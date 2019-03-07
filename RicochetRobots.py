@@ -3,6 +3,7 @@ import sys
 import numpy as np
 
 from square import Square
+from robot import Robot
 
 pygame.init()
 
@@ -222,11 +223,10 @@ def PlaceWalls():
 # The Program # ---------------------------------------------
 
 # Initalizes red robot
-x = 30 
-y = 30
+redRobo = Robot((255,0,0), 30, 30, 0, 0)
+blueRobo = Robot((0,0,255), 30, 80, 0, 1)
 vel = 50
-curX = 0 
-curY = 0
+
 
 # Places Walls on the board
 board = PlaceWalls()
@@ -241,25 +241,26 @@ while True:
             sys.exit()
 
     ResetGame()
-    pygame.draw.rect(screen, red, (x,y,30,30), 0)
+    pygame.draw.rect(screen, redRobo.colour, (redRobo.curX,redRobo.curY,30,30), 0)
+    pygame.draw.rect(screen, blueRobo.colour, (blueRobo.curX,blueRobo.curY,30,30), 0)
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        while board[curY][curX].west == 0:
-            curX -= 1
-            x -= vel
+        while board[redRobo.curSy][redRobo.curSx].west == 0:
+            redRobo.curSx -= 1
+            redRobo.curX -= vel
     if keys[pygame.K_RIGHT]:
-        while board[curY][curX].east == 0:
-            curX += 1
-            x += vel
+        while board[redRobo.curSy][redRobo.curSx].east == 0:
+            redRobo.curSx += 1
+            redRobo.curX += vel
     if keys[pygame.K_UP]:
-        while board[curY][curX].north == 0:
-            curY -= 1
-            y -= vel
+        while board[redRobo.curSy][redRobo.curSx].north == 0:
+            redRobo.curSy -= 1
+            redRobo.curY -= vel
     if keys[pygame.K_DOWN]:
-        while board[curY][curX].south == 0:
-            curY += 1
-            y += vel    
+        while board[redRobo.curSy][redRobo.curSx].south == 0:
+            redRobo.curSy += 1
+            redRobo.curY += vel    
 
     
     pygame.display.update()
