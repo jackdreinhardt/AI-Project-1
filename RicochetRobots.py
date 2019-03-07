@@ -23,7 +23,6 @@ tile1 = (230, 245, 255)
 tile2 = (245, 255, 250)             
 edgecol = (173, 216, 230)
 black = (0,0,0)   
-red = (255,0,0)
 
 pygame.mouse.set_visible(1)      
 
@@ -218,20 +217,66 @@ def PlaceWalls():
     
     return board
     
+def DetermineRobo(click):
+    if click[0] > redRobo.curX and click[0] < redRobo.curX+30 and click[1] > redRobo.curY and click[1] < redRobo.curY+30:
+        currentRobo = redRobo
+        return currentRobo
+    if click[0] > blueRobo.curX and click[0] < blueRobo.curX+30 and click[1] > blueRobo.curY and click[1] < blueRobo.curY+30:
+        currentRobo = blueRobo
+        return currentRobo
+    if click[0] > greenRobo.curX and click[0] < greenRobo.curX+30 and click[1] > greenRobo.curY and click[1] < greenRobo.curY+30:
+        currentRobo = greenRobo
+        return currentRobo    
+    if click[0] > yellowRobo.curX and click[0] < yellowRobo.curX+30 and click[1] > yellowRobo.curY and click[1] < yellowRobo.curY+30:
+        currentRobo = yellowRobo
+        return currentRobo    
+    return 0
     
+def RoboMoves(currentRobo, key):
+    if key == pygame.K_LEFT:
+        while board[currentRobo.curSy][currentRobo.curSx].west == 0:
+            currentRobo.curSx -= 1
+            currentRobo.curX -= vel
+    if key == pygame.K_RIGHT:
+        while board[currentRobo.curSy][currentRobo.curSx].east == 0:
+            currentRobo.curSx += 1
+            currentRobo.curX += vel
+    if key == pygame.K_UP:
+        while board[currentRobo.curSy][currentRobo.curSx].north == 0:
+            currentRobo.curSy -= 1
+            currentRobo.curY -= vel
+    if key == pygame.K_DOWN:
+        while board[currentRobo.curSy][currentRobo.curSx].south == 0:
+            currentRobo.curSy += 1
+            currentRobo.curY += vel
+             
+    return currentRobo         
+            
 ## ----------------------------------------------------------    
 # The Program # ---------------------------------------------
 
 # Initalizes red robot
 redRobo = Robot((255,0,0), 30, 30, 0, 0)
 blueRobo = Robot((0,0,255), 30, 80, 0, 1)
+greenRobo = Robot((0,255,0), 80, 30, 1, 0)
+yellowRobo = Robot((255, 255, 0), 80, 80, 1, 1)
 vel = 50
 
 
 # Places Walls on the board
 board = PlaceWalls()
 
+# Draw Board
+ResetGame()
+pygame.draw.rect(screen, redRobo.colour, (redRobo.curX,redRobo.curY,30,30), 0)
+pygame.draw.rect(screen, blueRobo.colour, (blueRobo.curX,blueRobo.curY,30,30), 0)
+pygame.draw.rect(screen, greenRobo.colour, (greenRobo.curX,greenRobo.curY,30,30), 0)
+pygame.draw.rect(screen, yellowRobo.colour, (yellowRobo.curX,yellowRobo.curY,30,30), 0)
+pygame.display.update()
+
 # MAIN LOOP
+currentRobo = 0
+
 while True:
     pygame.time.delay(100)
     for event in pygame.event.get():                    
@@ -239,28 +284,35 @@ while True:
             pygame.display.quit()                 
             pygame.quit()
             sys.exit()
-
-    ResetGame()
-    pygame.draw.rect(screen, redRobo.colour, (redRobo.curX,redRobo.curY,30,30), 0)
-    pygame.draw.rect(screen, blueRobo.colour, (blueRobo.curX,blueRobo.curY,30,30), 0)
-
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]:
-        while board[redRobo.curSy][redRobo.curSx].west == 0:
-            redRobo.curSx -= 1
-            redRobo.curX -= vel
-    if keys[pygame.K_RIGHT]:
-        while board[redRobo.curSy][redRobo.curSx].east == 0:
-            redRobo.curSx += 1
-            redRobo.curX += vel
-    if keys[pygame.K_UP]:
-        while board[redRobo.curSy][redRobo.curSx].north == 0:
-            redRobo.curSy -= 1
-            redRobo.curY -= vel
-    if keys[pygame.K_DOWN]:
-        while board[redRobo.curSy][redRobo.curSx].south == 0:
-            redRobo.curSy += 1
-            redRobo.curY += vel    
-
-    
+        if event.type == pygame.MOUSEBUTTONDOWN: 
+            click = event.pos  
+            currentRobo = DetermineRobo(click)
+        if event.type == pygame.KEYDOWN and currentRobo != 0:
+            key = event.key
+            RoboMove = RoboMoves(currentRobo, key)
+            if RoboMove.colour == (255,0,0):
+                ResetGame()
+                pygame.draw.rect(screen, redRobo.colour, (RoboMove.curX,RoboMove.curY,30,30), 0)
+                pygame.draw.rect(screen, blueRobo.colour, (blueRobo.curX,blueRobo.curY,30,30), 0)
+                pygame.draw.rect(screen, greenRobo.colour, (greenRobo.curX,greenRobo.curY,30,30), 0)
+                pygame.draw.rect(screen, yellowRobo.colour, (yellowRobo.curX,yellowRobo.curY,30,30), 0)
+            elif RoboMove.colour == (0,0,255):
+                ResetGame()
+                pygame.draw.rect(screen, blueRobo.colour, (RoboMove.curX,RoboMove.curY,30,30), 0)
+                pygame.draw.rect(screen, redRobo.colour, (redRobo.curX,redRobo.curY,30,30), 0)
+                pygame.draw.rect(screen, greenRobo.colour, (greenRobo.curX,greenRobo.curY,30,30), 0)
+                pygame.draw.rect(screen, yellowRobo.colour, (yellowRobo.curX,yellowRobo.curY,30,30), 0)
+            elif RoboMove.colour == (0,255,0):
+                ResetGame()
+                pygame.draw.rect(screen, greenRobo.colour, (RoboMove.curX,RoboMove.curY,30,30), 0)
+                pygame.draw.rect(screen, blueRobo.colour, (blueRobo.curX,blueRobo.curY,30,30), 0)
+                pygame.draw.rect(screen, redRobo.colour, (redRobo.curX,redRobo.curY,30,30), 0)
+                pygame.draw.rect(screen, yellowRobo.colour, (yellowRobo.curX,yellowRobo.curY,30,30), 0)
+            elif RoboMove.colour == (255,255,0):
+                ResetGame()
+                pygame.draw.rect(screen, yellowRobo.colour, (RoboMove.curX,RoboMove.curY,30,30), 0)
+                pygame.draw.rect(screen, greenRobo.colour, (greenRobo.curX,greenRobo.curY,30,30), 0)
+                pygame.draw.rect(screen, blueRobo.colour, (blueRobo.curX,blueRobo.curY,30,30), 0)
+                pygame.draw.rect(screen, redRobo.colour, (redRobo.curX,redRobo.curY,30,30), 0)
+        
     pygame.display.update()
