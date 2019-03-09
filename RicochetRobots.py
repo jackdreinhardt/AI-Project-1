@@ -1,5 +1,6 @@
 import pygame
 import sys
+import random
 
 from square import Square
 from robot import Robot
@@ -23,7 +24,13 @@ pygame.display.set_caption(windowTitle)
 tile1 = (230, 245, 255)             
 tile2 = (245, 255, 250)             
 edgecol = (173, 216, 230)
-black = (0,0,0)   
+black = (0,0,0)
+
+# Define the required colours for the robots and the targets
+red = (255,0,0)
+blue = (0,0,255)
+green = (0,255,0)
+yellow = (255,255,0)   
 
 pygame.mouse.set_visible(1)      
 
@@ -107,11 +114,12 @@ def ResetBoard():
     DrawBoardgameEdge()
     DrawBoardgame()
     DrawWalls()
+    DrawTarget()
     pygame.display.update()
     
 def PlaceWalls():
-    # Initialize board without walls; no square is currently occupied
-    board = [[Square(0,0,0,0,0) for j in range(boardSize)] for i in range(boardSize)]
+    # Initialize board without walls; no square is currently occupied; no target is placed
+    board = [[Square(0,0,0,0,0,0) for j in range(boardSize)] for i in range(boardSize)]
 
     # Add outer walls
     for i in range(boardSize):
@@ -220,15 +228,70 @@ def PlaceWalls():
     
     return board
 
+def PlaceTarget():
+    for i in range(boardSize):
+        for j in range (boardSize):
+            board[i][j].tar = 0
+    rand = random.choice(range(16))
+    # Blue targets
+    if rand == 0:
+        board[1][5].tar = 1
+    if rand == 1:
+        board[5][9].tar = 1
+    if rand == 2:
+        board[9][5].tar = 1
+    if rand == 3:
+        board[11][13].tar = 1
+    #Red targets
+    if rand == 4:
+        board[2][1].tar = 2
+    if rand == 5:
+        board[2][14].tar = 2
+    if rand == 6:
+        board[12][6].tar = 2
+    if rand == 7:
+        board[14][14].tar = 2
+    # Green targets
+    if rand == 8:
+        board[1][12].tar = 3
+    if rand == 9:
+        board[6][2].tar = 3
+    if rand == 10:
+        board[13][9].tar = 3
+    if rand == 11:
+        board[14][2].tar = 3
+    # Yellow targets
+    if rand == 12:
+        board[4][6].tar = 4
+    if rand == 13:
+        board[6][11].tar = 4
+    if rand == 14:
+        board[9][1].tar = 4
+    if rand == 15:
+        board[10][8].tar = 4
+    
+    return board
+# =============================================================================
+# # List of targets
+#     Be careful: tuple (x,y) is not (rows, coloumns) but (x,y) coordinates 
+#     with the center of the coordinate system in the top left corner.
+#     (the x-axis is the horizontal axis of the board)
+#     blue targets: (5,1) (9,5) (5,9) (13,11)
+#     red targets: (1,2) (14,2) (6,12) (14,14)
+#     green targets: (12,1) (2,6) (9,13) (2,14)
+#     yellow targets: (6,4) (11,6) (1,9) (8,10)
+#     colourful target: (8,3)
+# =============================================================================
+
 # For each square determines if the square is currently occupied
 def OccupiedSquares():
     for i in range(boardSize):
         for j in range (boardSize):
             board[i][j].occ = 0
-    board[redRobo.curSy][redRobo.curSx].occ = 1
     board[blueRobo.curSy][blueRobo.curSx].occ = 1
-    board[greenRobo.curSy][greenRobo.curSx].occ = 1
-    board[yellowRobo.curSy][yellowRobo.curSx].occ = 1
+    board[redRobo.curSy][redRobo.curSx].occ = 2
+    board[greenRobo.curSy][greenRobo.curSx].occ = 3
+    board[yellowRobo.curSy][yellowRobo.curSx].occ = 4
     
     return board
     
@@ -253,25 +316,25 @@ def DetermineRobo(click):
 def RoboMoves(currentRobo, key):
     if key == pygame.K_LEFT:
         while (board[currentRobo.curSy][currentRobo.curSx].west == 0):
-            if (board[currentRobo.curSy][(currentRobo.curSx)-1].occ == 1):
+            if (board[currentRobo.curSy][(currentRobo.curSx)-1].occ != 0):
                 break
             currentRobo.curSx -= 1
             currentRobo.curX -= vel
     if key == pygame.K_RIGHT:
         while (board[currentRobo.curSy][currentRobo.curSx].east == 0):
-            if (board[currentRobo.curSy][(currentRobo.curSx)+1].occ == 1):
+            if (board[currentRobo.curSy][(currentRobo.curSx)+1].occ != 0):
                 break
             currentRobo.curSx += 1
             currentRobo.curX += vel
     if key == pygame.K_UP:
         while (board[currentRobo.curSy][currentRobo.curSx].north == 0):
-            if (board[(currentRobo.curSy)-1][currentRobo.curSx].occ == 1):
+            if (board[(currentRobo.curSy)-1][currentRobo.curSx].occ != 0):
                 break
             currentRobo.curSy -= 1
             currentRobo.curY -= vel
     if key == pygame.K_DOWN:
         while (board[currentRobo.curSy][currentRobo.curSx].south == 0):
-            if (board[(currentRobo.curSy)+1][currentRobo.curSx].occ == 1):
+            if (board[(currentRobo.curSy)+1][currentRobo.curSx].occ != 0):
                 break
             currentRobo.curSy += 1
             currentRobo.curY += vel
@@ -281,20 +344,34 @@ def RoboMoves(currentRobo, key):
 # Draws the current position of all robots on the board
 def DrawRobots():
     ResetBoard()
-    pygame.draw.rect(screen, blueRobo.colour, (blueRobo.curX,blueRobo.curY,30,30), 0)
-    pygame.draw.rect(screen, redRobo.colour, (redRobo.curX,redRobo.curY,30,30), 0)
-    pygame.draw.rect(screen, greenRobo.colour, (greenRobo.curX,greenRobo.curY,30,30), 0)
-    pygame.draw.rect(screen, yellowRobo.colour, (yellowRobo.curX,yellowRobo.curY,30,30), 0)
+    pygame.draw.rect(screen, blue, (blueRobo.curX,blueRobo.curY,30,30), 0)
+    pygame.draw.rect(screen, red, (redRobo.curX,redRobo.curY,30,30), 0)
+    pygame.draw.rect(screen, green, (greenRobo.curX,greenRobo.curY,30,30), 0)
+    pygame.draw.rect(screen, yellow, (yellowRobo.curX,yellowRobo.curY,30,30), 0)
     pygame.display.update()
-            
+          
+def DrawTarget():
+    for i in range(boardSize):
+        for j in range (boardSize):
+            if board[i][j].tar != 0:
+                if board[i][j].tar == 1:
+                    pygame.draw.circle(screen, blue, (edge+j*square+25, edge+i*square+25), 10, 0)
+                if board[i][j].tar == 2:
+                    pygame.draw.circle(screen, red, (edge+j*square+25, edge+i*square+25), 10, 0)
+                if board[i][j].tar == 3:
+                    pygame.draw.circle(screen, green, (edge+j*square+25, edge+i*square+25), 10, 0)
+                if board[i][j].tar == 4:
+                    pygame.draw.circle(screen, yellow, (edge+j*square+25, edge+i*square+25), 10, 0)
+
+
 ## ----------------------------------------------------------    
 # The Program # ---------------------------------------------
 
 # Initalizes the robots
-redRobo = Robot((255,0,0), 30+13*square, 30+12*square, 13, 12)
-blueRobo = Robot((0,0,255), 30+5*square, 30+11*square, 5, 11)
-greenRobo = Robot((0,255,0), 30+3*square, 30+6*square, 3, 6)
-yellowRobo = Robot((255, 255, 0), 30+13*square, 30, 13, 0)
+redRobo = Robot(red, 30+13*square, 30+12*square, 13, 12)
+blueRobo = Robot(blue, 30+5*square, 30+11*square, 5, 11)
+greenRobo = Robot(green, 30+3*square, 30+6*square, 3, 6)
+yellowRobo = Robot(yellow, 30+13*square, 30, 13, 0)
 vel = 50
 
 # Places walls on the board
@@ -302,6 +379,9 @@ board = PlaceWalls()
 
 # Determines occupied squares
 board = OccupiedSquares()
+
+# Places the target on the board
+board = PlaceTarget()
 
 # Draw board and robots 
 DrawRobots()
@@ -322,27 +402,23 @@ while True:
         if event.type == pygame.KEYDOWN and currentRobo != 0:
             key = event.key
             RoboMove = RoboMoves(currentRobo, key)
-            if RoboMove.colour == (255,0,0):
+            if RoboMove.colour == red:
                 redRobo = RoboMove
-            elif RoboMove.colour == (0,0,255):
+            elif RoboMove.colour == blue:
                 blueRobo = RoboMove
-            elif RoboMove.colour == (0,255,0):
+            elif RoboMove.colour == green:
                 greenRobo = RoboMove
-            elif RoboMove.colour == (255,255,0):
+            elif RoboMove.colour == yellow:
                 yellowRobo = RoboMove
             DrawRobots()
             OccupiedSquares()
+            for i in range(boardSize):
+                for j in range (boardSize):
+                    if board[i][j].occ == board[i][j].tar and board[i][j].occ != 0:
+                        print("Success! New target placed")
+                        board = PlaceTarget()
+                        DrawRobots()
             
     pygame.display.update()
 
-# =============================================================================
-# # List of targets
-#     Be careful: tuple (x,y) is not (rows, coloumns) but (x,y) coordinates 
-#     with the center of the coordinate system in the top left corner.
-#     (the x-axis is the horizontal axis of the board)
-#     blue targets: (5,1) (9,5) (5,9) (13,11)
-#     red targets: (1,2) (14,2) (6,12) (14,14)
-#     green targets: (12,1) (2,6) (9,13) (2,14)
-#     yellow targets: (6,4) (11,6) (1,9) (8,,10)
-#     colourful target: (8,3)
-# =============================================================================
+
