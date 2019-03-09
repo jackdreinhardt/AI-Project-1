@@ -6,6 +6,7 @@ from robot import Robot
 
 pygame.init()
 
+# Define the required variables for the boardgame
 boardSize = 16
 square = 50
 edge = 20
@@ -18,6 +19,7 @@ windowTitle = "Ricochet Robots"
 screen = pygame.display.set_mode(windowSize)
 pygame.display.set_caption(windowTitle)
 
+# Define the required colours for the boardgame 
 tile1 = (230, 245, 255)             
 tile2 = (245, 255, 250)             
 edgecol = (173, 216, 230)
@@ -25,6 +27,7 @@ black = (0,0,0)
 
 pygame.mouse.set_visible(1)      
 
+# Draws the boardgame edge on the screen
 def DrawBoardgameEdge():
     screen.fill(tile2)
     pygame.draw.rect(screen, edgecol, (0, 0, windowSize[0], edge), 0)
@@ -32,6 +35,7 @@ def DrawBoardgameEdge():
     pygame.draw.rect(screen, edgecol, (0, windowSize[0] - edge, windowSize[0], edge), 0)
     pygame.draw.rect(screen, edgecol, (windowSize[0] - edge, 0, edge, windowSize[0]), 0)
     
+# Draws the chess-board pattern on the screen
 def DrawBoardgame():
     for j in range(0, 15, 2):
         for i in range(0, 15, 2):
@@ -106,7 +110,7 @@ def ResetBoard():
     pygame.display.update()
     
 def PlaceWalls():
-    # Initialize board without walls
+    # Initialize board without walls; no square is currently occupied
     board = [[Square(0,0,0,0,0) for j in range(boardSize)] for i in range(boardSize)]
 
     # Add outer walls
@@ -216,6 +220,7 @@ def PlaceWalls():
     
     return board
 
+# For each square determines if the square is currently occupied
 def OccupiedSquares():
     for i in range(boardSize):
         for j in range (boardSize):
@@ -227,6 +232,7 @@ def OccupiedSquares():
     
     return board
     
+# Determines which robot was selected by the player. Returns '0' if no robot was selected
 def DetermineRobo(click):
     if click[0] > redRobo.curX and click[0] < redRobo.curX+30 and click[1] > redRobo.curY and click[1] < redRobo.curY+30:
         currentRobo = redRobo
@@ -243,6 +249,7 @@ def DetermineRobo(click):
     
     return 0
     
+# Moves the selected robot in the desired position until the robots hits a wall or another robot
 def RoboMoves(currentRobo, key):
     if key == pygame.K_LEFT:
         while (board[currentRobo.curSy][currentRobo.curSx].west == 0):
@@ -271,6 +278,7 @@ def RoboMoves(currentRobo, key):
              
     return currentRobo
 
+# Draws the current position of all robots on the board
 def DrawRobots():
     ResetBoard()
     pygame.draw.rect(screen, blueRobo.colour, (blueRobo.curX,blueRobo.curY,30,30), 0)
@@ -283,10 +291,10 @@ def DrawRobots():
 # The Program # ---------------------------------------------
 
 # Initalizes the robots
-redRobo = Robot((255,0,0), 30, 30, 0, 0)
-blueRobo = Robot((0,0,255), 30, 80, 0, 1)
-greenRobo = Robot((0,255,0), 80, 30, 1, 0)
-yellowRobo = Robot((255, 255, 0), 80, 80, 1, 1)
+redRobo = Robot((255,0,0), 30+13*square, 30+12*square, 13, 12)
+blueRobo = Robot((0,0,255), 30+5*square, 30+11*square, 5, 11)
+greenRobo = Robot((0,255,0), 30+3*square, 30+6*square, 3, 6)
+yellowRobo = Robot((255, 255, 0), 30+13*square, 30, 13, 0)
 vel = 50
 
 # Places walls on the board
@@ -326,3 +334,15 @@ while True:
             OccupiedSquares()
             
     pygame.display.update()
+
+# =============================================================================
+# # List of targets
+#     Be careful: tuple (x,y) is not (rows, coloumns) but (x,y) coordinates 
+#     with the center of the coordinate system in the top left corner.
+#     (the x-axis is the horizontal axis of the board)
+#     blue targets: (5,1) (9,5) (5,9) (13,11)
+#     red targets: (1,2) (14,2) (6,12) (14,14)
+#     green targets: (12,1) (2,6) (9,13) (2,14)
+#     yellow targets: (6,4) (11,6) (1,9) (8,,10)
+#     colourful target: (8,3)
+# =============================================================================
