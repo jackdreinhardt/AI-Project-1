@@ -6,6 +6,9 @@ from square import Square
 from robot import Robot
 
 pygame.init()
+pygame.font.init()
+
+myfont = pygame.font.SysFont('Comic Sans MS', 15)
 
 moveCount = 0
 
@@ -27,6 +30,7 @@ tile1 = (230, 245, 255)
 tile2 = (245, 255, 250)
 edgecol = (173, 216, 230)
 black = (0,0,0)
+grey = (100,100,100)
 
 # Define the required colours for the robots and the targets
 red = (255,0,0)
@@ -120,7 +124,7 @@ def ResetBoard():
     pygame.display.update()
 
 def PlaceWalls():
-    # Initialize board without walls; no square is currently occupied; no target is placed
+    # Initialize board without walls (1-4); no square is currently occupied (5); no target is placed(6)
     board = [[Square(0,0,0,0,0,0) for j in range(boardSize)] for i in range(boardSize)]
 
     # Add outer walls
@@ -311,6 +315,12 @@ def DetermineRobo(click):
     if click[0] > yellowRobo.curX and click[0] < yellowRobo.curX+30 and click[1] > yellowRobo.curY and click[1] < yellowRobo.curY+30:
         currentRobo = yellowRobo
         return currentRobo
+# =============================================================================
+#     if click[0] > 378 and click[0] < 462 and click[1] > 378 and click[1] < 412:
+#         board = boardBackup
+#         DrawRobots()
+#         OccupiedSquares()
+# =============================================================================
 
     return 0
 
@@ -397,6 +407,7 @@ DrawRobots()
 
 # MAIN LOOP
 currentRobo = 0
+boardBackup = board
 
 while True:
     pygame.time.delay(100)
