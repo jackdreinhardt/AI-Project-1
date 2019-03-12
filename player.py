@@ -1,7 +1,8 @@
 class Player:
-  def __init__(self, name, id_num):
+  def __init__(self, name, id_num, score):
     self.name_ = name
     self.id_ = id_num
+    self.score_ = score
 
   # pure virtual, implemented by child class
   def execute_moves():
