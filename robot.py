@@ -12,6 +12,8 @@ class Robot:
     self.curSy = current_square_y
 
   # updates the position variables of the robot, updates board[][].robot
+  # @param d direction to move robot
+  # @param l number of pixels to move ('vel' in RicochetRobots.py)
   def move(self, board, d, l):
     # test_robot = self
     moved = False
