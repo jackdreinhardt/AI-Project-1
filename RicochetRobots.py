@@ -11,11 +11,11 @@ pygame.font.init()
 myfont = pygame.font.SysFont('Comic Sans MS', 15)
 
 # Define the required variables for the boardgame
-boardSize = 16
-square = 50
-edge = 20
-wallthickness = 6
-halfthickness = 2
+boardSize = 16 #16x16 squares
+square = 50 #50x50 pixels
+edge = 20 #20 pixels wide board edge
+wallthickness = 6 #in pixels
+halfthickness = 2 #
 
 windowSize = (square*boardSize + edge*2, square*boardSize + edge*2)
 windowTitle = "Ricochet Robots"
