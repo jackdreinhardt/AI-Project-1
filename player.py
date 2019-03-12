@@ -9,6 +9,6 @@ class Player:
                             + '.' + self._function + '\' called')
 
   # pure virtual, implemented by child class
-  def compute_moves():
+  def search_moves():
     raise TypeError('Abstract method `' + self._class.__name__ \
                             + '.' + self._function + '\' called')
