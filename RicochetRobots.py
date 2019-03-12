@@ -323,42 +323,6 @@ def DetermineRobo(click):
 
     return 0
 
-# Moves the selected robot in the desired position until the robots hits a wall or another robot
-def RoboMoves(currentRobo, key):
-    global moveCount
-    moved = False
-    if key == pygame.K_LEFT:
-        while (board[currentRobo.curSy][currentRobo.curSx].west == 0):
-            moved = True
-            if (board[currentRobo.curSy][(currentRobo.curSx)-1].occ != 0):
-                break
-            currentRobo.curSx -= 1
-            currentRobo.curX -= vel
-    if key == pygame.K_RIGHT:
-        while (board[currentRobo.curSy][currentRobo.curSx].east == 0):
-            moved = True
-            if (board[currentRobo.curSy][(currentRobo.curSx)+1].occ != 0):
-                break
-            currentRobo.curSx += 1
-            currentRobo.curX += vel
-    if key == pygame.K_UP:
-        while (board[currentRobo.curSy][currentRobo.curSx].north == 0):
-            moved = True
-            if (board[(currentRobo.curSy)-1][currentRobo.curSx].occ != 0):
-                break
-            currentRobo.curSy -= 1
-            currentRobo.curY -= vel
-    if key == pygame.K_DOWN:
-        while (board[currentRobo.curSy][currentRobo.curSx].south == 0):
-            moved = True
-            if (board[(currentRobo.curSy)+1][currentRobo.curSx].occ != 0):
-                break
-            currentRobo.curSy += 1
-            currentRobo.curY += vel
-    if moved:
-        moveCount += 1
-    return currentRobo
-
 # Draws the current position of all robots on the board
 def DrawRobots():
     ResetBoard()
@@ -380,6 +344,19 @@ def DrawTarget():
                     pygame.draw.circle(screen, green, (edge+j*square+25, edge+i*square+25), 10, 0)
                 if board[i][j].tar == 4:
                     pygame.draw.circle(screen, yellow, (edge+j*square+25, edge+i*square+25), 10, 0)
+
+def KeyToDir(key):
+    if key == pygame.K_UP:
+        return "NORTH"
+    elif key == pygame.K_DOWN:
+        return "SOUTH"
+    elif key == pygame.K_RIGHT:
+        return "EAST"
+    elif key == pygame.K_LEFT:
+        return "WEST"
+    else:
+        return "NOT SUPPORTED"
+
 
 
 ## ----------------------------------------------------------
@@ -407,6 +384,7 @@ DrawRobots()
 # MAIN LOOP
 currentRobo = 0
 boardBackup = board
+moveCount = 0
 
 while True:
     pygame.time.delay(100)
@@ -419,16 +397,9 @@ while True:
             click = event.pos
             currentRobo = DetermineRobo(click)
         if event.type == pygame.KEYDOWN and currentRobo != 0:
-            key = event.key
-            RoboMove = RoboMoves(currentRobo, key)
-            if RoboMove.colour == red:
-                redRobo = RoboMove
-            elif RoboMove.colour == blue:
-                blueRobo = RoboMove
-            elif RoboMove.colour == green:
-                greenRobo = RoboMove
-            elif RoboMove.colour == yellow:
-                yellowRobo = RoboMove
+            d = KeyToDir(event.key)
+            if currentRobo.move(board, d, vel):
+                moveCount += 1
             DrawRobots()
             OccupiedSquares()
             for i in range(boardSize):
