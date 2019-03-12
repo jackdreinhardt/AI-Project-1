@@ -1,5 +1,4 @@
 import pygame
-import sys
 import random
 
 from square import Square
@@ -415,7 +414,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.display.quit()
             pygame.quit()
-            sys.exit()
+            exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             click = event.pos
             currentRobo = DetermineRobo(click)
