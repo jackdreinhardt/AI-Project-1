@@ -3,13 +3,12 @@ import random
 
 from square import Square
 from robot import Robot
+from ai_player import AIPlayer
 
 pygame.init()
 pygame.font.init()
 
 myfont = pygame.font.SysFont('Comic Sans MS', 15)
-
-moveCount = 0
 
 # Define the required variables for the boardgame
 boardSize = 16 #16x16 squares
@@ -126,110 +125,63 @@ def PlaceWalls():
     # Initialize board without walls (1-4); no square is currently occupied (5); no target is placed(6)
     board = [[Square(0,0,0,0,0,0) for j in range(boardSize)] for i in range(boardSize)]
 
-    # Add outer walls
-    for i in range(boardSize):
+    for i in range(boardSize): # Add outer walls
         board[0][i].north = 1
         board[15][i].south = 1
         board[i][0].west = 1
         board[i][15].east = 1
 
     # Add inner square walls
-    board[6][7].south = 1
-    board[6][8].south = 1
-    board[7][6].east = 1
-    board[8][6].east = 1
-    board[7][9].west = 1
-    board[8][9].west = 1
-    board[9][7].north = 1
-    board[9][8].north = 1
+    board[6][7].south = board[6][8].south = 1
+    board[7][6].east = board[8][6].east = 1
+    board[7][9].west = board[8][9].west = 1
+    board[9][7].north = board[9][8].north = 1
 
     # Add vertical walls
-    board[0][3].east = 1
-    board[0][4].west = 1
-    board[0][10].east = 1
-    board[0][11].west = 1
-    board[1][5].east = 1
-    board[1][6].west = 1
-    board[1][11].east = 1
-    board[1][12].west = 1
-    board[2][0].east = 1
-    board[2][1].west = 1
-    board[2][13].east = 1
-    board[2][14].west = 1
-    board[3][7].east = 1
-    board[3][8].west = 1
-    board[4][6].east = 1
-    board[4][7].west = 1
-    board[5][9].east = 1
-    board[5][10].west = 1
-    board[6][2].east = 1
-    board[6][3].west = 1
-    board[6][11].east = 1
-    board[6][12].west = 1
-    board[9][1].east = 1
-    board[9][2].west = 1
-    board[9][4].east = 1
-    board[9][5].west = 1
-    board[10][8].east = 1
-    board[10][9].west = 1
-    board[11][12].east = 1
-    board[11][13].west = 1
-    board[12][6].east = 1
-    board[12][7].west = 1
-    board[13][8].east = 1
-    board[13][9].west = 1
-    board[14][1].east = 1
-    board[14][2].west = 1
-    board[14][14].east = 1
-    board[14][15].west = 1
-    board[15][5].east = 1
-    board[15][6].west = 1
-    board[15][11].east = 1
-    board[15][12].west = 1
+    board[0][3].east = board[0][4].west = 1
+    board[0][10].east = board[0][11].west = 1
+    board[1][5].east = board[1][6].west = 1
+    board[1][11].east = board[1][12].west = 1
+    board[2][0].east = board[2][1].west = 1
+    board[2][13].east = board[2][14].west = 1
+    board[3][7].east = board[3][8].west = 1
+    board[4][6].east = board[4][7].west = 1
+    board[5][9].east = board[5][10].west = 1
+    board[6][2].east = board[6][3].west = 1
+    board[6][11].east = board[6][12].west = 1
+    board[9][1].east = board[9][2].west = 1
+    board[9][4].east = board[9][5].west = 1
+    board[10][8].east = board[10][9].west = 1
+    board[11][12].east = board[11][13].west = 1
+    board[12][6].east = board[12][7].west = 1
+    board[13][8].east = board[13][9].west = 1
+    board[14][1].east = board[14][2].west = 1
+    board[14][14].east = board[14][15].west = 1
+    board[15][5].east = board[15][6].west = 1
+    board[15][11].east = board[15][12].west = 1
 
     # Add horizontal walls
-    board[0][5].south = 1
-    board[1][5].north = 1
-    board[0][12].south = 1
-    board[1][12].north = 1
-    board[2][1].south = 1
-    board[3][1].north = 1
-    board[2][14].south = 1
-    board[3][14].north = 1
-    board[3][0].south = 1
-    board[4][0].north = 1
-    board[3][8].south = 1
-    board[4][8].north = 1
-    board[4][6].south = 1
-    board[5][6].north = 1
-    board[4][15].south = 1
-    board[5][15].north = 1
-    board[5][9].south = 1
-    board[6][9].north = 1
-    board[5][11].south = 1
-    board[6][11].north = 1
-    board[6][2].south = 1
-    board[7][2].north = 1
-    board[8][1].south = 1
-    board[9][1].north = 1
-    board[8][5].south = 1
-    board[9][5].north = 1
-    board[9][15].south = 1
-    board[10][15].north = 1
-    board[10][0].south = 1
-    board[11][0].north = 1
-    board[10][8].south = 1
-    board[11][8].north = 1
-    board[10][13].south = 1
-    board[11][13].north = 1
-    board[12][6].south = 1
-    board[13][6].north = 1
-    board[13][9].south = 1
-    board[14][9].north = 1
-    board[13][14].south = 1
-    board[14][14].north = 1
-    board[14][2].south = 1
-    board[15][2].north = 1
+    board[0][5].south = board[1][5].north = 1
+    board[0][12].south = board[1][12].north = 1
+    board[2][1].south = board[3][1].north = 1
+    board[2][14].south = board[3][14].north = 1
+    board[3][0].south = board[4][0].north = 1
+    board[3][8].south = board[4][8].north = 1
+    board[4][6].south = board[5][6].north = 1
+    board[4][15].south = board[5][15].north = 1
+    board[5][9].south = board[6][9].north = 1
+    board[5][11].south = board[6][11].north = 1
+    board[6][2].south = board[7][2].north = 1
+    board[8][1].south = board[9][1].north = 1
+    board[8][5].south = board[9][5].north = 1
+    board[9][15].south = board[10][15].north = 1
+    board[10][0].south = board[11][0].north = 1
+    board[10][8].south = board[11][8].north = 1
+    board[10][13].south = board[11][13].north = 1
+    board[12][6].south = board[13][6].north = 1
+    board[13][9].south = board[14][9].north = 1
+    board[13][14].south = board[14][14].north = 1
+    board[14][2].south = board[15][2].north = 1
 
     return board
 
