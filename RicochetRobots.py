@@ -6,6 +6,9 @@ from square import Square
 from robot import Robot
 
 pygame.init()
+pygame.font.init()
+
+myfont = pygame.font.SysFont('Comic Sans MS', 15)
 
 # Define the required variables for the boardgame
 boardSize = 16
@@ -25,6 +28,7 @@ tile1 = (230, 245, 255)
 tile2 = (245, 255, 250)             
 edgecol = (173, 216, 230)
 black = (0,0,0)
+grey = (100,100,100)
 
 # Define the required colours for the robots and the targets
 red = (255,0,0)
@@ -50,6 +54,15 @@ def DrawBoardgame():
     for j in range(0, 15, 2):
         for i in range(0, 15, 2):
             pygame.draw.rect(screen, tile1, (j*square + edge + square, i*square + edge, square, square), 0)
+# =============================================================================
+#     # Buttons to reset the game and spawn a new target
+#     pygame.draw.rect(screen, grey, (7*square + edge + 8, 7*square + edge + 8, 84, 34), 0)
+#     pygame.draw.rect(screen, grey, (7*square + edge + 8, 8*square + edge + 8, 84, 34), 0)
+#     textNewTarget = myfont.render('New Target', False, (255,255,255))
+#     screen.blit(textNewTarget,(7*square + edge + 11, 7*square + edge + 12))
+#     textTryAgain = myfont.render('Try Again', False, (255,255,255))
+#     screen.blit(textTryAgain,(7*square + edge + 11, 8*square + edge + 12))
+# =============================================================================
       
 def DrawWalls():
     # Draw outer walls
@@ -118,7 +131,7 @@ def ResetBoard():
     pygame.display.update()
     
 def PlaceWalls():
-    # Initialize board without walls; no square is currently occupied; no target is placed
+    # Initialize board without walls (1-4); no square is currently occupied (5); no target is placed(6)
     board = [[Square(0,0,0,0,0,0) for j in range(boardSize)] for i in range(boardSize)]
 
     # Add outer walls
@@ -296,7 +309,7 @@ def OccupiedSquares():
     return board
     
 # Determines which robot was selected by the player. Returns '0' if no robot was selected
-def DetermineRobo(click):
+def DetermineRobo(click):   
     if click[0] > redRobo.curX and click[0] < redRobo.curX+30 and click[1] > redRobo.curY and click[1] < redRobo.curY+30:
         currentRobo = redRobo
         return currentRobo
@@ -309,7 +322,13 @@ def DetermineRobo(click):
     if click[0] > yellowRobo.curX and click[0] < yellowRobo.curX+30 and click[1] > yellowRobo.curY and click[1] < yellowRobo.curY+30:
         currentRobo = yellowRobo
         return currentRobo
-    
+# =============================================================================
+#     if click[0] > 378 and click[0] < 462 and click[1] > 378 and click[1] < 412:
+#         board = boardBackup
+#         DrawRobots()
+#         OccupiedSquares()
+# =============================================================================
+
     return 0
     
 # Moves the selected robot in the desired position until the robots hits a wall or another robot
@@ -388,6 +407,7 @@ DrawRobots()
 
 # MAIN LOOP
 currentRobo = 0
+boardBackup = board
 
 while True:
     pygame.time.delay(100)
