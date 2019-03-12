@@ -10,12 +10,14 @@ pygame.font.init()
 
 myfont = pygame.font.SysFont('Comic Sans MS', 15)
 
+moveCount = 0
+
 # Define the required variables for the boardgame
-boardSize = 16
-square = 50
-edge = 20
-wallthickness = 6
-halfthickness = 2
+boardSize = 16 #16x16 squares
+square = 50 #50x50 pixels
+edge = 20 #20 pixels wide board edge
+wallthickness = 6 #in pixels
+halfthickness = 2 #
 
 windowSize = (square*boardSize + edge*2, square*boardSize + edge*2)
 windowTitle = "Ricochet Robots"
@@ -23,9 +25,9 @@ windowTitle = "Ricochet Robots"
 screen = pygame.display.set_mode(windowSize)
 pygame.display.set_caption(windowTitle)
 
-# Define the required colours for the boardgame 
-tile1 = (230, 245, 255)             
-tile2 = (245, 255, 250)             
+# Define the required colours for the boardgame
+tile1 = (230, 245, 255)
+tile2 = (245, 255, 250)
 edgecol = (173, 216, 230)
 black = (0,0,0)
 grey = (100,100,100)
@@ -34,9 +36,9 @@ grey = (100,100,100)
 red = (255,0,0)
 blue = (0,0,255)
 green = (0,255,0)
-yellow = (255,255,0)   
+yellow = (255,255,0)
 
-pygame.mouse.set_visible(1)      
+pygame.mouse.set_visible(1)
 
 # Draws the boardgame edge on the screen
 def DrawBoardgameEdge():
@@ -45,7 +47,7 @@ def DrawBoardgameEdge():
     pygame.draw.rect(screen, edgecol, (0, 0, edge, windowSize[0]), 0)
     pygame.draw.rect(screen, edgecol, (0, windowSize[0] - edge, windowSize[0], edge), 0)
     pygame.draw.rect(screen, edgecol, (windowSize[0] - edge, 0, edge, windowSize[0]), 0)
-    
+
 # Draws the chess-board pattern on the screen
 def DrawBoardgame():
     for j in range(0, 15, 2):
@@ -54,23 +56,14 @@ def DrawBoardgame():
     for j in range(0, 15, 2):
         for i in range(0, 15, 2):
             pygame.draw.rect(screen, tile1, (j*square + edge + square, i*square + edge, square, square), 0)
-# =============================================================================
-#     # Buttons to reset the game and spawn a new target
-#     pygame.draw.rect(screen, grey, (7*square + edge + 8, 7*square + edge + 8, 84, 34), 0)
-#     pygame.draw.rect(screen, grey, (7*square + edge + 8, 8*square + edge + 8, 84, 34), 0)
-#     textNewTarget = myfont.render('New Target', False, (255,255,255))
-#     screen.blit(textNewTarget,(7*square + edge + 11, 7*square + edge + 12))
-#     textTryAgain = myfont.render('Try Again', False, (255,255,255))
-#     screen.blit(textTryAgain,(7*square + edge + 11, 8*square + edge + 12))
-# =============================================================================
-      
+
 def DrawWalls():
     # Draw outer walls
     pygame.draw.rect(screen, black, (edge-halfthickness, edge-halfthickness, windowSize[0]-3/2*edge-halfthickness, wallthickness), 0)
     pygame.draw.rect(screen, black, (edge-halfthickness, edge-halfthickness, wallthickness, windowSize[0]-3/2*edge-halfthickness), 0)
     pygame.draw.rect(screen, black, (edge-halfthickness, windowSize[0]-edge, windowSize[0]-3/2*edge-halfthickness, wallthickness), 0)
     pygame.draw.rect(screen, black, (windowSize[0]-edge, edge-halfthickness, wallthickness, windowSize[0]-3/2*edge-halfthickness), 0)
-    
+
     # Draw inner Square walls
     pygame.draw.rect(screen, black, (edge+7*square-halfthickness, edge+7*square-halfthickness, 2*square, wallthickness), 0)
     pygame.draw.rect(screen, black, (edge+7*square-halfthickness, edge+7*square-halfthickness, wallthickness, 2*square), 0)
@@ -122,14 +115,14 @@ def DrawWalls():
     pygame.draw.rect(screen, black, (edge+9*square-halfthickness, edge+14*square-halfthickness, square+2*halfthickness, wallthickness), 0)
     pygame.draw.rect(screen, black, (edge+14*square-halfthickness, edge+14*square-halfthickness, square+2*halfthickness, wallthickness), 0)
     pygame.draw.rect(screen, black, (edge+2*square-halfthickness, edge+15*square-halfthickness, square+2*halfthickness, wallthickness), 0)
- 
+
 def ResetBoard():
     DrawBoardgameEdge()
     DrawBoardgame()
     DrawWalls()
     DrawTarget()
     pygame.display.update()
-    
+
 def PlaceWalls():
     # Initialize board without walls (1-4); no square is currently occupied (5); no target is placed(6)
     board = [[Square(0,0,0,0,0,0) for j in range(boardSize)] for i in range(boardSize)]
@@ -140,17 +133,17 @@ def PlaceWalls():
         board[15][i].south = 1
         board[i][0].west = 1
         board[i][15].east = 1
-    
+
     # Add inner square walls
     board[6][7].south = 1
     board[6][8].south = 1
-    board[7][6].east = 1    
+    board[7][6].east = 1
     board[8][6].east = 1
     board[7][9].west = 1
     board[8][9].west = 1
     board[9][7].north = 1
     board[9][8].north = 1
-    
+
     # Add vertical walls
     board[0][3].east = 1
     board[0][4].west = 1
@@ -194,7 +187,7 @@ def PlaceWalls():
     board[15][6].west = 1
     board[15][11].east = 1
     board[15][12].west = 1
-    
+
     # Add horizontal walls
     board[0][5].south = 1
     board[1][5].north = 1
@@ -231,14 +224,14 @@ def PlaceWalls():
     board[10][13].south = 1
     board[11][13].north = 1
     board[12][6].south = 1
-    board[13][6].north = 1    
+    board[13][6].north = 1
     board[13][9].south = 1
-    board[14][9].north = 1 
+    board[14][9].north = 1
     board[13][14].south = 1
     board[14][14].north = 1
     board[14][2].south = 1
-    board[15][2].north = 1 
-    
+    board[15][2].north = 1
+
     return board
 
 def PlaceTarget():
@@ -282,11 +275,11 @@ def PlaceTarget():
         board[9][1].tar = 4
     if rand == 15:
         board[10][8].tar = 4
-    
+
     return board
 # =============================================================================
 # # List of targets
-#     Be careful: tuple (x,y) is not (rows, coloumns) but (x,y) coordinates 
+#     Be careful: tuple (x,y) is not (rows, coloumns) but (x,y) coordinates
 #     with the center of the coordinate system in the top left corner.
 #     (the x-axis is the horizontal axis of the board)
 #     blue targets: (5,1) (9,5) (5,9) (13,11)
@@ -305,11 +298,11 @@ def OccupiedSquares():
     board[redRobo.curSy][redRobo.curSx].occ = 2
     board[greenRobo.curSy][greenRobo.curSx].occ = 3
     board[yellowRobo.curSy][yellowRobo.curSx].occ = 4
-    
+
     return board
-    
+
 # Determines which robot was selected by the player. Returns '0' if no robot was selected
-def DetermineRobo(click):   
+def DetermineRobo(click):
     if click[0] > redRobo.curX and click[0] < redRobo.curX+30 and click[1] > redRobo.curY and click[1] < redRobo.curY+30:
         currentRobo = redRobo
         return currentRobo
@@ -318,7 +311,7 @@ def DetermineRobo(click):
         return currentRobo
     if click[0] > greenRobo.curX and click[0] < greenRobo.curX+30 and click[1] > greenRobo.curY and click[1] < greenRobo.curY+30:
         currentRobo = greenRobo
-        return currentRobo    
+        return currentRobo
     if click[0] > yellowRobo.curX and click[0] < yellowRobo.curX+30 and click[1] > yellowRobo.curY and click[1] < yellowRobo.curY+30:
         currentRobo = yellowRobo
         return currentRobo
@@ -330,34 +323,41 @@ def DetermineRobo(click):
 # =============================================================================
 
     return 0
-    
+
 # Moves the selected robot in the desired position until the robots hits a wall or another robot
 def RoboMoves(currentRobo, key):
+    global moveCount
+    moved = False
     if key == pygame.K_LEFT:
         while (board[currentRobo.curSy][currentRobo.curSx].west == 0):
+            moved = True
             if (board[currentRobo.curSy][(currentRobo.curSx)-1].occ != 0):
                 break
             currentRobo.curSx -= 1
             currentRobo.curX -= vel
     if key == pygame.K_RIGHT:
         while (board[currentRobo.curSy][currentRobo.curSx].east == 0):
+            moved = True
             if (board[currentRobo.curSy][(currentRobo.curSx)+1].occ != 0):
                 break
             currentRobo.curSx += 1
             currentRobo.curX += vel
     if key == pygame.K_UP:
         while (board[currentRobo.curSy][currentRobo.curSx].north == 0):
+            moved = True
             if (board[(currentRobo.curSy)-1][currentRobo.curSx].occ != 0):
                 break
             currentRobo.curSy -= 1
             currentRobo.curY -= vel
     if key == pygame.K_DOWN:
         while (board[currentRobo.curSy][currentRobo.curSx].south == 0):
+            moved = True
             if (board[(currentRobo.curSy)+1][currentRobo.curSx].occ != 0):
                 break
             currentRobo.curSy += 1
             currentRobo.curY += vel
-             
+    if moved:
+        moveCount += 1
     return currentRobo
 
 # Draws the current position of all robots on the board
@@ -368,7 +368,7 @@ def DrawRobots():
     pygame.draw.rect(screen, green, (greenRobo.curX,greenRobo.curY,30,30), 0)
     pygame.draw.rect(screen, yellow, (yellowRobo.curX,yellowRobo.curY,30,30), 0)
     pygame.display.update()
-          
+
 def DrawTarget():
     for i in range(boardSize):
         for j in range (boardSize):
@@ -383,7 +383,7 @@ def DrawTarget():
                     pygame.draw.circle(screen, yellow, (edge+j*square+25, edge+i*square+25), 10, 0)
 
 
-## ----------------------------------------------------------    
+## ----------------------------------------------------------
 # The Program # ---------------------------------------------
 
 # Initalizes the robots
@@ -402,7 +402,7 @@ board = OccupiedSquares()
 # Places the target on the board
 board = PlaceTarget()
 
-# Draw board and robots 
+# Draw board and robots
 DrawRobots()
 
 # MAIN LOOP
@@ -411,13 +411,13 @@ boardBackup = board
 
 while True:
     pygame.time.delay(100)
-    for event in pygame.event.get():                    
-        if event.type == pygame.QUIT:  
-            pygame.display.quit()                 
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.display.quit()
             pygame.quit()
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
-            click = event.pos  
+            click = event.pos
             currentRobo = DetermineRobo(click)
         if event.type == pygame.KEYDOWN and currentRobo != 0:
             key = event.key
@@ -436,9 +436,9 @@ while True:
                 for j in range (boardSize):
                     if board[i][j].occ == board[i][j].tar and board[i][j].occ != 0:
                         print("Success! New target placed")
+                        print("You took " + str(moveCount) + " moves to find a solution")
+                        moveCount = 0
                         board = PlaceTarget()
                         DrawRobots()
-            
+            print("Moves: " + str(moveCount))
     pygame.display.update()
-
-
