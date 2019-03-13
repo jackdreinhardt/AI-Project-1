@@ -14,6 +14,7 @@ class Robot:
   # updates the position variables of the robot, updates board[][].robot
   # @param d direction to move robot
   # @param l number of pixels to move ('vel' in RicochetRobots.py)
+  # returns true if move was successful, false otherwise
   def move(self, board, d, l):
     # test_robot = self
     moved = False
