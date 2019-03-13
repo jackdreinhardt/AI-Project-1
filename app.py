@@ -2,7 +2,7 @@ import pygame
 import random
 
 from robot import Robot
-from RicochetRobots import DrawRobots
+from square import Square
 
 class App:
 
@@ -14,20 +14,21 @@ class App:
   BLUE = (0,0,255)
   GREEN = (0,255,0)
   YELLOW = (255,255,0)
+  VEL = 50
 
 
   def __init__(self):
     # Initialize board without walls (1-4); no square is currently occupied (5); no target is placed(6)
     self.board_ = [[Square(0,0,0,0,0,0) for j in range(BOARDSIZE)] for i in range(BOARDSIZE)]
 
-    redRobo = Robot(RED, 30+13*SQUARE, 30+12*SQUARE, 13, 12)
-    blueRobo = Robot(BLUE, 30+5*SQUARE, 30+11*SQUARE, 5, 11)
-    greenRobo = Robot(GREEN, 30+3*SQUARE, 30+6*SQUARE, 3, 6)
-    yellowRobo = Robot(YELLOW, 30+13*SQUARE, 30, 13, 0)
+    redRobo = Robot(App.RED, 30+13*App.SQUARE, 30+12*App.SQUARE, 13, 12)
+    blueRobo = Robot(App.BLUE, 30+5*App.SQUARE, 30+11*App.SQUARE, 5, 11)
+    greenRobo = Robot(App.GREEN, 30+3*App.SQUARE, 30+6*App.SQUARE, 3, 6)
+    yellowRobo = Robot(App.YELLOW, 30+13*App.SQUARE, 30, 13, 0)
     self.robots_ = [redRobo, blueRobo, greenRobo, yellowRobo]
 
   def PlaceWalls():
-    for i in range(BOARDSIZE): # Add outer walls
+    for i in range(App.BOARDSIZE): # Add outer walls
       self.board_[0][i].north = 1
       self.board_[15][i].south = 1
       self.board_[i][0].west = 1
@@ -87,17 +88,11 @@ class App:
 
     # Determines which robot was selected by the player. Returns '0' if no robot was selected
   def DetermineRobo(click):
-    for r in robots_:
+    for r in self.robots_:
       if click[0] > r.curX and click[0] < r.curX+30 and click[1] > r.curY and click[1] < r.curY+30:
         return r
 
   def Run():
-    # redRobo = Robot(red, 30+13*SQUARE, 30+12*SQUARE, 13, 12)
-    # blueRobo = Robot(blue, 30+5*SQUARE, 30+11*SQUARE, 5, 11)
-    # greenRobo = Robot(green, 30+3*SQUARE, 30+6*SQUARE, 3, 6)
-    # yellowRobo = Robot(yellow, 30+13*SQUARE, 30, 13, 0)
-
-    vel = 50
 
     # Places walls on the board
     self.board_ = PlaceWalls()
@@ -127,7 +122,7 @@ class App:
           currentRobo = DetermineRobo(event.pos)
         if event.type == pygame.KEYDOWN and currentRobo != 0:
             d = KeyToDir(event.key)
-            if currentRobo.move(board, d, vel):
+            if currentRobo.move(board, d, App.VEL):
                 moveCount += 1
             DrawRobots()
             OccupiedSquares()
@@ -141,4 +136,10 @@ class App:
                         DrawRobots()
               print("Moves: " + str(moveCount))
         pygame.display.update()
+
+
+
+if __name__ == '__main__':
+  game = App()
+  game.Run()
 
