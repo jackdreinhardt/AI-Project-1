@@ -3,7 +3,7 @@ import random
 
 from robot import Robot
 from square import Square
-from draw import GraphicalBoard
+from drawks import GraphicalBoard
 
 class App:
 
@@ -25,10 +25,10 @@ class App:
     # Initialize self.board_ without walls (1-4); no square is currently occupied (5); no target is placed(6)
     self.board_ = [[Square(0,0,0,0,0,0) for j in range(App.BOARDSIZE)] for i in range(App.BOARDSIZE)]
 
-    redRobo = Robot(App.RED, 30+13*App.SQUARE, 30+12*App.SQUARE, 13, 12)
-    blueRobo = Robot(App.BLUE, 30+5*App.SQUARE, 30+11*App.SQUARE, 5, 11)
-    greenRobo = Robot(App.GREEN, 30+3*App.SQUARE, 30+6*App.SQUARE, 3, 6)
-    yellowRobo = Robot(App.YELLOW, 30+13*App.SQUARE, 30, 13, 0)
+    redRobo = Robot(App.RED,  13, 12)
+    blueRobo = Robot(App.BLUE,  5, 11)
+    greenRobo = Robot(App.GREEN,  3, 6)
+    yellowRobo = Robot(App.YELLOW, 13, 0)
     self.robots_ = [redRobo, blueRobo, greenRobo, yellowRobo]
 
     self.graphics_ = GraphicalBoard(App.BOARDSIZE, App.SQUARE, App.EDGE, App.WALLTHICKNESS, App.HALFTHICKNESS)
@@ -42,6 +42,10 @@ class App:
     for r in self.robots_:
       self.board_[r.curSy][r.curSx].occ = count
       count += 1
+  
+      
+  
+          
 
   def PlaceTarget(self):
     for i in range(App.BOARDSIZE):
@@ -86,7 +90,7 @@ class App:
         self.board_[10][8].tar = 4
 
   def PlaceWalls(self):
-    for i in range(App.BOARDSIZE): # Add outer walls
+    for i in range(16): # Add outer walls
       self.board_[0][i].north = 1
       self.board_[15][i].south = 1
       self.board_[i][0].west = 1
@@ -159,7 +163,7 @@ class App:
   # Determines which robot was selected by the player. Returns '0' if no robot was selected
   def DetermineRobo(self, click):
     for r in self.robots_:
-      if click[0] > r.curX and click[0] < r.curX+30 and click[1] > r.curY and click[1] < r.curY+30:
+      if click[0] > r.curSx*self.SQUARE and click[0] < (r.curSx+1)*self.SQUARE and click[1] > r.curSy*self.SQUARE and click[1] < self.SQUARE*(r.curSy+1):
         return r
     return None
 
@@ -168,14 +172,17 @@ class App:
     self.PlaceTarget()
     self.OccupiedSquares()
 
-    self.graphics_.drawBoardState(self.board_, self.robots_)
+    self.graphics_.drawBoardState(self.board_,self.robots_)
 
     # MAIN LOOP
     currentRobo = 0
     boardBackup = self.board_
     moveCount = 0
-
+    
+    self.graphics_.printToConsole(self.board_)
+    
     while True:
+      
       pygame.time.delay(100)
       for event in pygame.event.get():
         if event.type == pygame.QUIT:
