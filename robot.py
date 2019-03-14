@@ -8,6 +8,7 @@ class Robot:
     self.colour = Colour 
     self.curSx = current_square_x
     self.curSy = current_square_y
+    
 
   
   # updates the position variables of the robot, updates board[][].robot
