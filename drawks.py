@@ -46,7 +46,7 @@ class GraphicalBoard:
 #        pygame.font.init()
 #        pygame.mouse.set_visible(1)
         self.drawBoard()
-        self.drawKiliansBoard(board, robots)
+        self.drawObstacles(board, robots)
         self.drawRobots(board,robots)
         
         
@@ -66,7 +66,7 @@ class GraphicalBoard:
                 pygame.draw.rect(self.Screen, self.Tile1, (j*self.SquareSize + self.SquareSize, i*self.SquareSize , self.SquareSize, self.SquareSize), 0)
        
     #my new draw method, By using this, the geographyical/physical location of the Robot/Squares should be redundant
-    def drawKiliansBoard(self, board, robots):
+    def drawObstacles(self, board, robots):
         
         
         
@@ -106,16 +106,10 @@ class GraphicalBoard:
                 
                 
                 
-                if board[i][j].tar:
-                    if board[i][j].tar == 1:
-                       pygame.draw.circle(self.Screen, self.Blue, (round((j+0.5)*self.SquareSize),round((i+0.5)*self.SquareSize)), 10, 0)
-                    if board[i][j].tar == 2:
-                       pygame.draw.circle(self.Screen, self.Red, (round((j+0.5)*self.SquareSize),round((i+0.5)*self.SquareSize)), 10, 0)
-                    if board[i][j].tar == 3:
-                       pygame.draw.circle(self.Screen, self.Green, (round((j+0.5)*self.SquareSize),round((i+0.5)*self.SquareSize)), 10, 0)
-                    if board[i][j].tar == 4:
-                       pygame.draw.circle(self.Screen, self.Yellow, (round((j+0.5)*self.SquareSize),round((i+0.5)*self.SquareSize)), 10, 0)
-                    #draw Target
+                
+                if board[i][j].tar != 0:
+                       pygame.draw.circle(self.Screen, board[i][j].tar, (round((j+0.5)*self.SquareSize),round((i+0.5)*self.SquareSize)), 10, 0)
+            
                    
                     
                 
@@ -123,7 +117,7 @@ class GraphicalBoard:
    
     def resetBoard(self,board, robots):
         self.drawBoard()
-        self.drawKiliansBoard(board,robots)
+        self.drawObstacles(board,robots)
         pygame.display.update()
         
     
