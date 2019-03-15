@@ -12,29 +12,27 @@ from robot import Robot
 from square import Square
 
 class GraphicalBoard:
-    
-    def __init__(self, boardSize, squareSize, edgeSize, wallthickness, halfthickness):
-        self.BoardSize = boardSize
-        self.SquareSize = squareSize
-        self.EdgeSize = edgeSize
-        self.WallThickness = wallthickness
-        self.HalfThickness = halfthickness
-        #self.WindowTile= windowTile
-        self.MoveCount = 0
+    def __init__(self, boardSize):
+        self.BoardSize_ = boardSize
+        self.SquareSize = 50
+        self.EdgeSize = 20
+        self.WallThickness = 6
+        self.HalfThickness = 2
         
-        self.WindowSize = (squareSize*boardSize, squareSize*boardSize)
+        window_dim = self.SquareSize * self.BoardSize_
+        self.WindowSize = (window_dim, window_dim)
         self.WindowTitle = "Ricochet Robots"
         self.Screen = pygame.display.set_mode(self.WindowSize)
         pygame.display.set_caption(self.WindowTitle)
     
-    # Define the required colours for the boardgame
+        # Define the required colours for the boardgame
         self.Tile1 = (230, 245, 255)
         self.Tile2 = (245, 255, 250)
         self.Edgecol = (173, 216, 230)
         self.Black = (0,0,0)
         self.Grey = (100,100,100)
     
-    # Define the required colours for the robots and the targets
+        # Define the required colours for the robots and the targets
         self.Red = (255,0,0)
         self.Blue = (0,0,255)
         self.Green = (0,255,0)
@@ -147,4 +145,5 @@ class GraphicalBoard:
          for j in range(0,16):
              for i in range (0,16):
                 print(board[j][i].west, end = '')
-             print()   
+             print()
+
