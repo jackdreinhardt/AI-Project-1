@@ -1,11 +1,11 @@
 class Square(object): 
   def __init__(self): 
-    self.north = False 
-    self.east = False 
-    self.south = False
-    self.west = False
-    #self.occ = Occupied
-    self.tar = False
+    self.north_ = False 
+    self.east_ = False 
+    self.south_ = False
+    self.west_ = False
+    self.target_ = None
+    self.robot_ = None
     # We always provide both, robots and board, that avoids saving information twice
 
   def Wall(self, direction):
