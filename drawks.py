@@ -94,3 +94,14 @@ class GraphicalBoard:
                 print(board[j][i].west, end = '')
              print()
 
+    # Determines which robot was selected by the player. Returns None if no robot was selected
+    def DetermineRobo(self, click, robots):
+        for r in robots:
+          north_click_bound = self.EdgeSize+r.y_*self.SquareSize
+          south_click_bound = self.EdgeSize+(r.y_+1)*self.SquareSize
+          east_click_bound = self.EdgeSize+(r.x_+1)*self.SquareSize
+          west_click_bound = self.EdgeSize+r.x_*self.SquareSize
+          if click[0] > west_click_bound and click[0] < east_click_bound and click[1] > north_click_bound and click[1] < south_click_bound:
+            return r
+        return None
+
