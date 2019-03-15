@@ -1,44 +1,58 @@
-# Robot.
+# Robot
 #
 # This is the main class for the game pieces. This is where the pieces can be
 # moved. 
 
 class Robot: 
-  def __init__(self, Colour, current_square_x, current_square_y, id):
-    self.id_ = id
-    self.colour = Colour
-    self.curSx = current_square_x
-    self.curSy = current_square_y
+    def __init__(self, color, x, y):
+        self.color_ = color
+        self.x_ = x
+        self.y_ = y
+    
+    # updates the position variables of the robot, updates board[][].robot
+    # @param d direction to move robot
+    # @param l number of pixels to move ('vel' in RicochetRobots.py)
+    # returns true if move was successful, false otherwise
+    def move(self, board, d):
+        moved = False
+        if d == "NORTH":
+            self.move_north(board)
+            moved = True
+        elif d == "SOUTH":
+            self.move_south(board)
+            moved = True
+        elif d == "EAST":
+            self.move_east(board)
+            moved = True
+        elif d == "WEST":
+            self.move_west(board)
+            moved = True
+        else:
+          print("The key you entered is not a valid direction.")
+        return moved # test_robot.curX != self.curX or test_robot.curY != self.curY
+
+    def move_north(self, board):
+        while not board[self.y_][self.x_].north_ and board[self.y_-1][self.x_].robot_ == None:
+            board[self.y_][self.x_].robot_ = None
+            board[self.y_-1][self.x_].robot_ = self
+            self.y_ -= 1
+
+    def move_south(self, board):
+        while not board[self.y_][self.x_].south_ and board[self.y_+1][self.x_].robot_ == None:
+            board[self.y_][self.x_].robot_ = None
+            board[self.y_+1][self.x_].robot_ = self
+            self.y_ += 1
+
+    def move_east(self, board):
+        while not board[self.y_][self.x_].east_ and board[self.y_][self.x_+1].robot_ == None:
+            board[self.y_][self.x_].robot_ = None
+            board[self.y_][self.x_+1].robot_ = self
+            self.x_ += 1
+
+    def move_west(self, board):
+        while not board[self.y_][self.x_].west_ and board[self.y_][self.x_-1].robot_ == None:
+          board[self.y_][self.x_].robot_ = None
+          board[self.y_][self.x_-1].robot_ = self
+          self.x_ -= 1
     
 
-  
-  # updates the position variables of the robot, updates board[][].robot
-  # @param d direction to move robot
-  # @param l number of pixels to move ('vel' in RicochetRobots.py)
-  # returns true if move was successful, false otherwise
-  def move(self, board, d):
-    # test_robot = self
-    moved = False
-    if d == "NORTH":
-      while board[self.curSy][self.curSx].north == 0 and board[self.curSy-1][self.curSx].occ == 0:
-        self.curSy -= 1
-        moved = True
-        # update board[][].robot
-    elif d == "SOUTH":
-      while board[self.curSy][self.curSx].south == 0 and board[self.curSy+1][self.curSx].occ == 0:
-        self.curSy += 1
-        moved = True
-        # update board[][].robot
-    elif d == "EAST":
-      while board[self.curSy][self.curSx].east == 0 and board[self.curSy][self.curSx+1].occ == 0:
-        self.curSx += 1
-        moved = True
-        # update board[][].robot
-    elif d == "WEST":
-      while board[self.curSy][self.curSx].west == 0 and board[self.curSy][self.curSx-1].occ == 0:
-        self.curSx -= 1
-        moved = True
-        # update board[][].robot
-    else:
-      print("The key you entered is not a valid direction.")
-    return moved # test_robot.curX != self.curX or test_robot.curY != self.curY
