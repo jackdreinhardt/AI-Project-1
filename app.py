@@ -8,10 +8,6 @@ from drawks import GraphicalBoard
 class App:
 
   BOARDSIZE = 16
-  SQUARE = 50 #50x50 pixels
-  EDGE = 20 #20 pixels wide self.board_ edge
-  WALLTHICKNESS = 6 #in pixels
-  HALFTHICKNESS = 2 #
 
   # Define the required colours for the robots and the targets
   RED = (255,0,0)
@@ -23,15 +19,15 @@ class App:
 
   def __init__(self):
     # Initialize self.board_ without walls (1-4); no square is currently occupied (5); no target is placed(6)
-    self.board_ = [[Square(0,0,0,0,0,0) for j in range(App.BOARDSIZE)] for i in range(App.BOARDSIZE)]
+    self.board_ = [[Square() for j in range(App.BOARDSIZE)] for i in range(App.BOARDSIZE)]
 
-    redRobo = Robot(App.RED,  13, 12)
-    blueRobo = Robot(App.BLUE,  5, 11)
-    greenRobo = Robot(App.GREEN,  3, 6)
-    yellowRobo = Robot(App.YELLOW, 13, 0)
+    redRobo = Robot(App.RED,  13, 12, 1)
+    blueRobo = Robot(App.BLUE,  5, 11, 2)
+    greenRobo = Robot(App.GREEN,  3, 6, 3)
+    yellowRobo = Robot(App.YELLOW, 13, 0, 4)
     self.robots_ = [redRobo, blueRobo, greenRobo, yellowRobo]
 
-    self.graphics_ = GraphicalBoard(App.BOARDSIZE, App.SQUARE, App.EDGE, App.WALLTHICKNESS, App.HALFTHICKNESS)
+    self.graphics_ = GraphicalBoard(App.BOARDSIZE)
 
   # For each square determines if the square is currently occupied
   def OccupiedSquares(self):
@@ -89,8 +85,46 @@ class App:
     if rand == 15:
         self.board_[10][8].tar = 4
 
+  def PlaceWall(self, x, y, direction):
+    if direction == 1:
+      self.board_[x][y].Wall(direction)
+      self.board_[x][y+1].Wall(2)
+    if direction == 2:
+      self.board_[x][y].Wall(direction)
+      self.board_[x][y-1].Wall(1)
+    if direction == 3:
+      self.board_[x][y].Wall(direction)
+      self.board_[x][y+1].Wall(4)
+    if direction == 4:
+      self.board_[x][y].Wall(direction)
+      self.board_[x][y-1].Wall(3)
+
+  def PlaceWalls2(self):
+    # outer walls
+    for i in range(16):
+      self.board_[0][i].north = 1
+      self.board_[15][i].south = 1
+      self.board_[i][0].west = 1
+      self.board_[i][15].east = 1
+
+    # inner walls
+    center_north = [(9,7),(9,8)]
+    center_south = [(6,7),(6,8)]
+    center_east = [(7,6),(8,6)]
+    center_west = [(7,9),(8,9)]
+
+    center = (center_north, center_south, center_east, center_west)
+
+    d = 0
+    for direction in center:
+      d += 1
+      for wall_location in direction:
+        print(wall_location)
+        self.PlaceWall(wall_location[1], wall_location[0], d)
+
   def PlaceWalls(self):
-    for i in range(16): # Add outer walls
+    # outer walls
+    for i in range(16):
       self.board_[0][i].north = 1
       self.board_[15][i].south = 1
       self.board_[i][0].west = 1
@@ -160,10 +194,10 @@ class App:
     else:
         return "NOT SUPPORTED"
 
-  # Determines which robot was selected by the player. Returns '0' if no robot was selected
+ # Determines which robot was selected by the player. Returns None if no robot was selected
   def DetermineRobo(self, click):
     for r in self.robots_:
-      if click[0] > r.curSx*self.SQUARE and click[0] < (r.curSx+1)*self.SQUARE and click[1] > r.curSy*self.SQUARE and click[1] < self.SQUARE*(r.curSy+1):
+      if click[0] > r.curSx*self.graphics_.SquareSize and click[0] < (r.curSx+1)*self.graphics_.SquareSize and click[1] > r.curSy*self.graphics_.SquareSize and click[1] < self.graphics_.SquareSize*(r.curSy+1):
         return r
     return None
 
@@ -193,7 +227,7 @@ class App:
           currentRobo = self.DetermineRobo(event.pos)
         if event.type == pygame.KEYDOWN and currentRobo != None:
           d = self.KeyToDir(event.key)
-          if currentRobo.move(self.board_, d, App.VEL):
+          if currentRobo.move(self.board_, d):
               moveCount += 1
           self.graphics_.drawRobots(self.board_, self.robots_)
           self.OccupiedSquares()
