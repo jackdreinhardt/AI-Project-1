@@ -11,7 +11,7 @@ class AIPlayer(Player):
   # board is also a temporary parameter, we will include it as a member variable
   def execute_moves(self, board, moves, vel):
     for i in moves:
-      i[0].move(board, i[1], vel)
+      i[0].move(board, i[1])
         
 
   def search(self, board, robots):
