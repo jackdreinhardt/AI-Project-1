@@ -78,8 +78,8 @@ class Graph_Search_BF:
     def __init__(self):
         AIPlayer.__init__(self, None, None)
         
-    def search(self,board,robots,limit):
-        finalNode = self.graph_Search(board,robots)
+    def search(self,board,robots,target):
+        finalNode = self.graph_Search(board,robots,target)
         return self.findMoves(finalNode)
 
     def findMoves (self,goalNode):
