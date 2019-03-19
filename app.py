@@ -14,6 +14,10 @@ class App:
     self.state_ = Board(self.robots_)
     self.graphics_ = GraphicalBoard(BOARDSIZE)
 
+  def settings():
+    print("AI or human? (a / h)")
+
+
   def KeyToDir(self, key):
     if key == pygame.K_UP:
         return "NORTH"
@@ -63,5 +67,6 @@ class App:
 
 if __name__ == '__main__':
   game = App()
+  game.settings()
   game.Run()
 
