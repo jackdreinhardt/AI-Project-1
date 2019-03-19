@@ -12,5 +12,5 @@ class HumanPlayer(Player):
         currentRobo.move(board, KeyToDir(event.key))
 
   # since the user is playing the game, no search algorithm is needed
-  def search(self, board, robots):
+  def search(self, board, robots, limit):
     return
