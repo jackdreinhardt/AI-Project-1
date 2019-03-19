@@ -10,6 +10,6 @@ class AIPlayer(Player):
   def execute_moves(self, board, moves):
     for i in moves:
       i[0].move(board, i[1])
-        
-  def search(self, board, robots):
+
+  def search(self, board, robots, limit):
     return [(robots[0], "NORTH")]
