@@ -10,11 +10,11 @@ class Board:
     def square(self, i, j):
         return self.board_[i][j]
 
-#        # map.target_locations
-#        red = [(1,5),(5,9),(9,5),(11,13)]
-#        blue = [(2,1),(2,14),(12,6),(14,14)]
-#        green = [(1,12),(6,2),(13,9),(14,2)]
-#        yellow = [(4,6),(6,11),(9,1),(10,8)]
+    def center(self, boardSize, i, j):
+        if boardSize == 16:
+            return i <= 8 and i >= 7 and j <= 8 and j >= 7
+        if boardSize == 6:
+            return i <= 3 and i >= 2 and j <= 3 and j >= 2
 
     def PlaceWalls(self, boardsize):
         if (boardsize==16):

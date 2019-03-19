@@ -1,5 +1,6 @@
 import random as rd
 from globals import *
+from board import Board
 
 class Target:
     def __init__(self, boardSize, board, num_robots):
@@ -19,10 +20,9 @@ class Target:
             or (board.square(i, j).wall_north_ and board.square(i, j).wall_west_) \
             or (board.square(i, j).wall_south_ and board.square(i, j).wall_east_) \
             or (board.square(i, j).wall_south_ and board.square(i, j).wall_west_) \
-            and not (i == 0 and j == 0) \
-            and not (i == self.board_size_ - 1 and j == 0) \
-            and not (i == 0 and j == self.board_size_ - 1) \
-            and not (i == self.board_size_ - 1 and j == self.board_size_ - 1)
+            and not (i == 0 or i ==  self.board_size_ - 1) \
+            and not (j == 0 or j == self.board_size_ - 1) \
+            and not board.center(board, i, j)
 
     def valid_locations(self, board):
         locations = []
@@ -34,6 +34,10 @@ class Target:
 
 
 
+t = Target(6, Board(6), 4)
+for i in range(0,6):
+    for j in range(0,6):
+        print(i, j, t.valid_target_loc(Board(6), i, j))
 
 # def PlaceTarget(self):
 #         for i in range(BOARDSIZE):
