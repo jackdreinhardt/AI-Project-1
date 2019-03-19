@@ -9,7 +9,7 @@ class AIPlayer(Player):
   #   direction: a string, "NORTH" "SOUTH" "EAST" or "WEST"
   # vel is a temporary parameter, we will find a way to avoid passing it
   # board is also a temporary parameter, we will include it as a member variable
-  def execute_moves(self, board, moves, vel):
+  def execute_moves(self, board, moves):
     for i in moves:
       i[0].move(board, i[1])
 
