@@ -12,7 +12,7 @@ FAILURE = "FAILURE"
 
 class node:
     def __init__(self,robots,father):
-        self.
+        self.thing
 class moveTuple:
     def __init__(self,robot,direction):
         self.robot_ = robot

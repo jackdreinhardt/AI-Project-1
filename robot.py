@@ -70,7 +70,6 @@ class Robot:
           board[self.y_][self.x_].robot_ = None
           board[self.y_][self.x_-1].robot_ = self
           self.x_ -= 1
-<<<<<<< HEAD
     
     def moveRobot (self,board,direction,newRobots):
         newRobots = self
@@ -90,7 +89,3 @@ class Robot:
         else:
           print("The key you entered is not a valid direction.")
         return moved # test_robot.curX != self.curX or test_robot.curY != self.curY
-
-        
-=======
->>>>>>> d60e1a4f7ba574af849447b4172e1b48fac69da2
