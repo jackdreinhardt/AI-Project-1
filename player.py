@@ -3,7 +3,6 @@ class Player:
         self.name_ = name
         self.score_ = score
         self.board_ = board
-
     # pure virtual, implemented by child class
     def execute_moves(self, board, moves, vel):
         raise TypeError('Abstract method `' + self._class.__name__ \
