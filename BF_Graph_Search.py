@@ -75,8 +75,8 @@ class Graph_Search_BF:
         return robots    
         
     
-    def __init__(self):
-        AIPlayer.__init__(self, None, None)
+    def __init__(self,name,score,board):
+        AIPlayer.__init__(self, None, None,None)
         
     def search(self,board,robots,target):
         finalNode = self.graph_Search(board,robots,target)
@@ -88,7 +88,7 @@ class Graph_Search_BF:
         currentNode = node.copyNode(goalNode)
         
         while currentNode.father_!=0:
-            moves.append(currentNode.moveTuple_)
+            moves.insert(0,currentNode.moveTuple_)
             currentNode=currentNode.father_
         for i in range(len(moves)):
             print(moves[i].robotColour_)
@@ -105,8 +105,7 @@ class Graph_Search_BF:
        frontier.append(initialNode)
        
        while True:
-           
-           print ("Searching")
+          
            
            currentNode = node.copyNode(frontier[0])
            del frontier[0]
@@ -125,9 +124,10 @@ class Graph_Search_BF:
                 for j in range (len(direction)):
                    
                     newNode =  node.copyNode(currentNode)
-                    if currentNode.robots_[i].move_possible(board,direction[j]) :
+                    if currentNode.robots_[i].move_possible(board,robots,direction[j]) :
                         tr=True
-                        newNode.robots_[i].move(board,direction[j])
+                        newNode.robots_[i] = newNode.robots_[i].move(board,robots,direction[j])
+                        
                         for m in range (len(frontier))  :
                             if (node.compareState(frontier[m],newNode)==True):
                                 tr=False
@@ -141,7 +141,7 @@ class Graph_Search_BF:
                             newNode.moveTuple_=moveTuple(currentNode.robots_[i].color_,direction[j])
                             newNode.father_=currentNode
                             frontier.append(node.copyNode(newNode))
-                            print (len(expanded))
+                           
                         
                             
                             

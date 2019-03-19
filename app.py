@@ -33,6 +33,7 @@ class App:
             return "WEST"
         else:
             return "NOT SUPPORTED"
+        
 
     def RunAI(self):
         self.graphics_.drawBoardState(self.board_, self.robots_)
@@ -57,6 +58,16 @@ class App:
             self.board_.PlaceTarget()
             self.graphics_.drawRobots(self.board_, self.robots_)
             pygame.display.update()
+            
+    def RunBF(self):
+        self.graphics_.drawBoardState(self.board_, self.robots_,self.target_)
+        player = Graph_Search_BF("k",15,None)
+        print("running")
+        solution = player.search(self.board_,self.robots_,self.target_)
+        
+        for i in solution:
+            print(i.robotColour_ ," ", i.dir_)  
+        
         
       
     def Run(self):
@@ -95,6 +106,6 @@ class App:
 
 if __name__ == '__main__':
   game = App(6, 4)
-  game.Run()
-
+  #game.Run()
+  game.RunBF()
 
