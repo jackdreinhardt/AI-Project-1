@@ -1,6 +1,6 @@
 class Player:
   def __init__(self, name, score):
-    self.name_ = nameself, board, robots
+    self.name_ = name
     self.score_ = score
 
   # pure virtual, implemented by child class

@@ -1,5 +1,7 @@
 import pygame
 import random
+import time
+from depth_limited_player import Depth_Limited_Player
 
 from robot import Robot
 from square import Square
@@ -9,14 +11,10 @@ from globals import *
 
 class App:
   def __init__(self):
-    self.robots_ = [Robot(RED, 13, 12), Robot(BLUE, 5, 11),
-                    Robot(GREEN, 3, 6), Robot(YELLOW, 13, 0)]
+    self.robots_ = (Robot(RED, 13, 12), Robot(BLUE, 5, 11),
+                    Robot(GREEN, 3, 6), Robot(YELLOW, 13, 0))
     self.state_ = Board(self.robots_)
     self.graphics_ = GraphicalBoard(BOARDSIZE)
-
-  def settings():
-    print("AI or human? (a / h)")
-
 
   def KeyToDir(self, key):
     if key == pygame.K_UP:
@@ -30,6 +28,33 @@ class App:
     else:
         return "NOT SUPPORTED"
 
+  def RunAI(self):
+    self.state_.PlaceWalls()
+    self.state_.PlaceRobots()
+    self.state_.PlaceTarget()
+
+    self.graphics_.drawBoardState(self.state_.board_, self.robots_)
+
+    robot = None
+    moveCount = 0
+
+    while True:
+      pygame.time.delay(100)
+      for event in pygame.event.get():
+        ai_player = Depth_Limited_Player()
+        moves = ai_player.search(self.state_.board_, self.robots_, 10)
+        if (moves != "FAILURE"):
+          for m in range(len(moves)):
+            robot.move(self.state_.board_, moves[m][0]) # move robot
+            self.graphics_.drawRobots(self.state_.board_, self.robots_)
+            time.sleep(1)
+
+            self.PlaceTarget()
+            self.graphics_.drawRobots(self.state_.board_, self.robots_)
+        print("Moves: " + str(moveCount))
+      pygame.display.update()
+
+
   def Run(self):
     self.state_.PlaceWalls()
     self.state_.PlaceRobots()
@@ -39,7 +64,7 @@ class App:
 
     robot = None
     moveCount = 0
-    
+
     while True:
       pygame.time.delay(100)
       for event in pygame.event.get():
@@ -60,13 +85,11 @@ class App:
               print("Success! New target placed")
               print("You took " + str(moveCount) + " moves to find a solution")
               moveCount = 0
-              self.PlaceTarget()
+              self.state_.PlaceTarget()
               self.graphics_.drawRobots(self.state_.board_, self.robots_)
           print("Moves: " + str(moveCount))
       pygame.display.update()
 
 if __name__ == '__main__':
   game = App()
-  game.settings()
   game.Run()
-
