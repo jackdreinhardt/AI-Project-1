@@ -209,14 +209,15 @@ class App:
       pygame.time.delay(100)
       ai_player = Depth_Limited_Player()
       print("Searching for solution")
-      solution = ai_player.search(self.board_, self.robots_, 5)
+      solution = ai_player.search(self.board_, self.robots_, 3)
       if (solution != "FAILURE" and solution != "CUTOFF"):
         print("Found solution")
         for m in range(len(solution)):
+          #print(solution)
           self.robots_[solution[m][0]].move(self.board_, solution[m][1]) # move robot
           self.graphics_.drawRobots(self.board_, self.robots_)
           time.sleep(1)
-      print("No solution found")
+      else: print("No solution found")
 
       self.PlaceTarget()
       self.graphics_.drawRobots(self.board_, self.robots_)

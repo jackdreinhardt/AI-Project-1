@@ -1,4 +1,5 @@
 from ai_player import AIPlayer
+import copy
 
 SUCCESS = "SUCCESS"
 CUTOFF = "CUTOFF"
@@ -23,11 +24,15 @@ class Depth_Limited_Player:
             direction = ["NORTH", "SOUTH", "EAST", "WEST"]
             for i in range(len(robots)): # for each robot in robots
                 for j in range(len(direction)): # for each direction
-                    if robots[i].move(board, direction[j]): # check if move successful
+                    if robots[i].move_possible(board, direction[j]): # check if move successful
+                        new_robots = copy.deepcopy(robots)
+                        new_board = copy.deepcopy(board)
+                        new_moves = copy.deepcopy(moves)
+                        new_robots[i].move(new_board, direction[j])
+
                         #print("Moving robot " + str(i) + " " + direction[j])
-                        new_robots = robots
-                        moves.append((i, direction[j])) # add move to history
-                        result = self.recursive_DLS(board, new_robots, limit-1, moves)
+                        new_moves.append((i, direction[j])) # add move to history
+                        result = self.recursive_DLS(new_board, new_robots, limit-1, new_moves)
                         if result == CUTOFF:
                             cutoff_occurred = True
                         elif result != FAILURE:
