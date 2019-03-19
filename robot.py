@@ -55,4 +55,23 @@ class Robot:
           board[self.y_][self.x_-1].robot_ = self
           self.x_ -= 1
     
+    def moveRobot (self,board,direction,newRobots):
+        newRobots = self
+        moved = False
+        if direction == "NORTH":
+            newRobots.move_north(board)
+            moved = True
+        elif direction == "SOUTH":
+            newRobots.move_south(board)
+            moved = True
+        elif direction == "EAST":
+            newRobots.move_east(board)
+            moved = True
+        elif direction == "WEST":
+            newRobots.move_west(board)
+            moved = True
+        else:
+          print("The key you entered is not a valid direction.")
+        return moved # test_robot.curX != self.curX or test_robot.curY != self.curY
 
+        
