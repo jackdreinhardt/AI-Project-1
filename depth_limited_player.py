@@ -25,6 +25,14 @@ class Depth_Limited_Player:
             for i in range(len(robots)): # for each robot in robots
                 for j in range(len(direction)): # for each direction
                     if robots[i].move_possible(board, direction[j]): # check if move successful
+                        if len(moves) > 0 \
+                        and i == moves[len(moves)-1][0] \
+                        and ((direction[j] == "NORTH" and moves[len(moves)-1][1] == "SOUTH") \
+                        or (direction[j] == "SOUTH" and moves[len(moves)-1][1] == "NORTH") \
+                        or (direction[j] == "EAST" and moves[len(moves)-1][1] == "WEST") \
+                        or (direction[j] == "WEST" and moves[len(moves)-1][1] == "EAST")):
+                            break # don't allow the opposite of the previous move
+
                         new_robots = copy.deepcopy(robots)
                         new_board = copy.deepcopy(board)
                         new_moves = copy.deepcopy(moves)

@@ -40,6 +40,7 @@ class App:
     robot = None
     moveCount = 0
 
+<<<<<<< HEAD
 #    while True:
 #      pygame.time.delay(100)
 #      ai_player = Depth_Limited_Player()
@@ -56,6 +57,22 @@ class App:
 #      else:
 #        print("No solution found")
 #        break
+=======
+
+    pygame.time.delay(100)
+    ai_player = Depth_Limited_Player()
+    print("Searching for solution")
+    solution = ai_player.search(self.state_.board_, self.robots_, 5)
+    if (solution != "FAILURE" and solution != "CUTOFF"):
+      print("Found solution")
+      for m in range(len(solution)):
+        #print(solution)
+        self.robots_[solution[m][0]].move(self.state_.board_, solution[m][1]) # move robot
+        self.graphics_.drawRobots(self.state_.board_, self.robots_)
+        time.sleep(1)
+    else:
+      print("No solution found")
+>>>>>>> 9b6d2f43e98c43442ab24eb7a2daac0270898f86
 
   def Run(self):
     self.state_.PlaceWalls(6)
