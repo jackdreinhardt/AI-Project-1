@@ -31,10 +31,11 @@ class GraphicalBoard:
         self.Yellow = (255,255,0)
 
     #draws everything  
-    def drawBoardState(self, board, robots):
+    def drawBoardState(self, board, robots, target):
         self.drawBoard()
         self.drawObstacles(board, robots)
-        self.drawRobots(board, robots)
+        self.drawRobots(board, robots, target)
+        self.drawTarget(target)
         
         
     #Here, the chess board is drawn    
@@ -68,16 +69,18 @@ class GraphicalBoard:
                 if square.wall_east_:
                     #draw right
                     pygame.draw.rect(self.Screen, self.Black, (self.EdgeSize+(j+1)*self.SquareSize-self.WallThickness/2,self.EdgeSize+(i)*self.SquareSize,self.WallThickness ,self.SquareSize), 0)
-#                if square.target_ != None:
-#                    pygame.draw.circle(self.Screen, board[i][j].target_.color_, (self.EdgeSize+round((j+0.5)*self.SquareSize),self.EdgeSize+round((i+0.5)*self.SquareSize)), round(self.SquareSize/5), 0)           
-#   
-    def resetBoard(self, board, robots):
+
+    def resetBoard(self, board, robots, target):
         self.drawBoard()
         self.drawObstacles(board, robots)
+        self.drawTarget(target)
         pygame.display.update()
     
-    def drawRobots(self, board, robots):
-        self.resetBoard(board,robots)
+    def drawTarget(self, target):
+        pygame.draw.circle(self.Screen, target.color_, (self.EdgeSize+round((target.x_+0.5)*self.SquareSize),self.EdgeSize+round((target.y_+0.5)*self.SquareSize)), round(self.SquareSize/5), 0)           
+
+    def drawRobots(self, board, robots, target):
+        self.resetBoard(board, robots, target)
         for r in robots:
             space = round(self.SquareSize/5)
             pygame.draw.rect(self.Screen, r.color_, (self.EdgeSize+r.x_*self.SquareSize+space, self.EdgeSize+r.y_*self.SquareSize+space ,self.SquareSize-2*space,self.SquareSize-2*space), 0)

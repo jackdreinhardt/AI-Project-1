@@ -60,7 +60,7 @@ class App:
         
       
     def Run(self):
-        self.graphics_.drawBoardState(self.board_, self.robots_)
+        self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
 
         moveCount = 0
 
@@ -77,18 +77,19 @@ class App:
                     d = self.KeyToDir(event.key)
                     if robot.move_possible(self.board_, self.robots_, d):
                         robot = robot.move(self.board_, self.robots_, d)
+                        moveCount += 1
                         for i in range(len(self.robots_)):
                             if robot.color_ == self.robots_[i].color_:
                                 self.robots_[i] = robot
-                    self.graphics_.drawRobots(self.board_, self.robots_)
+                    self.graphics_.drawRobots(self.board_, self.robots_, self.target_)
 
                     for r in self.robots_:
-                        if r.y_ == self.target_.y_ and r.x_ == self.target_.x_ and r.color_ == target_.color_:
+                        if r.y_ == self.target_.y_ and r.x_ == self.target_.x_ and r.color_ == self.target_.color_:
                             print("Success! New target placed")
                             print("You took " + str(moveCount) + " moves to find a solution")
                             moveCount = 0
-                            self.board_.PlaceTarget()
-                            self.graphics_.drawRobots(self.board_, self.robots_)
+                            self.target_.set_target(self.board_, len(self.robots_))
+                            self.graphics_.drawRobots(self.board_, self.robots_, self.target_)
                     print("Moves: " + str(moveCount))
             pygame.display.update()
 

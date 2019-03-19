@@ -10,7 +10,6 @@ class Target:
         colors = [RED, BLUE, GREEN, YELLOW]
         self.color_ = colors[rd.randrange(num_robots)]
         locations = self.valid_locations(board)
-        print(locations)
         loc = locations[rd.randrange(len(locations))]
         self.x_ = loc[1]
         self.y_ = loc[0]
