@@ -33,8 +33,8 @@ class GraphicalBoard:
     #draws everything  
     def drawBoardState(self,board, robots):
         self.drawBoard()
-        self.drawObstacles(board, robots)
-        self.drawRobots(board, robots)
+        self.drawObstacles(board.board_, robots)
+        self.drawRobots(board.board_, robots)
         
         
     #Here, the chess board is drawn    

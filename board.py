@@ -1,67 +1,15 @@
 import random
 
 from square import Square
-from globals import BOARDSIZE
 
 class Board:
-    def __init__(self, robots):
-        self.board_ = [[Square() for j in range(BOARDSIZE)] for i in range(BOARDSIZE)]
-        self.robots_ = robots
+    def __init__(self, boardSize):
+        self.board_ = [[Square() for j in range(boardSize)] for i in range(boardSize)]
+        self.PlaceWalls(boardSize)
 
-    def PlaceTarget(self):
-        for i in range(BOARDSIZE):
-            for j in range (BOARDSIZE):
-                self.board_[i][j].target_ = None
-        rand = random.choice(range(16))
-
-        # map.target_locations
-        red = [(1,5),(5,9),(9,5),(11,13)]
-        blue = [(2,1),(2,14),(12,6),(14,14)]
-        green = [(1,12),(6,2),(13,9),(14,2)]
-        yellow = [(4,6),(6,11),(9,1),(10,8)]
-
-        # set location
-        if rand < 4:
-          rand = rand % 4
-          self.board_[red[rand][0]][red[rand][1]].target_ = self.robots_[0]
-        elif rand < 8:
-          rand = rand % 4
-          self.board_[blue[rand][0]][blue[rand][1]].target_ = self.robots_[1]
-        elif rand < 12:
-          rand = rand % 4
-          self.board_[green[rand][0]][green[rand][1]].target_ = self.robots_[2]
-        elif rand < 16:
-          rand = rand % 4
-          self.board_[yellow[rand][0]][yellow[rand][1]].target_ = self.robots_[3]
-
-    def border(self, x, y):
-        return x == BOARDSIZE - 1 or x == 0 or y == BOARDSIZE - 1 or y == 0
-
-    def PlaceWall(self, x, y, direction):
-        if direction == NORTH:
-          self.board_[x][y].Wall(direction)
-          if not border(x, y):
-            self.board_[x+1][y].Wall(SOUTH)
-        if direction == SOUTH:
-          self.board_[x][y].Wall(direction)
-          if not border(x, y):
-            self.board_[x-1][y].Wall(NORTH)
-        if direction == EAST:
-          self.board_[x][y].Wall(direction)
-          if not border(x, y):
-            self.board_[x][y-1].Wall(WEST)
-        if direction == WEST:
-          self.board_[x][y].Wall(direction)
-          if not border(x, y):
-            self.board_[x][y+1].Wall(EAST)
-
-    def PlaceRobots(self):
-        for r in self.robots_:
-            self.board_[r.y_][r.x_].robot_ = r
-
-    def PlaceWalls(self):
+    def PlaceWalls(self, boardSize):
         # outer walls
-        for i in range(BOARDSIZE):
+        for i in range(boardSize):
             self.board_[0][i].north_ = 1
             self.board_[15][i].south_ = 1
             self.board_[i][0].west_ = 1
@@ -95,7 +43,6 @@ class Board:
             self.board_[14][14].east_ = self.board_[14][15].west_ = 1
             self.board_[15][5].east_ = self.board_[15][6].west_ = 1
             self.board_[15][11].east_ = self.board_[15][12].west_ = 1
-
             
 
             # Add horizontal walls
@@ -120,27 +67,4 @@ class Board:
             self.board_[13][9].south_ = self.board_[14][9].north_ = 1
             self.board_[13][14].south_ = self.board_[14][14].north_ = 1
             self.board_[14][2].south_ = self.board_[15][2].north_ = 1
-
-    # def PlaceWalls2(self):
-        #   # outer walls
-        #   for i in range(16):
-        #     self.board_[0][i].north = 1
-        #     self.board_[15][i].south_ = 1
-        #     self.board_[i][0].west = 1
-        #     self.board_[i][15].east = 1
-
-        #   # inner walls
-        #   center_north = [(9,7),(9,8)]
-        #   center_south_ = [(6,7),(6,8)]
-        #   center_east = [(7,6),(8,6)]
-        #   center_west = [(7,9),(8,9)]
-
-        #   center = (center_north, center_south_, center_east, center_west)
-
-        #   d = 0
-        #   for direction in center:
-        #     d += 1
-        #     for wall_location in direction:
-        #       print(wall_location)
-        #       self.PlaceWall(wall_location[1], wall_location[0], d)
 

@@ -1,22 +1,26 @@
 import pygame
-import random
+import random as rd
 import time
 from globals import *
-from depth_limited_player import Depth_Limited_Player
 
 from robot import Robot
-from square import Square
-from drawks import GraphicalBoard
 from board import Board
+from target import Target
+from drawks import GraphicalBoard
+
 from BF_Graph_Search import Graph_Search_BF
+from depth_limited_player import Depth_Limited_Player
 
 
 class App:
-    def __init__(self):
-        self.robots_ = [Robot(RED, 13, 12), Robot(BLUE, 5, 11),
-                        Robot(GREEN, 3, 6), Robot(YELLOW, 13, 0)]
-        self.state_ = Board(self.robots_)
-        self.graphics_ = GraphicalBoard(BOARDSIZE)
+    def __init__(self, boardSize, num_robots):
+        self.robots_ = (Robot(RED, rd.randrange(boardSize), rd.randrange(boardSize)),
+                        Robot(BLUE, rd.randrange(boardSize), rd.randrange(boardSize)),
+                        Robot(GREEN, rd.randrange(boardSize), rd.randrange(boardSize)),
+                        Robot(YELLOW, rd.randrange(boardSize), rd.randrange(boardSize)))
+        self.board_ = Board(boardSize)
+        self.target_ = Target(boardSize, self.board_, num_robots)
+        self.graphics_ = GraphicalBoard(boardSize)
 
     def KeyToDir(self, key):
         if key == pygame.K_UP:
@@ -31,11 +35,7 @@ class App:
             return "NOT SUPPORTED"
 
     def RunAI(self):
-        self.state_.PlaceWalls()
-        self.state_.PlaceRobots()
-        self.state_.PlaceTarget()
-
-        self.graphics_.drawBoardState(self.state_.board_, self.robots_)
+        self.graphics_.drawBoardState(self.board_, self.robots_)
 
         robot = None
         moveCount = 0
@@ -44,28 +44,24 @@ class App:
             pygame.time.delay(100)
             ai_player = Depth_Limited_Player()
             print("Searching for solution")
-            solution = ai_player.search(self.state_.board_, self.robots_, 3)
+            solution = ai_player.search(self.board_, self.robots_, 3)
             if (solution != "FAILURE" and solution != "CUTOFF"):
                 print("Found solution")
                 for m in range(len(solution)):
                     #print(solution)
-                    self.robots_[solution[m][0]].move(self.state_.board_, solution[m][1]) # move robot
-                    self.graphics_.drawRobots(self.state_.board_, self.robots_)
+                    self.robots_[solution[m][0]].move(self.board_, solution[m][1]) # move robot
+                    self.graphics_.drawRobots(self.board_, self.robots_)
                     time.sleep(1)
             else:
                 print("No solution found")
-            self.state_.PlaceTarget()
-            self.graphics_.drawRobots(self.state_.board_, self.robots_)
+            self.board_.PlaceTarget()
+            self.graphics_.drawRobots(self.board_, self.robots_)
             pygame.display.update()
         
       
 
     def Run(self):
-        self.state_.PlaceWalls()
-        self.state_.PlaceRobots()
-        self.state_.PlaceTarget()
-
-        self.graphics_.drawBoardState(self.state_.board_, self.robots_)
+        self.graphics_.drawBoardState(self.board_, self.robots_)
 
         robot = None
         moveCount = 0
@@ -96,7 +92,7 @@ class App:
             pygame.display.update()
 
 if __name__ == '__main__':
-  game = App()
+  game = App(16, 4)
   game.Run()
 
 

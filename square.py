@@ -1,11 +1,9 @@
 class Square(object): 
     def __init__(self): 
-        self.north_ = False 
-        self.east_ = False 
-        self.south_ = False
-        self.west_ = False
-        self.target_ = None
-        self.robot_ = None
+        self.wall_north_ = False 
+        self.wall_east_ = False 
+        self.wall_south_ = False
+        self.wall_west_ = False
 
     def Wall(self, direction):
         if direction == NORTH:
