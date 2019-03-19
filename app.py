@@ -1,5 +1,7 @@
 import pygame
 import random
+import time
+from depth_limited_player import Depth_Limited_Player
 
 from robot import Robot
 from square import Square
@@ -170,6 +172,7 @@ class App:
 
     robot = None
     moveCount = 0
+<<<<<<< HEAD
     
     aiPlayer = Graph_Search_BF("hi",12)
     
@@ -179,34 +182,61 @@ class App:
         print(hello[i])
     
     
+=======
+
+    # while True:
+    #   pygame.time.delay(100)
+    #   for event in pygame.event.get():
+    #     if event.type == pygame.QUIT:
+    #       pygame.display.quit()
+    #       pygame.quit()
+    #       exit()
+    #     if event.type == pygame.MOUSEBUTTONDOWN:
+    #       robot = self.graphics_.DetermineRobo(event.pos, self.robots_)
+    #     if event.type == pygame.KEYDOWN and robot != None:
+    #       d = self.KeyToDir(event.key)
+    #       if robot.move(self.board_, d):
+    #           moveCount += 1
+    #       self.graphics_.drawRobots(self.board_, self.robots_)
+    #
+    #       for r in self.robots_:
+    #         if self.board_[r.y_][r.x_].target_ != None and self.board_[r.y_][r.x_].target_.color_ == r.color_:
+    #           print("Success! New target placed")
+    #           print("You took " + str(moveCount) + " moves to find a solution")
+    #           moveCount = 0
+    #
+    #           ai_player = Depth_Limited_Player()
+    #           moves = ai_player.search(self.board_, self.robots_, 10)
+    #           if (moves != "FAILURE"):
+    #               for m in range(len(moves)):
+    #                   robot.move(self.board_, moves[m][0]) # move robot
+    #                   self.graphics_.drawRobots(self.board_, self.robots_)
+    #                   time.sleep(1)
+    #
+    #           self.PlaceTarget()
+    #           self.graphics_.drawRobots(self.board_, self.robots_)
+    #       print("Moves: " + str(moveCount))
+    #   pygame.display.update()
+
+>>>>>>> d60e1a4f7ba574af849447b4172e1b48fac69da2
     while True:
       pygame.time.delay(100)
-      for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-          pygame.display.quit()
-          pygame.quit()
-          exit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-          robot = self.graphics_.DetermineRobo(event.pos, self.robots_)
-        if event.type == pygame.KEYDOWN and robot != None:
-          d = self.KeyToDir(event.key)
-          if robot.move(self.board_, d):
-              moveCount += 1
+      ai_player = Depth_Limited_Player()
+      print("Searching for solution")
+      solution = ai_player.search(self.board_, self.robots_, 3)
+      if (solution != "FAILURE" and solution != "CUTOFF"):
+        print("Found solution")
+        for m in range(len(solution)):
+          #print(solution)
+          self.robots_[solution[m][0]].move(self.board_, solution[m][1]) # move robot
           self.graphics_.drawRobots(self.board_, self.robots_)
+          time.sleep(1)
+      else: print("No solution found")
 
-          for r in self.robots_:
-            if self.board_[r.y_][r.x_].target_ != None and self.board_[r.y_][r.x_].target_.color_ == r.color_:
-              print("Success! New target placed")
-              print("You took " + str(moveCount) + " moves to find a solution")
-              moveCount = 0
-              self.PlaceTarget()
-              self.graphics_.drawRobots(self.board_, self.robots_)
-          print("Moves: " + str(moveCount))
+      self.PlaceTarget()
+      self.graphics_.drawRobots(self.board_, self.robots_)
       pygame.display.update()
-
-
 
 if __name__ == '__main__':
   game = App()
   game.Run()
-
