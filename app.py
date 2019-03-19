@@ -4,6 +4,8 @@ import random
 from robot import Robot
 from square import Square
 from drawks import GraphicalBoard
+from Limited_BFS_GraphSearch import Graph_Search_BF
+
 
 class App:
 
@@ -168,6 +170,14 @@ class App:
 
     robot = None
     moveCount = 0
+    
+    aiPlayer = Graph_Search_BF("hi",12)
+    
+    hello = aiPlayer.graph_Search(self.board_,self.robots_)
+    
+    for i in range(len(hello)):
+        print(hello[i])
+    
     
     while True:
       pygame.time.delay(100)
