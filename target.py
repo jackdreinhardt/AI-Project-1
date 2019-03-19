@@ -16,11 +16,10 @@ class Target:
         self.y_ = loc[0]
 
     def valid_target_loc(self, board, i, j):
-        board = board.board_
-        return (board[i][j].wall_north_ and board[i][j].wall_east_) \
-            or (board[i][j].wall_north_ and board[i][j].wall_west_) \
-            or (board[i][j].wall_south_ and board[i][j].wall_east_) \
-            or (board[i][j].wall_south_ and board[i][j].wall_west_) \
+        return (board.square(i, j).wall_north_ and board.square(i, j).wall_east_) \
+            or (board.square(i, j).wall_north_ and board.square(i, j).wall_west_) \
+            or (board.square(i, j).wall_south_ and board.square(i, j).wall_east_) \
+            or (board.square(i, j).wall_south_ and board.square(i, j).wall_west_) \
             and not (i == 0 and j == 0) \
             and not (i == self.board_size_ - 1 and j == 0) \
             and not (i == 0 and j == self.board_size_ - 1) \

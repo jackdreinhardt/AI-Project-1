@@ -16,55 +16,59 @@ class Robot:
     # @param l number of pixels to move ('vel' in RicochetRobots.py)
     # returns true if move was successful, false otherwise
     def move(self, board, robots, d):
-        self.x_ = x
-        self.y_ = y
+        x = self.x_
+        y = self.y_
         if d == "NORTH":
-            while not board[y][x].north_:
+            while not board.square(y, x).wall_north_:
                 for r in robots:
-                    if r.y_ == y - 1:
-                        return Robot(self.color, x, y)
+                    if r.y_ == y - 1 and r.x_ == x:
+                        return Robot(self.color_, x, y)
                 y -= 1
         elif d == "SOUTH":
-            while not board[y][x].south_:
+            while not board.square(y, x).wall_south_:
                 for r in robots:
-                    if r.y_ == y + 1:
-                        return Robot(self.color, x, y)
+                    if r.y_ == y + 1 and r.x_ == x:
+                        return Robot(self.color_, x, y)
                 y += 1
         elif d == "EAST":
-            while not board[y][x].east_:
-                if r.x_ == x + 1:
-                        return Robot(self.color, x, y)
+            while not board.square(y, x).wall_east_:
+                for r in robots:
+                    if r.x_ == x + 1 and r.y_ == y:
+                            return Robot(self.color_, x, y)
                 x += 1
         elif d == "WEST":
-            while not board[y][x].west_:
-                if r.x_ == x - 1:
-                    return Robot(self.color, x, y)
+            while not board.square(y, x).wall_west_:
+                for r in robots:
+                    if r.x_ == x - 1 and r.y_ == y:
+                        return Robot(self.color_, x, y)
                 x -= 1
         else:
           print("The key you entered is not a valid direction.")
-        return Robot(self.color, x, y)
+        return Robot(self.color_, x, y)
 
-    def move_possible(self, board, d):
-        self.x_ = x
-        self.y_ = y
+    def move_possible(self, board, robots, d):
+        x = self.x_
+        y = self.y_
         if d == "NORTH":
-            if not board[y][x].north_:
+            if not board.square(y, x).wall_north_:
                 for r in robots:
-                    if r.y_ == y - 1:
+                    if r.y_ == y - 1 and r.x_ == x:
                         return False
         elif d == "SOUTH":
-            if not board[y][x].south_:
+            if not board.square(y, x).wall_south_:
                 for r in robots:
-                    if r.y_ == y + 1:
+                    if r.y_ == y + 1 and r.x_ == x:
                         return False
         elif d == "EAST":
-            if not board[y][x].east_:
-                if r.x_ == x + 1:
+            if not board.square(y, x).wall_east_:
+                for r in robots:
+                    if r.x_ == x + 1 and r.y_ == y:
                         return False
         elif d == "WEST":
-            if not board[y][x].west_:
-                if r.x_ == x - 1:
-                    return False
+            if not board.square(y, x).wall_west_:
+                for r in robots:
+                    if r.x_ == x - 1 and r.y_ == y:
+                        return False
         else:
           print("The key you entered is not a valid direction.")
         return True
