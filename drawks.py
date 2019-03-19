@@ -45,32 +45,32 @@ class GraphicalBoard:
         pygame.draw.rect(self.Screen, self.Edgecol, (0, self.WindowSize[0] - self.EdgeSize, self.WindowSize[0], self.EdgeSize), 0)
         pygame.draw.rect(self.Screen, self.Edgecol, (self.WindowSize[0] - self.EdgeSize, 0, self.EdgeSize, self.WindowSize[0]), 0)
 
-        for i in range(0, 15, 2):
-            for j in range(0, 15, 2):
+        for i in range(0, self.BoardSize_, 2):
+            for j in range(0, self.BoardSize_, 2):
                 pygame.draw.rect(self.Screen, self.Tile1, (j*self.SquareSize + self.EdgeSize, i*self.SquareSize + (self.SquareSize + self.EdgeSize), self.SquareSize, self.SquareSize), 0)
                 pygame.draw.rect(self.Screen, self.Tile1, (j*self.SquareSize + self.EdgeSize + self.SquareSize, i*self.SquareSize + self.EdgeSize, self.SquareSize, self.SquareSize), 0)
 
 
     #my new draw method, By using this, the geographyical/physical location of the Robot/Squares should be redundant
     def drawObstacles(self, board, robots):
-        for i in range(0,16):
-            for j in range (0,16):
+        for i in range(0,self.BoardSize_):
+            for j in range (0,self.BoardSize_):
                 square = board[i][j]
-                if square.south_:
+                if square.wall_south_:
                     #draw bottom wall
                     pygame.draw.rect(self.Screen, self.Black, (self.EdgeSize+j*self.SquareSize, self.EdgeSize+(i+1)*self.SquareSize-self.WallThickness/2 ,self.SquareSize,self.WallThickness), 0)
-                if square.north_:
+                if square.wall_north_:
                     #top wall
                     pygame.draw.rect(self.Screen, self.Black, (self.EdgeSize+j*self.SquareSize, self.EdgeSize+i*self.SquareSize-self.WallThickness/2 ,self.SquareSize,self.WallThickness), 0)
-                if square.west_:
+                if square.wall_west_:
                    # draw left
                     pygame.draw.rect(self.Screen, self.Black, (self.EdgeSize+j*self.SquareSize-self.WallThickness/2, self.EdgeSize+i*self.SquareSize ,self.WallThickness,self.SquareSize), 0)
-                if square.east_:
+                if square.wall_east_:
                     #draw right
                     pygame.draw.rect(self.Screen, self.Black, (self.EdgeSize+(j+1)*self.SquareSize-self.WallThickness/2,self.EdgeSize+(i)*self.SquareSize,self.WallThickness ,self.SquareSize), 0)
-                if square.target_ != None:
-                    pygame.draw.circle(self.Screen, board[i][j].target_.color_, (self.EdgeSize+round((j+0.5)*self.SquareSize),self.EdgeSize+round((i+0.5)*self.SquareSize)), 10, 0)           
-   
+#                if square.target_ != None:
+#                    pygame.draw.circle(self.Screen, board[i][j].target_.color_, (self.EdgeSize+round((j+0.5)*self.SquareSize),self.EdgeSize+round((i+0.5)*self.SquareSize)), round(self.SquareSize/5), 0)           
+#   
     def resetBoard(self,board, robots):
         self.drawBoard()
         self.drawObstacles(board,robots)
@@ -78,21 +78,17 @@ class GraphicalBoard:
     
     def drawRobots(self, board, robots):
         self.resetBoard(board,robots)
-        for j in range(0,16):
-            for i in range (0,16):
+        for j in range(0,self.BoardSize_):
+            for i in range (0,self.BoardSize_):
         
                     #draw Robot
-                    for k in range(0,4):
-                        space =10
-                        if (robots[k].y_ == i) and (robots[k].x_ == j):
-                            pygame.draw.rect(self.Screen, robots[k].color_, (self.EdgeSize+j*self.SquareSize+space, self.EdgeSize+i*self.SquareSize+space ,self.SquareSize-2*space,self.SquareSize-2*space), 0)
+                    for r in robots:
+                        space =round(self.SquareSize/5)
+                        if (r.y_ == i) and (r.x_ == j):
+                            pygame.draw.rect(self.Screen, r.color_, (self.EdgeSize+j*self.SquareSize+space, self.EdgeSize+i*self.SquareSize+space ,self.SquareSize-2*space,self.SquareSize-2*space), 0)
         pygame.display.update()
         
-    def printToConsole(self,board):
-         for j in range(0,16):
-             for i in range (0,16):
-                print(board[j][i].west, end = '')
-             print()
+  
 
     # Determines which robot was selected by the player. Returns None if no robot was selected
     def DetermineRobo(self, click, robots):
