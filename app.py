@@ -1,13 +1,15 @@
 import pygame
 import random
 import time
+from globals import *
 from depth_limited_player import Depth_Limited_Player
 
 from robot import Robot
 from square import Square
 from drawks import GraphicalBoard
 from board import Board
-from globals import *
+from BF_Graph_Search import Graph_Search_BF
+
 
 class App:
   def __init__(self):
@@ -40,20 +42,20 @@ class App:
 
     while True:
       pygame.time.delay(100)
-      for event in pygame.event.get():
-        ai_player = Depth_Limited_Player()
-        moves = ai_player.search(self.state_.board_, self.robots_, 10)
-        if (moves != "FAILURE"):
-          for m in range(len(moves)):
-            robot.move(self.state_.board_, moves[m][0]) # move robot
-            self.graphics_.drawRobots(self.state_.board_, self.robots_)
-            time.sleep(1)
-
-            self.PlaceTarget()
-            self.graphics_.drawRobots(self.state_.board_, self.robots_)
-        print("Moves: " + str(moveCount))
-      pygame.display.update()
-
+      ai_player = Depth_Limited_Player()
+      print("Searching for solution")
+      solution = ai_player.search(self.state_.board_, self.robots_, 3)
+      if (solution != "FAILURE" and solution != "CUTOFF"):
+        print("Found solution")
+        for m in range(len(solution)):
+          #print(solution)
+          self.robots_[solution[m][0]].move(self.state_.board_, solution[m][1]) # move robot
+          self.graphics_.drawRobots(self.state_.board_, self.robots_)
+          time.sleep(1)
+          break
+      else:
+        print("No solution found")
+        break
 
   def Run(self):
     self.state_.PlaceWalls()
@@ -92,4 +94,4 @@ class App:
 
 if __name__ == '__main__':
   game = App()
-  game.Run()
+  game.RunAI()
