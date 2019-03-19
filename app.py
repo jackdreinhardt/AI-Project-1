@@ -13,9 +13,9 @@ from BF_Graph_Search import Graph_Search_BF
 
 class App:
   def __init__(self):
-    self.robots_ = (Robot(RED, 13, 12), Robot(BLUE, 5, 11),
-                    Robot(GREEN, 3, 6), Robot(YELLOW, 13, 0))
-    self.state_ = Board(self.robots_)
+    self.robots_ = (Robot(RED, 1, 1), Robot(BLUE, 2, 2),
+                    Robot(GREEN, 0, 3), Robot(YELLOW, 4, 0))
+    self.state_ = Board()
     self.graphics_ = GraphicalBoard(BOARDSIZE)
 
   def KeyToDir(self, key):
@@ -31,35 +31,35 @@ class App:
         return "NOT SUPPORTED"
 
   def RunAI(self):
-    self.state_.PlaceWalls()
-    self.state_.PlaceRobots()
-    self.state_.PlaceTarget()
+    self.state_.PlaceWalls(16)
+    self.state_.PlaceRobots(self.robots_)
+#    self.state_.PlaceTarget()
 
     self.graphics_.drawBoardState(self.state_.board_, self.robots_)
 
     robot = None
     moveCount = 0
 
-    while True:
-      pygame.time.delay(100)
-      ai_player = Depth_Limited_Player()
-      print("Searching for solution")
-      solution = ai_player.search(self.state_.board_, self.robots_, 3)
-      if (solution != "FAILURE" and solution != "CUTOFF"):
-        print("Found solution")
-        for m in range(len(solution)):
-          #print(solution)
-          self.robots_[solution[m][0]].move(self.state_.board_, solution[m][1]) # move robot
-          self.graphics_.drawRobots(self.state_.board_, self.robots_)
-          time.sleep(1)
-          break
-      else:
-        print("No solution found")
-        break
+#    while True:
+#      pygame.time.delay(100)
+#      ai_player = Depth_Limited_Player()
+#      print("Searching for solution")
+#      solution = ai_player.search(self.state_.board_, self.robots_, 3)
+#      if (solution != "FAILURE" and solution != "CUTOFF"):
+#        print("Found solution")
+#        for m in range(len(solution)):
+#          #print(solution)
+#          self.robots_[solution[m][0]].move(self.state_.board_, solution[m][1]) # move robot
+#          self.graphics_.drawRobots(self.state_.board_, self.robots_)
+#          time.sleep(1)
+#          break
+#      else:
+#        print("No solution found")
+#        break
 
   def Run(self):
-    self.state_.PlaceWalls()
-    self.state_.PlaceRobots()
+    self.state_.PlaceWalls(6)
+    self.state_.PlaceRobots(self.robots_)
     self.state_.PlaceTarget()
 
     self.graphics_.drawBoardState(self.state_.board_, self.robots_)
