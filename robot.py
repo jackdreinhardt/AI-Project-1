@@ -123,6 +123,7 @@ class Robot:
                         break
         return tr
 
+    # static functions ( do not reference self )
     def validate_positions(board, robots):
         for i in range(len(robots)):
             while not Robot.valid_position(board, robots[i], robots[:i] + robots[(i+1):]):
