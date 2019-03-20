@@ -9,8 +9,11 @@ from board import Board
 from target import Target
 from drawks import GraphicalBoard
 
-from depth_limited_player import Depth_Limited_Player
+from graph_bredth import Graph_Search_BF
+from graph_depth_limited import Graph_Search_DF
 
+from depth_limited_player import Depth_Limited_Player
+from a_star_player import A_Star_Player
 
 class App:
     def __init__(self, boardSize, num_robots):
@@ -34,47 +37,63 @@ class App:
             return "WEST"
         else:
             return "NOT SUPPORTED"
-        
+
 
     def RunAI(self):
-        self.graphics_.drawBoardState(self.board_, self.robots_)
+        self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
 
-        robot = None
-        moveCount = 0
+        pygame.time.delay(100)
+        ai_player = Depth_Limited_Player()
+        print("Searching for solution")
+        start_time = time.time()
+        solution = ai_player.search(self.board_, self.target_, self.robots_, 7)
+        if (solution != "FAILURE" and solution != "CUTOFF"):
+            print("Found solution of length " + str(len(solution)))
+            solution_time = time.time() - start_time
+            print("The algorithm took " + str(solution_time) + " seconds to find a solution")
+            for m in range(len(solution)):
+                #print(solution)
+                self.robots_[solution[m][0]] = self.robots_[solution[m][0]].move(self.board_, self.robots_, solution[m][1]) # move robot
+                self.graphics_.drawRobots(self.board_, self.robots_, self.target_)
+                time.sleep(1)
+        else:
+            print("No solution found")
 
-        while True:
-            pygame.time.delay(100)
-            ai_player = Depth_Limited_Player()
-            print("Searching for solution")
-            solution = ai_player.search(self.board_, self.robots_, 3)
-            if (solution != "FAILURE" and solution != "CUTOFF"):
-                print("Found solution")
-                for m in range(len(solution)):
-                    #print(solution)
-                    self.robots_[solution[m][0]].move(self.board_, solution[m][1]) # move robot
-                    self.graphics_.drawRobots(self.board_, self.robots_)
-                    time.sleep(1)
-            else:
-                print("No solution found")
-            self.board_.PlaceTarget()
-            self.graphics_.drawRobots(self.board_, self.robots_)
-            pygame.display.update()
-            
+    def RunAStar(self):
+        self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
+
+        pygame.time.delay(100)
+        ai_player = A_Star_Player()
+        print("Searching for solution")
+        start_time = time.time()
+        solution = ai_player.search(self.board_, self.target_, self.robots_)
+        if (solution != "FAILURE"):
+            print("Found solution of length " + str(len(solution)))
+            solution_time = time.time() - start_time
+            print("The algorithm took " + str(solution_time) + " seconds to find a solution")
+            for m in range(len(solution)):
+                #print(solution)
+                self.robots_[solution[m][0]] = self.robots_[solution[m][0]].move(self.board_, self.robots_, solution[m][1]) # move robot
+                self.graphics_.drawRobots(self.board_, self.robots_, self.target_)
+                time.sleep(1)
+        else:
+            print("No solution found")
+
     def RunBF(self):
         self.graphics_.drawBoardState(self.board_, self.robots_,self.target_)
-        player = Graph_Search_DF("k",15,None)
+        player = Graph_Search_BF("k",15,None)
         print("running")
         solution = player.search(self.board_,self.robots_,self.target_)
-        
+
         for i in solution:
-            print(i)  
-        
-        
+            print(i)
+
+
         input()
         pygame.display.quit()
         pygame.quit()
-        
-      
+
+
     def Run(self):
         self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
 
@@ -110,8 +129,6 @@ class App:
             pygame.display.update()
 
 if __name__ == '__main__':
-
     game = App(16, 4)
     game.Run()
     # game.RunBF()
-
