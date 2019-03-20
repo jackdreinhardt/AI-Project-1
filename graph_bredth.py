@@ -12,7 +12,11 @@ Created on Tue Mar 19 09:39:24 2019
 @author: kilia
 """
 
-
+from ai_player import AIPlayer
+from robot import Robot
+from node import Node
+from move_tuple import MoveTuple
+#import copy
 
 class Graph_Search_BF:
     
@@ -33,18 +37,13 @@ class Graph_Search_BF:
         
     def search(self,board,robots,target):
         finalNode = self.graph_Search(board,robots,target)
-        return self.findMoves(finalNode)
-
-    def findMoves (self,goalNode):
         
-        moves = []
-        currentNode = (goalNode)
-        
-        while currentNode.father_!=0:
-            moves.append(currentNode.moveTuple_)
-            currentNode=currentNode.father_
-        
-        return moves 
+        if (finalNode!=False):
+            
+            return Node.find_moves(finalNode)
+        else:
+            return "FAILURE"
+ 
 
     def graph_Search(self,board, robots,target):
         

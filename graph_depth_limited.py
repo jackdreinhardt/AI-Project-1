@@ -9,7 +9,7 @@ from ai_player import AIPlayer
 from robot import Robot
 from node import Node
 from move_tuple import MoveTuple
-import copy
+#import copy
 
 
         
@@ -32,29 +32,8 @@ class Graph_Search_DF:
  def __init__(self,name,score,board):
     AIPlayer.__init__(self, None, None,None)
     
- def search(self,board,robots,target):
-    finalNode = self.graph_Search(board,robots,target)
-    
-    if (finalNode!=False):
-        
-        return self.findMoves(finalNode)
-    else:
-        return "FAILURE"
+ 
 
- def findMoves (self,goalNode):
-    
-    moves = []
-    currentNode = (goalNode)
-    
-    while currentNode.father_!=0:
-        c= copy.deepcopy(currentNode.move_tuple_.robotColour_)
-        d = copy.deepcopy(currentNode.move_tuple_.dir_)
-       
-        move = (c,d)
-        moves.insert(0,move)
-        currentNode=currentNode.father_
-    
-    return moves 
 
  def graph_Search(self,board, robots,target):
     
@@ -62,7 +41,14 @@ class Graph_Search_DF:
    expanded = []
    initialState= self.copyState(robots)
    initialNode = Node(initialState,0,0)
-   
+   def search(self,board,robots,target):
+    finalNode = self.graph_Search(board,robots,target)
+    
+    if (finalNode!=False):
+        
+        return Node.find_moves(finalNode)
+    else:
+        return "FAILURE"
    frontier.append(initialNode)
    limit =5
    print ("Searching")
