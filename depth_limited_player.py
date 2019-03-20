@@ -1,10 +1,6 @@
-from ai_player import AIPlayer
+from ai_player import *
 import copy
 import random
-
-SUCCESS = "SUCCESS"
-CUTOFF = "CUTOFF"
-FAILURE = "FAILURE"
 
 class Depth_Limited_Player:
     def __init__(self):
@@ -41,7 +37,7 @@ class Depth_Limited_Player:
                         new_moves = copy.deepcopy(moves)
                         new_robots[i] = new_robots[i].move(new_board, new_robots, direction[j])
 
-                        print("Moving robot " + str(i) + " " + direction[j])
+                        #print("Moving robot " + str(i) + " " + direction[j])
                         new_moves.append((i, direction[j])) # add move to history
                         result = self.recursive_DLS(new_board, target, new_robots, limit-1, new_moves)
                         if result == CUTOFF:

@@ -1,5 +1,9 @@
 from player import Player
 
+SUCCESS = "SUCCESS"
+CUTOFF = "CUTOFF"
+FAILURE = "FAILURE"
+
 class AIPlayer(Player):
   def __init__(self, name, score, board):
       Player.__init__(self, name, score, board)

@@ -12,7 +12,7 @@ from drawks import GraphicalBoard
 from graph_bredth import Graph_Search_BF
 from graph_depth_limited import Graph_Search_DF
 from depth_limited_player import Depth_Limited_Player
-
+from a_star_player import A_Star_Player
 
 class App:
     def __init__(self, boardSize, num_robots):
@@ -46,6 +46,23 @@ class App:
         print("Searching for solution")
         solution = ai_player.search(self.board_, self.target_, self.robots_, 7)
         if (solution != "FAILURE" and solution != "CUTOFF"):
+            print("Found solution")
+            for m in range(len(solution)):
+                #print(solution)
+                self.robots_[solution[m][0]] = self.robots_[solution[m][0]].move(self.board_, self.robots_, solution[m][1]) # move robot
+                self.graphics_.drawRobots(self.board_, self.robots_, self.target_)
+                time.sleep(1)
+        else:
+            print("No solution found")
+
+    def RunAStar(self):
+        self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
+
+        pygame.time.delay(100)
+        ai_player = A_Star_Player()
+        print("Searching for solution")
+        solution = ai_player.search(self.board_, self.target_, self.robots_)
+        if (solution != "FAILURE"):
             print("Found solution")
             for m in range(len(solution)):
                 #print(solution)
@@ -107,5 +124,6 @@ class App:
 if __name__ == '__main__':
   game = App(6, 4)
   # game.Run()
-  game.RunAI()
+  # game.RunAI()
+  game.RunAStar()
   # game.RunBF()
