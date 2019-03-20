@@ -3,7 +3,7 @@
 # This is the main class for the game pieces. This is where the pieces can be
 # moved.
 
-#import math
+import random as rd
 
 class Robot:
     def __init__(self, color, x, y):
@@ -122,6 +122,18 @@ class Robot:
                         tr = False
                         break
         return tr
+
+    def validate_positions(board, robots):
+        for i in range(len(robots)):
+            while not Robot.valid_position(board, robots[i], robots[:i] + robots[(i+1):]):
+                robots[i].x_ = rd.randrange(board.boardsize_)
+                robots[i].y_ = rd.randrange(board.boardsize_)
+
+    def valid_position(board, r, other_robots):
+        return not (r.x_, r.y_) in [(o_r.x_, o_r.y_) for o_r in other_robots] \
+                and not board.center(r.y_, r.x_)
+
+
 
                
     

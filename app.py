@@ -14,12 +14,13 @@ from depth_limited_player import Depth_Limited_Player
 
 class App:
     def __init__(self, boardSize, num_robots):
+        self.board_ = Board(boardSize)
         self.robots_ = [Robot(RED, rd.randrange(boardSize), rd.randrange(boardSize)),
                         Robot(BLUE, rd.randrange(boardSize), rd.randrange(boardSize)),
                         Robot(GREEN, rd.randrange(boardSize), rd.randrange(boardSize)),
                         Robot(YELLOW, rd.randrange(boardSize), rd.randrange(boardSize))]
-        self.board_ = Board(boardSize)
-        self.target_ = Target(boardSize, self.board_, num_robots)
+        Robot.validate_positions(self.board_, self.robots_)
+        self.target_ = Target(boardSize, self.board_, self.robots_)
         self.graphics_ = GraphicalBoard(boardSize)
 
     def KeyToDir(self, key):
@@ -103,13 +104,13 @@ class App:
                             print("Success! New target placed")
                             print("You took " + str(moveCount) + " moves to find a solution")
                             moveCount = 0
-                            self.target_.set_target(self.board_, len(self.robots_))
+                            self.target_.set_target(self.board_, self.robots_)
                             self.graphics_.drawRobots(self.board_, self.robots_, self.target_)
                     print("Moves: " + str(moveCount))
             pygame.display.update()
 
 if __name__ == '__main__':
   game = App(6, 4)
-  #game.Run()
-  game.RunBF()
+  game.Run()
+  # game.RunBF()
 

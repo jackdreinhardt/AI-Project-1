@@ -5,15 +5,16 @@ from square import Square
 class Board:
     def __init__(self, boardSize):
         self.board_ = [[Square() for j in range(boardSize)] for i in range(boardSize)]
+        self.boardsize_ = boardSize
         self.PlaceWalls(boardSize)
 
     def square(self, i, j):
         return self.board_[i][j]
 
-    def center(self, boardSize, i, j):
-        if boardSize == 16:
+    def center(self, i, j):
+        if self.boardsize_ == 16:
             return i <= 8 and i >= 7 and j <= 8 and j >= 7
-        if boardSize == 6:
+        if self.boardsize_ == 6:
             return i <= 3 and i >= 2 and j <= 3 and j >= 2
 
     def PlaceWalls(self, boardsize):
