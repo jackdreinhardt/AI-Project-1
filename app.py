@@ -1,6 +1,7 @@
 import pygame
 import random as rd
 import time
+
 from globals import *
 
 from robot import Robot
@@ -8,7 +9,7 @@ from board import Board
 from target import Target
 from drawks import GraphicalBoard
 
-from BF_Graph_Search import Graph_Search_BF
+from BF_Graph_Search import Graph_Search_DF
 from depth_limited_player import Depth_Limited_Player
 
 
@@ -61,12 +62,12 @@ class App:
             
     def RunBF(self):
         self.graphics_.drawBoardState(self.board_, self.robots_,self.target_)
-        player = Graph_Search_BF("k",15,None)
+        player = Graph_Search_DF("k",15,None)
         print("running")
         solution = player.search(self.board_,self.robots_,self.target_)
         
         for i in solution:
-            print(i.robotColour_ ," ", i.dir_)  
+            print(i)  
         
         
         input()
