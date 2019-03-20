@@ -94,6 +94,7 @@ class App:
                     if robot.move_possible(self.board_, self.robots_, d):
                         robot = robot.move(self.board_, self.robots_, d)
                         moveCount += 1
+                        print("Moves: " + str(moveCount))
                         for i in range(len(self.robots_)):
                             if robot.color_ == self.robots_[i].color_:
                                 self.robots_[i] = robot
@@ -106,7 +107,6 @@ class App:
                             moveCount = 0
                             self.target_.set_target(self.board_, self.robots_)
                             self.graphics_.drawRobots(self.board_, self.robots_, self.target_)
-                    print("Moves: " + str(moveCount))
             pygame.display.update()
 
 if __name__ == '__main__':
