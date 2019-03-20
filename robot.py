@@ -43,7 +43,7 @@ class Robot:
                         return Robot(self.color_, x, y)
                 x -= 1
         else:
-          print("The key you entered is not a valid direction.")
+            print("The key you entered is not a valid direction.")
         return Robot(self.color_, x, y)
     
 
@@ -51,29 +51,32 @@ class Robot:
         x = self.x_
         y = self.y_
         if d == "NORTH":
-            
-            if  (board.square(y, x).wall_north_!=1):
+            if not board.square(y, x).wall_north_:
                 for r in robots:
                     if r.y_ == y - 1 and r.x_ == x:
                         return False
+            else: return False
         elif d == "SOUTH":
-            if  (board.square(y, x).wall_south_!=1):
+            if not board.square(y, x).wall_south_:
                 for r in robots:
                     if r.y_ == y + 1 and r.x_ == x:
                         return False
+            else: return False
         elif d == "EAST":
-            if (board.square(y, x).wall_east_!=1):
+            if not board.square(y, x).wall_east_:
                 for r in robots:
                     if r.x_ == x + 1 and r.y_ == y:
                         return False
+            else: return False
         elif d == "WEST":
-            if (board.square(y, x).wall_west_!=1):
+            if not board.square(y, x).wall_west_:
                 for r in robots:
                     if r.x_ == x - 1 and r.y_ == y:
                         return False
+            else: return False
         else:
-          
-            return True
+            print("The key you entered is not a valid direction.")
+        return True
         
         
     def possibleMoves(self, board, robots, d):
