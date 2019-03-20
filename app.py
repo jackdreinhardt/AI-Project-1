@@ -9,19 +9,34 @@ from board import Board
 from target import Target
 from drawks import GraphicalBoard
 
-from BF_Graph_Search import Graph_Search_DF
+from graph_depth_limited import Graph_Search_DF
 from depth_limited_player import Depth_Limited_Player
-
+from graph_bredth import Graph_Search_BF
+from node import Node
+from moves_array import Moves_array
 
 class App:
+#    def __init__(self, boardSize, num_robots):
+#        self.board_ = Board(boardSize)
+#        self.robots_ = [Robot(RED, rd.randrange(boardSize), rd.randrange(boardSize)),
+#                        Robot(BLUE, rd.randrange(boardSize), rd.randrange(boardSize)),
+#                        Robot(GREEN, rd.randrange(boardSize), rd.randrange(boardSize)),
+#                        Robot(YELLOW, rd.randrange(boardSize), rd.randrange(boardSize))]
+#        Robot.validate_positions(self.board_, self.robots_)
+#        self.target_ = Target(boardSize, self.board_, self.robots_)
+#        self.graphics_ = GraphicalBoard(boardSize)
+    
     def __init__(self, boardSize, num_robots):
         self.board_ = Board(boardSize)
-        self.robots_ = [Robot(RED, rd.randrange(boardSize), rd.randrange(boardSize)),
-                        Robot(BLUE, rd.randrange(boardSize), rd.randrange(boardSize)),
-                        Robot(GREEN, rd.randrange(boardSize), rd.randrange(boardSize)),
-                        Robot(YELLOW, rd.randrange(boardSize), rd.randrange(boardSize))]
+        self.robots_ = [Robot(RED, 3, 0),
+                        Robot(BLUE, 4, 4),
+                        Robot(GREEN, 0, 2),
+                        Robot(YELLOW, 1, 2)]
         Robot.validate_positions(self.board_, self.robots_)
         self.target_ = Target(boardSize, self.board_, self.robots_)
+        self.target_.x_=0
+        self.target_.y_=0
+        self.target_.color_=BLUE
         self.graphics_ = GraphicalBoard(boardSize)
 
     def KeyToDir(self, key):
@@ -67,8 +82,7 @@ class App:
         print("running")
         solution = player.search(self.board_,self.robots_,self.target_)
         
-        for i in solution:
-            print(i)  
+        yes = Node.print_moves(solution)
         
         
         input()
@@ -112,6 +126,6 @@ class App:
 
 if __name__ == '__main__':
   game = App(6, 4)
-  game.Run()
-  # game.RunBF()
+  #game.Run()
+  #game.RunBF()
 

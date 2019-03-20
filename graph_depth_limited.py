@@ -32,11 +32,19 @@ class Graph_Search_DF:
  def __init__(self,name,score,board):
     AIPlayer.__init__(self, None, None,None)
     
+ def search(self,board,robots,target):
+        finalNode = self.graph_Search(board,robots,target)
+        
+        if (finalNode!=False):
+            
+            return Node.find_moves(finalNode)
+        else:
+            return "FAILURE"   
  
 
 
  def graph_Search(self,board, robots,target):
-    
+   print(target.color_)
    frontier= []
    expanded = []
    initialState= self.copyState(robots)
@@ -50,7 +58,7 @@ class Graph_Search_DF:
     else:
         return "FAILURE"
    frontier.append(initialNode)
-   limit =5
+   limit =4
    print ("Searching")
    while True:
        
@@ -60,7 +68,7 @@ class Graph_Search_DF:
            del frontier[0]
            expanded.append(Node.copy_node(currentNode))
        else:
-           print(len(expanded))
+           
            return False
        
        if (currentNode.get_level()<=limit):

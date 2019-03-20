@@ -42,4 +42,43 @@ class Node:
         return copy.deepcopy(oldNode)
     
     
-    
+    @staticmethod
+    def find_moves(goalNode):
+        moves = []
+        currentNode = (goalNode)
+        
+        while currentNode.father_!=0:
+            moves.insert(0,currentNode.move_tuple_)
+            currentNode=currentNode.father_
+        
+        return moves 
+    @staticmethod
+    def print_moves(goalNode):
+        
+        if (goalNode == "FAILURE"):
+            return False
+        else:
+            
+        
+            n = Node.copy_node(goalNode)
+            while True:
+                color = goalNode.move_tuple_.robotColour_
+                c=""
+                if (color == (255,0,0)):
+                    c="red"
+                if (color ==(255,255,0)):
+                    c="yellow"
+                if (color ==(0,255,0)):
+                    c= "green"
+                if (color ==(0,0,255)):
+                    c= "blue"
+                
+                direction = goalNode.move_tuple_.dir_
+                
+                print(c,direction)
+                n = Node.copy_node(n.father_)  
+                if n.move_tuple.dir_==None:
+                    return True
+            
+            
+        

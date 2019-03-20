@@ -16,6 +16,7 @@ from ai_player import AIPlayer
 from robot import Robot
 from node import Node
 from move_tuple import MoveTuple
+import copy
 #import copy
 
 class Graph_Search_BF:
@@ -40,7 +41,7 @@ class Graph_Search_BF:
         
         if (finalNode!=False):
             
-            return Node.find_moves(finalNode)
+            return finalNode
         else:
             return "FAILURE"
  
@@ -51,52 +52,58 @@ class Graph_Search_BF:
        expanded = []
        initialState= self.copyState(robots)
        initialNode = Node(initialState,0,0)
-       
+       limit = 3
        frontier.append(initialNode)
        
        while True:
           
            
-           currentNode = Node.copyNode(frontier[0])
-           del frontier[0]
+           if (len(frontier)>0):
+              currentNode = Node.copy_node(frontier[0])
+              del frontier[0]
+              expanded.append(Node.copy_node(currentNode))
+           else:
+              print(len(expanded))
+              return False
            
-           expanded.append(Node.copyNode(currentNode))
-           
-           for r in currentNode.robots_:
-               if (target.color_ == r.color_ and target.x_ == r.x_ and target.y_==r.y_):
-                       return currentNode
-              
-           
-           for i in range (len(currentNode.robots_)):
-                #move robot in one direction
-                direction = ["NORTH", "SOUTH", "EAST", "WEST"]
-                
-                for j in range (len(direction)):
-                   
+           if (currentNode.get_level()<=limit):
+            
+               for r in currentNode.robots_:
+                   if (target.color_ == r.color_ and target.x_ == r.x_ and target.y_==r.y_):
+                           return currentNode
+                  
+               
+               for i in range (len(currentNode.robots_)):
+                    #move robot in one direction
+                    direction = ["NORTH", "SOUTH", "EAST", "WEST"]
                     
-                    if (currentNode.robots_[i].possibleMoves(board,robots,direction[j])) :
-                        newNode =  Node.copyNode(currentNode)
-                        tr=True
-                        newNode.robots_[i] = newNode.robots_[i].move(board,robots,direction[j])
+                    for j in range (len(direction)):
+                       
                         
-                        
-                        newNode.move_tuple_=MoveTuple(currentNode.robots_[i].color_,direction[j])
-                        newNode.father_=currentNode
-                        
-                        for m in range (len(frontier))  :
-                            if (Node.compareState(frontier[m],newNode)==True):
-                                tr=False
-                                break
-                        for n in range(len(expanded))  :  
-                            if (Node.compareState(expanded[n],newNode)==True):
-                                tr=False
-                                break
-                        if(tr):
+                        if (currentNode.robots_[i].move_possible(board,robots,direction[j])) :
+                            newNode =  Node.copy_node(currentNode)
+                            tr=True
                             
-                            frontier.append(Node.copy_node(newNode))
+                            newNode.robots_[i] = newNode.robots_[i].move(board,robots,direction[j])
                             
                             
-                        
+                            newNode.move_tuple_=MoveTuple(copy.deepcopy(currentNode.robots_[i].color_),direction[j])
+                            newNode.father_=currentNode
+                            
+                            for m in range (len(frontier))  :
+                                if (Node.compareState(frontier[m],newNode)==True):
+                                    tr=False
+                                    break
+                            for n in range(len(expanded))  :  
+                                if (Node.compareState(expanded[n],newNode)==True):
+                                    tr=False
+                                    break
+                            if(tr):
+                                
+                                frontier.append(Node.copy_node(newNode))
+                                
+                                
+                            
                             
                             
                            

@@ -4,6 +4,7 @@
 # moved.
 
 import random as rd
+import copy
 
 class Robot:
     def __init__(self, color, x, y):
@@ -18,29 +19,30 @@ class Robot:
     def move(self, board, robots, d):
         x = self.x_
         y = self.y_
+        c = copy.deepcopy(self.color_)
         if d == "NORTH":
             while not board.square(y, x).wall_north_:
                 for r in robots:
                     if r.y_ == y - 1 and r.x_ == x:
-                        return Robot(self.color_, x, y)
+                        return Robot(c, x, y)
                 y -= 1
         elif d == "SOUTH":
             while not board.square(y, x).wall_south_:
                 for r in robots:
                     if r.y_ == y + 1 and r.x_ == x:
-                        return Robot(self.color_, x, y)
+                        return Robot(c, x, y)
                 y += 1
         elif d == "EAST":
             while not board.square(y, x).wall_east_:
                 for r in robots:
                     if r.x_ == x + 1 and r.y_ == y:
-                            return Robot(self.color_, x, y)
+                            return Robot(c, x, y)
                 x += 1
         elif d == "WEST":
             while not board.square(y, x).wall_west_:
                 for r in robots:
                     if r.x_ == x - 1 and r.y_ == y:
-                        return Robot(self.color_, x, y)
+                        return Robot(c, x, y)
                 x -= 1
         else:
             print("The key you entered is not a valid direction.")
