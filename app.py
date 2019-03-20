@@ -44,9 +44,12 @@ class App:
         pygame.time.delay(100)
         ai_player = Depth_Limited_Player()
         print("Searching for solution")
+        start_time = time.time()
         solution = ai_player.search(self.board_, self.target_, self.robots_, 7)
         if (solution != "FAILURE" and solution != "CUTOFF"):
-            print("Found solution")
+            print("Found solution of length " + str(len(solution)))
+            solution_time = time.time() - start_time
+            print("The algorithm took " + str(solution_time) + " seconds to find a solution")
             for m in range(len(solution)):
                 #print(solution)
                 self.robots_[solution[m][0]] = self.robots_[solution[m][0]].move(self.board_, self.robots_, solution[m][1]) # move robot
@@ -61,9 +64,12 @@ class App:
         pygame.time.delay(100)
         ai_player = A_Star_Player()
         print("Searching for solution")
+        start_time = time.time()
         solution = ai_player.search(self.board_, self.target_, self.robots_)
         if (solution != "FAILURE"):
-            print("Found solution")
+            print("Found solution of length " + str(len(solution)))
+            solution_time = time.time() - start_time
+            print("The algorithm took " + str(solution_time) + " seconds to find a solution")
             for m in range(len(solution)):
                 #print(solution)
                 self.robots_[solution[m][0]] = self.robots_[solution[m][0]].move(self.board_, self.robots_, solution[m][1]) # move robot

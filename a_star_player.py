@@ -8,8 +8,8 @@ class A_Star_Player:
         AIPlayer.__init__(self, None, None, None)
 
     def search(self, board, target, robots):
-        finalNode = self.graph_Search(board, target, robots)
-        if (finalNode != False): return Node.get_solution(finalNode)
+        finalNode = self.graph_search(board, target, robots)
+        if (finalNode != FAILURE): return Node.get_solution(finalNode)
         else: return FAILURE
 
     def find_min_index(self, frontier):
@@ -21,7 +21,7 @@ class A_Star_Player:
                 min_cost = frontier[i].get_cost()
         return min_index
 
-    def graph_Search(self, board, target, robots):
+    def graph_search(self, board, target, robots):
         frontier = []
         expanded = []
         initialState = copy.deepcopy(robots)
@@ -29,6 +29,9 @@ class A_Star_Player:
         frontier.append(initialNode)
 
         while True:
+            if (len(frontier) == 0):
+                return FAILURE
+
             # remove node at top of priority queue
             min_index = self.find_min_index(frontier)
             currentNode = Node.copyNode(frontier[min_index])
@@ -50,7 +53,10 @@ class A_Star_Player:
                         # calculate cost of newNode
                         newNode.g_ = newNode.g_ + 1;
                         h = 0;
-                        newNode.h_ = newNode.h_ + 1;
+                        # for r in range(len(newNode.robots_)):
+                        #     if (newNode.robots_[r].color_ == target.color_):
+                        #         h = abs(newNode.robots_[r].x_ - target.x_) + abs(newNode.robots_[r].y_ - target.y_)
+                        newNode.h_ = h;
 
                         print("Moving robot " + str(i) + " " + direction[j] + " at depth " + str(newNode.g_))
                         newNode.move_tuple_ = (i, direction[j])
