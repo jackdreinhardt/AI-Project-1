@@ -1,7 +1,5 @@
 # global constants, imported to various files
 
-BOARDSIZE = 16
-
 NORTH = 1
 SOUTH = 2
 EAST = 3
