@@ -69,6 +69,10 @@ class App:
             print(i.robotColour_ ," ", i.dir_)  
         
         
+        input()
+        pygame.display.quit()
+        pygame.quit()
+        
       
     def Run(self):
         self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)

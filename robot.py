@@ -3,7 +3,7 @@
 # This is the main class for the game pieces. This is where the pieces can be
 # moved.
 
-import math
+#import math
 
 class Robot:
     def __init__(self, color, x, y):
@@ -45,32 +45,81 @@ class Robot:
         else:
           print("The key you entered is not a valid direction.")
         return Robot(self.color_, x, y)
+    
 
     def move_possible(self, board, robots, d):
         x = self.x_
         y = self.y_
         if d == "NORTH":
-            if not board.square(y, x).wall_north_:
+            
+            if  (board.square(y, x).wall_north_!=1):
                 for r in robots:
                     if r.y_ == y - 1 and r.x_ == x:
                         return False
         elif d == "SOUTH":
-            if not board.square(y, x).wall_south_:
+            if  (board.square(y, x).wall_south_!=1):
                 for r in robots:
                     if r.y_ == y + 1 and r.x_ == x:
                         return False
         elif d == "EAST":
-            if not board.square(y, x).wall_east_:
+            if (board.square(y, x).wall_east_!=1):
                 for r in robots:
                     if r.x_ == x + 1 and r.y_ == y:
                         return False
         elif d == "WEST":
-            if not board.square(y, x).wall_west_:
+            if (board.square(y, x).wall_west_!=1):
                 for r in robots:
                     if r.x_ == x - 1 and r.y_ == y:
                         return False
         else:
-          print("The key you entered is not a valid direction.")
-        return True
+          
+            return True
+        
+        
+    def possibleMoves(self, board, robots, d):
+        
+            
+           
+        tr=True
+        
+        if d == "NORTH":
+            
+            if  (board.square(self.y_, self.x_).wall_north_==1):
+                tr=False
+            else:
+            
+                for r in robots:
+                    if r.y_ == self.y_ - 1 and r.x_ == self.x_:
+                        tr = False
+                        break
+                           
+                    
+        elif d == "SOUTH":
+            if  (board.square(self.y_, self.x_).wall_south_==1):
+                tr=False
+            else:    
+                for r in robots:
+                    if r.y_ == self.y_ + 1 and r.x_ == self.x_:
+                        tr = False
+                        break
+        elif d == "EAST":
+            if (board.square(self.y_, self.x_).wall_east_==1):
+                tr=False
+            else:    
+                for r in robots:
+                    if r.x_ == self.x_ + 1 and r.y_ == self.y_:
+                        tr = False
+                        break
+        elif d == "WEST":
+            if (board.square(self.y_, self.x_).wall_west_==1):
+                tr=False
+            else:    
+                for r in robots:
+                    if r.x_ == self.x_ - 1 and r.y_ == self.y_:
+                        tr = False
+                        break
+        return tr
+
+               
     
     

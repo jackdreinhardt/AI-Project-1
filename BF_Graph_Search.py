@@ -85,14 +85,12 @@ class Graph_Search_BF:
     def findMoves (self,goalNode):
         
         moves = []
-        currentNode = node.copyNode(goalNode)
+        currentNode = (goalNode)
         
         while currentNode.father_!=0:
-            moves.insert(0,currentNode.moveTuple_)
+            moves.append(currentNode.moveTuple_)
             currentNode=currentNode.father_
-        for i in range(len(moves)):
-            print(moves[i].robotColour_)
-            print(moves[i].dir_)
+        
         return moves 
 
     def graph_Search(self,board, robots,target):
@@ -113,7 +111,7 @@ class Graph_Search_BF:
            expanded.append(node.copyNode(currentNode))
            
            for r in currentNode.robots_:
-               if (target.color_ == r.color_ and target.x_ == r.x_ and target.y_==target.y_):
+               if (target.color_ == r.color_ and target.x_ == r.x_ and target.y_==r.y_):
                        return currentNode
               
            
@@ -123,10 +121,15 @@ class Graph_Search_BF:
                 
                 for j in range (len(direction)):
                    
-                    newNode =  node.copyNode(currentNode)
-                    if currentNode.robots_[i].move_possible(board,robots,direction[j]) :
+                    
+                    if (currentNode.robots_[i].possibleMoves(board,robots,direction[j])) :
+                        newNode =  node.copyNode(currentNode)
                         tr=True
                         newNode.robots_[i] = newNode.robots_[i].move(board,robots,direction[j])
+                        
+                        
+                        newNode.moveTuple_=moveTuple(currentNode.robots_[i].color_,direction[j])
+                        newNode.father_=currentNode
                         
                         for m in range (len(frontier))  :
                             if (node.compareState(frontier[m],newNode)==True):
@@ -137,11 +140,9 @@ class Graph_Search_BF:
                                 tr=False
                                 break
                         if(tr):
-                            #newMove = moveTuple(currentNode.robots_[i].color_,direction[j])
-                            newNode.moveTuple_=moveTuple(currentNode.robots_[i].color_,direction[j])
-                            newNode.father_=currentNode
+                            
                             frontier.append(node.copyNode(newNode))
-                           
+                            
                         
                             
                             
