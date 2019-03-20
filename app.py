@@ -9,7 +9,6 @@ from board import Board
 from target import Target
 from drawks import GraphicalBoard
 
-from BF_Graph_Search import Graph_Search_DF
 from depth_limited_player import Depth_Limited_Player
 
 
