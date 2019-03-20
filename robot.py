@@ -3,7 +3,7 @@
 # This is the main class for the game pieces. This is where the pieces can be
 # moved.
 
-#import math
+import random as rd
 
 class Robot:
     def __init__(self, color, x, y):
@@ -43,7 +43,7 @@ class Robot:
                         return Robot(self.color_, x, y)
                 x -= 1
         else:
-          print("The key you entered is not a valid direction.")
+            print("The key you entered is not a valid direction.")
         return Robot(self.color_, x, y)
     
 
@@ -51,29 +51,32 @@ class Robot:
         x = self.x_
         y = self.y_
         if d == "NORTH":
-            
-            if  (board.square(y, x).wall_north_!=1):
+            if not board.square(y, x).wall_north_:
                 for r in robots:
                     if r.y_ == y - 1 and r.x_ == x:
                         return False
+            else: return False
         elif d == "SOUTH":
-            if  (board.square(y, x).wall_south_!=1):
+            if not board.square(y, x).wall_south_:
                 for r in robots:
                     if r.y_ == y + 1 and r.x_ == x:
                         return False
+            else: return False
         elif d == "EAST":
-            if (board.square(y, x).wall_east_!=1):
+            if not board.square(y, x).wall_east_:
                 for r in robots:
                     if r.x_ == x + 1 and r.y_ == y:
                         return False
+            else: return False
         elif d == "WEST":
-            if (board.square(y, x).wall_west_!=1):
+            if not board.square(y, x).wall_west_:
                 for r in robots:
                     if r.x_ == x - 1 and r.y_ == y:
                         return False
+            else: return False
         else:
-          
-            return True
+            print("The key you entered is not a valid direction.")
+        return True
         
         
     def possibleMoves(self, board, robots, d):
@@ -119,6 +122,18 @@ class Robot:
                         tr = False
                         break
         return tr
+
+    def validate_positions(board, robots):
+        for i in range(len(robots)):
+            while not Robot.valid_position(board, robots[i], robots[:i] + robots[(i+1):]):
+                robots[i].x_ = rd.randrange(board.boardsize_)
+                robots[i].y_ = rd.randrange(board.boardsize_)
+
+    def valid_position(board, r, other_robots):
+        return not (r.x_, r.y_) in [(o_r.x_, o_r.y_) for o_r in other_robots] \
+                and not board.center(r.y_, r.x_)
+
+
 
                
     
