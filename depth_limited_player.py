@@ -1,5 +1,6 @@
 from ai_player import AIPlayer
 import copy
+import random
 
 SUCCESS = "SUCCESS"
 CUTOFF = "CUTOFF"
@@ -7,15 +8,16 @@ FAILURE = "FAILURE"
 
 class Depth_Limited_Player:
     def __init__(self):
-        AIPlayer.__init__(self, None, None)
+        AIPlayer.__init__(self, None, None, None)
 
-    def search(self, board, robots, limit):
+    def search(self, board, target, robots, limit):
         moves = [] # empty list to store history of moves
-        return self.recursive_DLS(board, robots, limit, moves)
+        return self.recursive_DLS(board, target, robots, limit, moves)
 
-    def recursive_DLS(self, board, robots, limit, moves):
+    def recursive_DLS(self, board, target, robots, limit, moves):
         for r in robots:
-          if board[r.y_][r.x_].target_ != None and board[r.y_][r.x_].target_.color_ == r.color_:
+          #if board[r.y_][r.x_].target_ != None and board[r.y_][r.x_].target_.color_ == r.color_:
+          if (target.color_ == r.color_ and target.x_ == r.x_ and target.y_ == r.y_):
             return moves # return solution
         if limit == 0: # if depth limit was reached
             return CUTOFF
@@ -23,8 +25,9 @@ class Depth_Limited_Player:
             cutoff_occurred = False
             direction = ["NORTH", "SOUTH", "EAST", "WEST"]
             for i in range(len(robots)): # for each robot in robots
+                random.shuffle(direction) # randomize order of directions
                 for j in range(len(direction)): # for each direction
-                    if robots[i].move_possible(board, direction[j]): # check if move successful
+                    if robots[i].move_possible(board, robots, direction[j]): # check if move successful
                         if len(moves) > 0 \
                         and i == moves[len(moves)-1][0] \
                         and ((direction[j] == "NORTH" and moves[len(moves)-1][1] == "SOUTH") \
@@ -36,11 +39,11 @@ class Depth_Limited_Player:
                         new_robots = copy.deepcopy(robots)
                         new_board = copy.deepcopy(board)
                         new_moves = copy.deepcopy(moves)
-                        new_robots[i].move(new_board, direction[j])
+                        new_robots[i] = new_robots[i].move(new_board, new_robots, direction[j])
 
-                        #print("Moving robot " + str(i) + " " + direction[j])
+                        print("Moving robot " + str(i) + " " + direction[j])
                         new_moves.append((i, direction[j])) # add move to history
-                        result = self.recursive_DLS(new_board, new_robots, limit-1, new_moves)
+                        result = self.recursive_DLS(new_board, target, new_robots, limit-1, new_moves)
                         if result == CUTOFF:
                             cutoff_occurred = True
                         elif result != FAILURE:

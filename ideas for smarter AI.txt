@@ -1,5 +1,5 @@
-with the conventional AIs we run into exactely the problem that was mentioned in the lecture with the game Sokuban. The state space is extremly big which makes it extremly hard for the AI to solve the problem even though it might not be to difficult for a human
-This means we need a strong heuristics or an intelligent seach algorithm 
+with the conventional AIs we run into exactly the problem that was mentioned in the lecture with the game Sokuban. The state space is extremely big which makes it extremely hard for the AI to solve the problem even though it might not be to difficult for a human
+This means we need a strong heuristics or an intelligent search algorithm
 
 
 idea for Ricochet Robots smart AI:
@@ -8,13 +8,13 @@ Assume without loss of generality that a red target is currently placed on the b
 2.step: Backtrack form the target, checking for blue, yellow or green robot at adjacent squares as long as the track of the red robot is clear (only turns at walls)
 3.step: If step 2 is successful make square on the backtrack next to one of the robots a new target square
 4.step: Search tree for only the red robot with the new target as a goal state for depth ~10
-5.step: Found a way to reach the new goal state?	yes -> calulate combined pathlength by adding the moves required to move one of the green, yellow or blue robot and the moves of the red robot to the goal state and the moves of the red robot of the goal state to the target square
+5.step: Found a way to reach the new goal state?	yes -> calculate combined path length by adding the moves required to move one of the green, yellow or blue robot and the moves of the red robot to the goal state and the moves of the red robot of the goal state to the target square
 							no -> continue with step 2 erasing the goal state and ignoring it in the future
 
 for step 2 I could also imagine calculating the backtrack until a certain depth first and then order all of new goal states by the amount of moves required to get a robot to the neighboring square
 I suggest always checking for an easy solution first: moving only the target robot for a depth of ~8
 an issue with this AI is in which order to you move the other robots? Do you calculate the possible positions with or without other robots (that potentially block the way) on the board? (additional move for moving robots out of the way?)
-a heuristics for this could be to start with the robot that is closesed to the target
+a heuristics for this could be to start with the robot that is closest to the target
 
 I can also imagine splitting up the search into even more smaller steps.
-Starting with the backtrack and use the postion of the squares that lie on this track as a heuristic for the other robots.
+Starting with the backtrack and use the position of the squares that lie on this track as a heuristic for the other robots.
