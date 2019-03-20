@@ -110,7 +110,8 @@ class App:
             pygame.display.update()
 
 if __name__ == '__main__':
-  game = App(6, 4)
-  game.Run()
-  # game.RunBF()
+
+    game = App(16, 4)
+    game.Run()
+    # game.RunBF()
 
