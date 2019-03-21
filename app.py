@@ -25,7 +25,6 @@ class App:
         Robot.validate_positions(self.board_, self.robots_)
         self.target_ = Target(boardSize, self.board_, self.robots_)
         self.graphics_ = GraphicalBoard(boardSize)
-        self.menu_ = Menu(boardSize)
 
     def KeyToDir(self, key):
         if key == pygame.K_UP:
@@ -93,14 +92,8 @@ class App:
         input()
         pygame.display.quit()
         pygame.quit()
-
-    def Menu(self):
-        self.menu_.display()
-        settings = self.menu_.get_settings()
         
-
     def Run(self):
-        self.Settings()
         self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
 
         moveCount = 0
