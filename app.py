@@ -128,8 +128,8 @@ class App:
             pygame.display.update()
 
 if __name__ == '__main__':
-  game = App(6, 4)
-  # game.Run()
+  game = App(16, 4)
+  game.Run()
   # game.RunAI()
-  game.RunAStar()
+  # game.RunAStar()
   # game.RunBF()
