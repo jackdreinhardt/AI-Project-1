@@ -135,7 +135,8 @@ class App:
             pygame.display.update()
 
 if __name__ == '__main__':
-    game = App(16, 4)
-    game.Menu()
-    game.Run()
-    # game.RunBF()
+  game = App(16, 4)
+  game.Run()
+  # game.RunAI()
+  # game.RunAStar()
+  # game.RunBF()
