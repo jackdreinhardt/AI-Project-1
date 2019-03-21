@@ -30,6 +30,7 @@ class GraphicalBoard:
         self.Green = (0,255,0)
         self.Yellow = (255,255,0)
 
+
     #draws everything  
     def drawBoardState(self, board, robots, target):
         self.drawBoard()
@@ -98,4 +99,5 @@ class GraphicalBoard:
           if click[0] > west_click_bound and click[0] < east_click_bound and click[1] > north_click_bound and click[1] < south_click_bound:
             return r
         return None
+        
 
