@@ -2,15 +2,16 @@ from ai_player import *
 import copy
 import random
 
-class Depth_Limited_Player:
+class Depth_Limited_Player(AIPlayer):
     def __init__(self):
-        AIPlayer.__init__(self, None, None, None)
+        AIPlayer.__init__(self, 'DFS', 0)
 
     def search(self, board, target, robots, limit):
         moves = [] # empty list to store history of moves
         return self.recursive_DLS(board, target, robots, limit, moves)
 
     def recursive_DLS(self, board, target, robots, limit, moves):
+        self.nodes_expanded_ += 1
         for r in robots:
           #if board[r.y_][r.x_].target_ != None and board[r.y_][r.x_].target_.color_ == r.color_:
           if (target.color_ == r.color_ and target.x_ == r.x_ and target.y_ == r.y_):
@@ -25,7 +26,7 @@ class Depth_Limited_Player:
                 for j in range(len(direction)): # for each direction
                     if robots[i].move_possible(board, robots, direction[j]): # check if move successful
                         if len(moves) > 0 \
-                        and i == moves[len(moves)-1][0] \
+                        and robots[i].color_ == moves[len(moves)-1][0] \
                         and ((direction[j] == "NORTH" and moves[len(moves)-1][1] == "SOUTH") \
                         or (direction[j] == "SOUTH" and moves[len(moves)-1][1] == "NORTH") \
                         or (direction[j] == "EAST" and moves[len(moves)-1][1] == "WEST") \
@@ -33,13 +34,13 @@ class Depth_Limited_Player:
                             break # don't allow the opposite of the previous move
 
                         new_robots = copy.deepcopy(robots)
-                        new_board = copy.deepcopy(board)
+                        # new_board = copy.deepcopy(board)
                         new_moves = copy.deepcopy(moves)
-                        new_robots[i] = new_robots[i].move(new_board, new_robots, direction[j])
+                        new_robots[i] = new_robots[i].move(board, new_robots, direction[j])
 
                         #print("Moving robot " + str(i) + " " + direction[j])
-                        new_moves.append((i, direction[j])) # add move to history
-                        result = self.recursive_DLS(new_board, target, new_robots, limit-1, new_moves)
+                        new_moves.append((new_robots[i].color_, direction[j])) # add move to history
+                        result = self.recursive_DLS(board, target, new_robots, limit-1, new_moves)
                         if result == CUTOFF:
                             cutoff_occurred = True
                         elif result != FAILURE:

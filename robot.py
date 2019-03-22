@@ -45,7 +45,7 @@ class Robot:
         else:
             print("The key you entered is not a valid direction.")
         return Robot(self.color_, x, y)
-    
+
 
     def move_possible(self, board, robots, d):
         x = self.x_
@@ -77,51 +77,6 @@ class Robot:
         else:
             print("The key you entered is not a valid direction.")
         return True
-        
-        
-    def possibleMoves(self, board, robots, d):
-        
-            
-           
-        tr=True
-        
-        if d == "NORTH":
-            
-            if  (board.square(self.y_, self.x_).wall_north_==1):
-                tr=False
-            else:
-            
-                for r in robots:
-                    if r.y_ == self.y_ - 1 and r.x_ == self.x_:
-                        tr = False
-                        break
-                           
-                    
-        elif d == "SOUTH":
-            if  (board.square(self.y_, self.x_).wall_south_==1):
-                tr=False
-            else:    
-                for r in robots:
-                    if r.y_ == self.y_ + 1 and r.x_ == self.x_:
-                        tr = False
-                        break
-        elif d == "EAST":
-            if (board.square(self.y_, self.x_).wall_east_==1):
-                tr=False
-            else:    
-                for r in robots:
-                    if r.x_ == self.x_ + 1 and r.y_ == self.y_:
-                        tr = False
-                        break
-        elif d == "WEST":
-            if (board.square(self.y_, self.x_).wall_west_==1):
-                tr=False
-            else:    
-                for r in robots:
-                    if r.x_ == self.x_ - 1 and r.y_ == self.y_:
-                        tr = False
-                        break
-        return tr
 
     # static functions ( do not reference self )
     def validate_positions(board, robots):
@@ -133,9 +88,3 @@ class Robot:
     def valid_position(board, r, other_robots):
         return not (r.x_, r.y_) in [(o_r.x_, o_r.y_) for o_r in other_robots] \
                 and not board.center(r.y_, r.x_)
-
-
-
-               
-    
-    

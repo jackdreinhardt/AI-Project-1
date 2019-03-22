@@ -39,6 +39,8 @@ class A_Star_Player(AIPlayer):
             del frontier[min_index]
             expanded.append(Node.copyNode(currentNode))
 
+            self.nodes_expanded_ += 1
+
             for r in currentNode.robots_: # goal test
                 if (target.color_ == r.color_ and target.x_ == r.x_ and target.y_ == r.y_):
                     return currentNode
@@ -59,11 +61,11 @@ class A_Star_Player(AIPlayer):
                         #         h = abs(newNode.robots_[r].x_ - target.x_) + abs(newNode.robots_[r].y_ - target.y_)
                         newNode.h_ = h;
 
-                        print("Moving robot " + str(i) + " " + direction[j] + " at depth " + str(newNode.g_))
+                        # print("Moving robot " + str(i) + " " + direction[j] + " at depth " + str(newNode.g_))
                         newNode.move_tuple_ = (COLORS[i], direction[j])
                         newNode.father_ = currentNode
 
-                        for m in range (len(frontier)): # check if newNode is already in frontier
+                        for m in range(len(frontier)): # check if newNode is already in frontier
                             if (Node.compareState(frontier[m],newNode)==True):
                                 unique_node = False
                                 break
