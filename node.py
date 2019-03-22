@@ -15,7 +15,7 @@ class Node:
 #         self.move_tuple_ = movetuple # what robot was moved to what direction
 # =============================================================================
 
-    def __init__(self, robots, father, movetuple, g, h):
+    def __init__(self, robots, father, movetuple, g=0, h=0):
         self.robots_ = robots
         self.father_ = father
         self.move_tuple_ = movetuple # what robot was moved to what direction
