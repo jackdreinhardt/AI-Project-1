@@ -227,8 +227,7 @@ class App:
             current_player = self.players_[0]
 
             print("\n\nRunning test " + str(i+1))
-            if (current_player.name_ == "DFS"): cp_move_count = current_player.execute_moves_dfs(self, 8)
-            else: cp_move_count = current_player.execute_moves(self)
+            cp_move_count = current_player.execute_moves(self, 8)
             print('{cp} was able to reach the target in {count} moves.'.format(cp=current_player.name_, count=cp_move_count))
             print('{cp} expanded {nodes} to find the solution.'.format(cp=current_player.name_, nodes=current_player.nodes_expanded_))
             pygame.time.delay(1000)
