@@ -2,10 +2,11 @@ from ai_player import *
 from node import Node
 import copy
 import random
+from globals import *
 
-class A_Star_Player:
+class A_Star_Player(AIPlayer):
     def __init__(self):
-        AIPlayer.__init__(self, None, None, None)
+        AIPlayer.__init__(self, 'A-Star', 0)
 
     def search(self, board, target, robots):
         finalNode = self.graph_search(board, target, robots)
@@ -59,7 +60,7 @@ class A_Star_Player:
                         newNode.h_ = h;
 
                         print("Moving robot " + str(i) + " " + direction[j] + " at depth " + str(newNode.g_))
-                        newNode.move_tuple_ = (i, direction[j])
+                        newNode.move_tuple_ = (COLORS[i], direction[j])
                         newNode.father_ = currentNode
 
                         for m in range (len(frontier)): # check if newNode is already in frontier
