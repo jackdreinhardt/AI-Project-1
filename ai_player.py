@@ -31,6 +31,7 @@ class AIPlayer(Player):
     def execute_moves_dfs(self, app, limit):
         print("executing...")
         count = 0
+        self.nodes_expanded_ = 0
         moves = self.search(app.board_, app.target_, app.robots_, limit)
         print(moves)
         for m in moves: # for each move
