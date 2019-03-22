@@ -8,7 +8,7 @@ class A_Star_Player(AIPlayer):
     def __init__(self):
         AIPlayer.__init__(self, 'A-Star', 0)
 
-    def search(self, board, target, robots):
+    def search(self, board, target, robots, limit):
         finalNode = self.graph_search(board, target, robots)
         if (finalNode != FAILURE): return Node.get_solution(finalNode)
         else: return FAILURE

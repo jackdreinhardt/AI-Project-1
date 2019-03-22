@@ -6,7 +6,7 @@ class HumanPlayer(Player):
     def __init__(self, name):
         Player.__init__(self, name, 0)
 
-    def execute_moves(self, app):
+    def execute_moves(self, app, limit=99):
         robot = None
         moveCount = 0
         while True:

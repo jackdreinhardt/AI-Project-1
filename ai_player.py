@@ -10,25 +10,7 @@ class AIPlayer(Player):
         Player.__init__(self, name, score)
         self.nodes_expanded_ = 0
 
-    def execute_moves(self, app):
-        print("executing...")
-        count = 0
-        self.nodes_expanded_ = 0
-        moves = self.search(app.board_, app.target_, app.robots_)
-        print(moves)
-        for m in moves: # for each move
-            for r in app.robots_: # for each robot
-                if r.color_ == m[0]: # check if robot matches
-                    robot = r.move(app.board_, app.robots_, m[1])
-                    for i in range(len(app.robots_)):
-                            if robot.color_ == app.robots_[i].color_:
-                                app.robots_[i] = robot # move robot on board
-                    app.graphics_.drawBoardState(app.board_, app.robots_, app.target_)
-                    pygame.time.delay(1000)
-                    count += 1
-        return count
-
-    def execute_moves_dfs(self, app, limit):
+    def execute_moves(self, app, limit=8):
         print("executing...")
         count = 0
         self.nodes_expanded_ = 0

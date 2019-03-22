@@ -167,24 +167,35 @@ class App:
             other_player = self.players_[2-p]
             robot_start_position = copy.deepcopy(self.robots_)
 
-            if (current_player.name_ == "DFS"): cp_move_count = current_player.execute_moves_dfs(self, 8)
-            else: cp_move_count = current_player.execute_moves(self)
-            print('{cp} was able to reach the target in {count} moves. {op} gets 1 minute to find a better solution.'\
-                .format(cp=current_player.name_, count=cp_move_count, op=other_player.name_))
+            cp_move_count = current_player.execute_moves(self, 8)
+            if cp_move_count == 0:
+                print('{cp} was not able to reach the target. If {op} can find a solution, they win the round.'\
+                    .format(cp=current_player.name_, op=other_player.name_))
+                cp_move_count = 999
+            else:
+                print('{cp} was able to reach the target in {count} moves. {op} gets 1 minute to find a better solution.'\
+                    .format(cp=current_player.name_, count=cp_move_count, op=other_player.name_))
             pygame.time.delay(1000)
 
             first_player_robots = self.robots_
             self.robots_ = robot_start_position
             self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
 
-            if (other_player.name_ == "DFS"): op_move_count = other_player.execute_moves_dfs(self, 8)
-            else: op_move_count = other_player.execute_moves(self)
-            print('{op} was able to reach the target in {count} moves.'\
-                .format(count=op_move_count, op=other_player.name_))
+            op_move_count = other_player.execute_moves(self, 8)
+            if op_move_count == 0:
+                print('{op} was not able to reach the target.'\
+                    .format(count=op_move_count, op=other_player.name_))
+                op_move_count == 999
+            else:
+                print('{op} was able to reach the target in {count} moves.'\
+                    .format(count=op_move_count, op=other_player.name_))
             pygame.time.delay(1000)
 
             if op_move_count < cp_move_count:
                 other_player.score_ += 1
+            elif cp_move_count == 999 and op_move_count == 999:
+                self.robots = robot_start_position
+                print("Neither player was able to find a solution, no points awarded")
             else:
                 current_player.score_ += 1
                 self.robots_ = first_player_robots

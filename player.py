@@ -4,7 +4,7 @@ class Player:
         self.score_ = score
 
     # pure virtual, implemented by child class
-    def execute_moves(self, app):
+    def execute_moves(self, app, limit):
         raise TypeError('Abstract method `' + self._class.__name__ \
                             + '.' + self._function + '\' called')
 
