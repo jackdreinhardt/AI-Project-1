@@ -11,6 +11,7 @@ class GraphicalBoard:
         self.WallThickness = 6
         self.HalfThickness = 2
         
+        pygame.init()
         window_dim = self.SquareSize * self.BoardSize_
         self.WindowSize = (window_dim + 2 * self.EdgeSize, window_dim + 2 * self.EdgeSize)
         self.WindowTitle = "Ricochet Robots"
@@ -30,12 +31,14 @@ class GraphicalBoard:
         self.Green = (0,255,0)
         self.Yellow = (255,255,0)
 
-    #draws everything  
+
+    # draws the complete game state  
     def drawBoardState(self, board, robots, target):
         self.drawBoard()
-        self.drawObstacles(board, robots)
-        self.drawRobots(board, robots, target)
+        self.drawWalls(board)
         self.drawTarget(target)
+        pygame.display.update()
+        self.drawRobots(board, robots, target)
         
         
     #Here, the chess board is drawn    
@@ -52,50 +55,38 @@ class GraphicalBoard:
                 pygame.draw.rect(self.Screen, self.Tile1, (j*self.SquareSize + self.EdgeSize + self.SquareSize, i*self.SquareSize + self.EdgeSize, self.SquareSize, self.SquareSize), 0)
 
 
-    #my new draw method, By using this, the geographyical/physical location of the Robot/Squares should be redundant
-    def drawObstacles(self, board, robots):
+    # my new draw method, By using this, the geographyical/physical location of the Robot/Squares should be redundant
+    def drawWalls(self, board):
         for i in range(0,self.BoardSize_):
             for j in range (0,self.BoardSize_):
                 square = board.square(i, j)
                 if square.wall_south_:
-                    #draw bottom wall
                     pygame.draw.rect(self.Screen, self.Black, (self.EdgeSize+j*self.SquareSize, self.EdgeSize+(i+1)*self.SquareSize-self.WallThickness/2 ,self.SquareSize,self.WallThickness), 0)
                 if square.wall_north_:
-                    #top wall
                     pygame.draw.rect(self.Screen, self.Black, (self.EdgeSize+j*self.SquareSize, self.EdgeSize+i*self.SquareSize-self.WallThickness/2 ,self.SquareSize,self.WallThickness), 0)
                 if square.wall_west_:
-                   # draw left
                     pygame.draw.rect(self.Screen, self.Black, (self.EdgeSize+j*self.SquareSize-self.WallThickness/2, self.EdgeSize+i*self.SquareSize ,self.WallThickness,self.SquareSize), 0)
                 if square.wall_east_:
-                    #draw right
                     pygame.draw.rect(self.Screen, self.Black, (self.EdgeSize+(j+1)*self.SquareSize-self.WallThickness/2,self.EdgeSize+(i)*self.SquareSize,self.WallThickness ,self.SquareSize), 0)
 
-    def resetBoard(self, board, robots, target):
-        self.drawBoard()
-        self.drawObstacles(board, robots)
-        self.drawTarget(target)
-        pygame.display.update()
-    
     def drawTarget(self, target):
         pygame.draw.circle(self.Screen, target.color_, (self.EdgeSize+round((target.x_+0.5)*self.SquareSize),self.EdgeSize+round((target.y_+0.5)*self.SquareSize)), round(self.SquareSize/5), 0)           
 
     def drawRobots(self, board, robots, target):
-        self.resetBoard(board, robots, target)
         for r in robots:
             space = round(self.SquareSize/5)
             pygame.draw.rect(self.Screen, r.color_, (self.EdgeSize+r.x_*self.SquareSize+space, self.EdgeSize+r.y_*self.SquareSize+space ,self.SquareSize-2*space,self.SquareSize-2*space), 0)
         pygame.display.update()
-        
-  
 
     # Determines which robot was selected by the player. Returns None if no robot was selected
     def DetermineRobo(self, click, robots):
         for r in robots:
-          north_click_bound = self.EdgeSize+r.y_*self.SquareSize
-          south_click_bound = self.EdgeSize+(r.y_+1)*self.SquareSize
-          east_click_bound = self.EdgeSize+(r.x_+1)*self.SquareSize
-          west_click_bound = self.EdgeSize+r.x_*self.SquareSize
-          if click[0] > west_click_bound and click[0] < east_click_bound and click[1] > north_click_bound and click[1] < south_click_bound:
-            return r
+            north_click_bound = self.EdgeSize+r.y_*self.SquareSize
+            south_click_bound = self.EdgeSize+(r.y_+1)*self.SquareSize
+            east_click_bound = self.EdgeSize+(r.x_+1)*self.SquareSize
+            west_click_bound = self.EdgeSize+r.x_*self.SquareSize
+            if click[0] > west_click_bound and click[0] < east_click_bound and click[1] > north_click_bound and click[1] < south_click_bound:
+                return r
         return None
+        
 

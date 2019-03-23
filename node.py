@@ -8,12 +8,14 @@ import copy
 
 class Node:
 
-    def __init__(self, robots, father, movetuple):
-        self.robots_ = robots
-        self.father_ = father
-        self.move_tuple_ = movetuple # what robot was moved to what direction
+# =============================================================================
+#     def __init__(self, robots, father, movetuple):
+#         self.robots_ = robots
+#         self.father_ = father
+#         self.move_tuple_ = movetuple # what robot was moved to what direction
+# =============================================================================
 
-    def __init__(self, robots, father, movetuple, g, h):
+    def __init__(self, robots, father, movetuple, g=0, h=0):
         self.robots_ = robots
         self.father_ = father
         self.move_tuple_ = movetuple # what robot was moved to what direction
@@ -34,11 +36,11 @@ class Node:
 
     @staticmethod
     def compareState(state1, state2):
-        t=True
         for i in range(len(state1.robots_)):
-            if (state1.robots_[i].color_!=state2.robots_[i].color_) or (state1.robots_[i].x_!=state2.robots_[i].x_ ) or (state1.robots_[i].y_!=state2.robots_[i].y_):
-                t=False
-        return t
+            for j in range(len(state2.robots_)):
+                if (state1.robots_[i].color_ == state2.robots_[j].color_) and (state1.robots_[i].x_ != state2.robots_[j].x_  or state1.robots_[i].y_ != state2.robots_[j].y_):
+                    return False
+        return True
 
     def get_level(self):
         current = self
