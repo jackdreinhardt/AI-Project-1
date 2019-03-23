@@ -20,8 +20,8 @@ import copy
 #import copy
 
 class Graph_Search_BF:
-    
-    
+
+
     def copyState(self,state1):
         robots = []
         for i in range(len(state1)):
@@ -29,33 +29,38 @@ class Graph_Search_BF:
             y=state1[i].y_
             c= state1[i].color_
             robots.append(Robot(c,x,y))
-            
-        return robots    
-        
-    
+
+        return robots
+
+
     def __init__(self,name,score,board):
         AIPlayer.__init__(self, None, None,None)
-        
+
     def search(self,board,robots,target):
         finalNode = self.graph_Search(board,robots,target)
-        
+
         if (finalNode!=False):
+
             
             return finalNode
+
         else:
             return "FAILURE"
- 
+
 
     def graph_Search(self,board, robots,target):
-        
+
        frontier= []
        expanded = []
        initialState= self.copyState(robots)
        initialNode = Node(initialState,0,0)
+
        limit = 3
+
        frontier.append(initialNode)
-       
+
        while True:
+
           
            
            if (len(frontier)>0):
