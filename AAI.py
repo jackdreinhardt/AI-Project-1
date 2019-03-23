@@ -12,7 +12,7 @@ class Actual_AI_Player:
         robotWalls = self.graph_search(board, target, robots)
         newGoals = self.backtrack(board, target, robots, robotWalls)
         finalNode = self.graph_search2(board, target, robots, newGoals) #Very similar to graph_search. Definitely combine them in the future
-        return Node.get_solution(finalNode)+1 #we add plus 1 which is true for all cases in which another robot is used as a wall. Needs modification. ALso moves of other robots are not added to this result yet
+        pathNewGoal =  Node.get_solution(finalNode) 
     
 
     def find_min_index(self, frontier):
