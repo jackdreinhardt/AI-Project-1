@@ -1,3 +1,4 @@
+1
 import pygame, time
 from sys import argv
 import random as rd
@@ -13,7 +14,6 @@ from settings import Settings
 
 
 from human_player import HumanPlayer
->>>>>>> 8f63a9fec18bfd752cede484750248dbcb27a753
 from graph_bredth import Graph_Search_BF
 from graph_depth_limited import Graph_Search_DF
 from depth_limited_player import Depth_Limited_Player
@@ -42,11 +42,47 @@ class App:
                 self.players_.append(Depth_Limited_Player())
             elif p == 'a-star':
                 self.players_.append(A_Star_Player())
+            elif p == 'bfs':
+                self.players_.append(Graph_Search_BF())
             else:
                 self.players_.append(HumanPlayer(p))
 
         self.graphics_ = GraphicalBoard(s.boardsize_)
+        
+    
+    def __init__(self,s,m):
+        self.board_ = Board(s.boardsize_)
 
+        self.robots_ = []
+        self.robots_.append(Robot(COLORS[0],0, 1))
+        self.robots_.append(Robot(COLORS[1],3, 5))
+        self.robots_.append(Robot(COLORS[2],1, 0))
+        #Robot.validate_positions(self.board_, self.robots_)   
+        
+        self.target_ = Target(s.boardsize_, self.board_, self.robots_)
+        self.target_.color_ = COLORS[m]
+        self.target_.x_=4
+        self.target_.y_=0
+         
+
+        if (s.test_rounds_ > 0):
+            self.test_rounds_ = s.test_rounds_
+        else: self.test_rounds_ = 0
+
+        self.players_ = []
+        for p in s.players_:
+            if p == 'dfs':
+                self.players_.append(Depth_Limited_Player())
+            elif p == 'a-star':
+                self.players_.append(A_Star_Player())
+            elif p == 'bfs':
+                self.players_.append(Graph_Search_BF())
+            else:
+                self.players_.append(HumanPlayer(p))
+
+        self.graphics_ = GraphicalBoard(s.boardsize_)
+            
+         
 
     def KeyToDir(self, key):
         if key == pygame.K_UP:
@@ -103,9 +139,9 @@ class App:
 
     def RunBF(self):
         self.graphics_.drawBoardState(self.board_, self.robots_,self.target_)
-        player = Graph_Search_BF("k",15,None)
+        player = Graph_Search_BF()
         print("running")
-        solution = player.search(self.board_, self.robots_, self.target_)
+        solution = player.search(self.board_, self.robots_, self.target_,5)
 
 
         for i in solution:
@@ -246,8 +282,8 @@ if __name__ == '__main__':
     print("\nusage: python app.py -b <boardsize> -r <robotcount> -t <testroundss> -p1 <playerone> -p2 <playertwo>\n")
     s = Settings()
     s.set_settings(argv)
-    game = App(s)
+    game = App(s,0)
     if (game.test_rounds_ > 0):
         game.Run_Test()
     else: game.Run()
-
+    

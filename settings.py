@@ -1,7 +1,7 @@
 
 
 class Settings:
-    def __init__(self, boardsize=16, robots=4, players=['Player 1','Player 2']):
+    def __init__(self, boardsize=6, robots=3, players=['bfs','Player 2']):
         self.boardsize_ = boardsize
         self.robots_ = robots
         self.players_ = players

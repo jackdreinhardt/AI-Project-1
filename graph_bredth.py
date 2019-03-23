@@ -12,105 +12,103 @@ Created on Tue Mar 19 09:39:24 2019
 @author: kilia
 """
 
-from ai_player import AIPlayer
-from robot import Robot
+from ai_player import *
 from node import Node
-from move_tuple import MoveTuple
 import copy
+import random
+from globals import *
+import copy
+
 #import copy
 
-class Graph_Search_BF:
+class Graph_Search_BF(AIPlayer):
 
 
-    def copyState(self,state1):
-        robots = []
-        for i in range(len(state1)):
-            x=state1[i].x_
-            y=state1[i].y_
-            c= state1[i].color_
-            robots.append(Robot(c,x,y))
-
-        return robots
+    def __init__(self):
+        AIPlayer.__init__(self, 'Breadth-First', 0)
 
 
-    def __init__(self,name,score,board):
-        AIPlayer.__init__(self, None, None,None)
+    
 
-    def search(self,board,robots,target):
-        finalNode = self.graph_Search(board,robots,target)
-
-        if (finalNode!=False):
-
-            
-            return finalNode
-
-        else:
-            return "FAILURE"
+    def search(self, board, target, robots, limit):
+        finalNode = self.graph_search(board, target, robots)
+        if (finalNode != FAILURE): return Node.get_solution(finalNode)
+        else: return FAILURE
 
 
-    def graph_Search(self,board, robots,target):
+    def graph_search(self,board, target,robots):
 
-       frontier= []
+       frontier = []
        expanded = []
-       initialState= self.copyState(robots)
-       initialNode = Node(initialState,0,0)
-
-       limit = 3
-
+       robots_copy = copy.deepcopy(robots)
+       initialNode = Node(robots_copy, 0, 0, 0, 0)
        frontier.append(initialNode)
+       
+       limit = 6
 
        while True:
+           
+           if (len(frontier) == 0):
+               print("fail")
+               return FAILURE
 
+           
+           currentNode = Node.copyNode(frontier[0])
+           del frontier[0]
+           expanded.append((currentNode))
+
+           self.nodes_expanded_ += 1
+             
           
-           
-           if (len(frontier)>0):
-              currentNode = Node.copy_node(frontier[0])
-              del frontier[0]
-              expanded.append(Node.copy_node(currentNode))
-           else:
-              print(len(expanded))
-              return False
-           
-           if (currentNode.get_level()<=limit):
-            
-               for r in currentNode.robots_:
-                   if (target.color_ == r.color_ and target.x_ == r.x_ and target.y_==r.y_):
-                           return currentNode
-                  
+         
                
-               for i in range (len(currentNode.robots_)):
-                    #move robot in one direction
-                    direction = ["NORTH", "SOUTH", "EAST", "WEST"]
+               
+           for i in range (len(currentNode.robots_)):
+                
+                #move robot in one direction
+                direction = ["NORTH", "SOUTH", "EAST", "WEST"]
+                
+                for j in range (len(direction)):
+                   
                     
-                    for j in range (len(direction)):
-                       
+                    if (currentNode.robots_[i].move_possible(board,currentNode.robots_,direction[j])) :
                         
-                        if (currentNode.robots_[i].move_possible(board,robots,direction[j])) :
-                            newNode =  Node.copy_node(currentNode)
-                            tr=True
+                        
+                        newNode =  Node.copyNode(currentNode)
+                        unique_node=True
+                        newNode.robots_[i] = newNode.robots_[i].move(board,currentNode.robots_,direction[j])
+                        
+                        newNode.move_tuple_ = (copy.deepcopy(COLORS[i]), direction[j])
+                        newNode.father_ = currentNode
+                        r=newNode.robots_[i]
+                        if target.color_ == r.color_ and target.x_ == r.x_ and target.y_ == r.y_:
+                            return newNode
+                        
+                        
+                        
+                        
+                        
+                        for m in range (len(frontier))  :
+                            if (Node.compareState(frontier[m],newNode)==True):
+                                unique_node=False
+                                break
+                        for n in range(len(expanded))  :  
+                            if (Node.compareState(expanded[n],newNode)==True):
+                                unique_node=False
+                                break
+                        
+          
+                        if(unique_node and newNode.get_level()<=limit): 
+                            newNode.father_.children_.append(newNode)
+                            frontier.append((newNode))
                             
-                            newNode.robots_[i] = newNode.robots_[i].move(board,robots,direction[j])
                             
                             
-                            newNode.move_tuple_=MoveTuple(copy.deepcopy(currentNode.robots_[i].color_),direction[j])
-                            newNode.father_=currentNode
+                        
                             
-                            for m in range (len(frontier))  :
-                                if (Node.compareState(frontier[m],newNode)==True):
-                                    tr=False
-                                    break
-                            for n in range(len(expanded))  :  
-                                if (Node.compareState(expanded[n],newNode)==True):
-                                    tr=False
-                                    break
-                            if(tr):
-                                
-                                frontier.append(Node.copy_node(newNode))
-                                
-                                
-                            
-                            
-                            
+                        
+                        
+                        
                            
    
                         

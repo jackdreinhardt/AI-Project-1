@@ -5,6 +5,7 @@ Created on Wed Mar 20 14:35:17 2019
 @author: kilia
 """
 import copy
+from robot import Robot
 
 class Node:
 
@@ -21,6 +22,7 @@ class Node:
         self.move_tuple_ = movetuple # what robot was moved to what direction
         self.g_ = g # g(n)
         self.h_ = h # heuristic
+        self.children_ = []
 
     def get_cost(self):
         return self.g_ + self.h_
@@ -37,9 +39,9 @@ class Node:
     @staticmethod
     def compareState(state1, state2):
         for i in range(len(state1.robots_)):
-            for j in range(len(state2.robots_)):
-                if (state1.robots_[i].color_ == state2.robots_[j].color_) and (state1.robots_[i].x_ != state2.robots_[j].x_  or state1.robots_[i].y_ != state2.robots_[j].y_):
-                    return False
+            
+            if (state1.robots_[i].color_ == state2.robots_[i].color_ and state1.robots_[i].x_ == state2.robots_[i].x_  and state1.robots_[i].y_ == state2.robots_[i].y_):
+                return False
         return True
 
     def get_level(self):
@@ -52,7 +54,13 @@ class Node:
 
     @staticmethod
     def copyNode(oldNode):
-        return copy.deepcopy(oldNode)
+        mt = copy.deepcopy(oldNode.move_tuple_)
+        father = copy.deepcopy(oldNode.father_)
+        robots =[]
+        for r in oldNode.robots_:
+            robots.append (Robot(r.color_,r.x_,r.y_))
+        return Node(robots,father,mt,0,0)
+    
 
     
     
@@ -93,5 +101,13 @@ class Node:
                 n = Node.copy_node(n.father_)  
                 if n.move_tuple.dir_==None:
                     return True
+    @staticmethod        
+    def move_robot(node_input,r_color,new_x,new_y):
+        new_node = Node.copyNode(node_input)
+        for r in new_node.robots_:
+            if(r.color_==r_color):
+                r.x_=new_x
+                r.y_=new_y
+        return new_node        
             
-
+        
