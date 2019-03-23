@@ -13,7 +13,6 @@ from settings import Settings
 
 
 from human_player import HumanPlayer
->>>>>>> 8f63a9fec18bfd752cede484750248dbcb27a753
 from graph_bredth import Graph_Search_BF
 from graph_depth_limited import Graph_Search_DF
 from depth_limited_player import Depth_Limited_Player
@@ -234,7 +233,7 @@ class App:
             print("\n\nRunning test " + str(i+1))
             cp_move_count = current_player.execute_moves(self, 8)
             print('{cp} was able to reach the target in {count} moves.'.format(cp=current_player.name_, count=cp_move_count))
-            print('{cp} expanded {nodes} to find the solution.'.format(cp=current_player.name_, nodes=current_player.nodes_expanded_))
+            print('{cp} expanded {nodes} nodes to find the solution.'.format(cp=current_player.name_, nodes=current_player.nodes_expanded_))
             pygame.time.delay(1000)
 
             self.target_.set_target(self.board_, self.robots_)
@@ -250,4 +249,3 @@ if __name__ == '__main__':
     if (game.test_rounds_ > 0):
         game.Run_Test()
     else: game.Run()
-
