@@ -10,7 +10,7 @@
 \begin{center}
 Project report on\\
 \vspace{0.5cm}
-{{\Large \sc Artificial Intelligence Playing the Ricochet Robots Boardgame}}\\
+{{\Large \sc Artificial Intelligence Playing the Ricochet Robots Board Game}}\\
 \vspace{0.5cm} for 02180 Introduction to Artificial Intelligence
 \end{center}
 \rule{\textwidth}{0.5pt}
@@ -22,16 +22,47 @@ Project report on\\
 \rule{\textwidth}{1pt}
 
 \tableofcontents
-\section{Game Rules}
-\section{Game Representation}
-\section{State Space and Complexity}
-\section{Search Algorithms and Results}
-  \subsection{Recursive Depth-Limited Search}
-  \subsection{Breadth First Search}
-  \subsection{A* Search}
-  \subsection{Custom Search Algorithm}
-\section{Conclusion}
 \thispagestyle{empty}
 \newpage
+\section{Game Rules}
+
+
+\section{Game Representation}
+
+
+\section{State Space and Complexity}
+The state space and branching factor of Ricochet Robots is large, making the task of reaching the target non-trivial for both humans and AI search algorithms.
+The board consists of a sixteen-by-sixteen grid with walls placed in predetermined positions.  With four robots that can be moved anywhere on the board (other
+than on top of another robot), this leaves a total of $(16*16)(16*16-1)(16*16-2)(16*16-3) = 4,195,023,360$ board configurations for a single wall setup and
+target placement.  Depending on the board setup, some states may not be reachable, but the state space still remains large. Each robot can move in any of the
+four directions on the board until it reaches a wall or another robot in its path.  Assuming that each robot has an obstruction in one of the four directions
+decreases the possible moves for each robot to three, giving the search algorithm a branching factor of $4*3 = 12$.  This assumption will be true in most cases since
+the robot must be stopped by an obstruction before moving in a different direction. \\
+
+The large state space and branching factor makes the problem of reaching the goal state difficult for traditional AI search algorithms with limited memory and time.
+In order to simplify the game and drastically reduce the size of the state space and the branching factor, we implemented Ricochet Robots in a way that allows the
+user to choose the size of the board (16x16 or 6x6) as well as the number of robots. In general, the size of the state space can be approximated by $(w*h)^n$ and
+the branching factor can be approximated by $n*3$, where w is the board width, h is the board height and n is the number of robots.  This reduced implementation
+of Ricochet Robots allowed us to play and test our AI algorithms without surpassing our memory and time limitations.
+
+
+\section{Search Algorithms and Results}
+
+
+  \subsection{Recursive Depth-Limited Search}
+
+
+  \subsection{Breadth First Search}
+
+
+  \subsection{A* Search}
+
+
+  \subsection{Custom Search Algorithm}
+
+
+\section{Conclusion}
+
+
 
 \end{document}
