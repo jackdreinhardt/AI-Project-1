@@ -46,7 +46,7 @@ class Robot:
                 x -= 1
         else:
             print("The key you entered is not a valid direction.")
-        return Robot(self.color_, x, y)
+        return Robot(c,x,y)
 
 
     def move_possible(self, board, robots, d):

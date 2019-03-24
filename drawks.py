@@ -6,7 +6,7 @@ from square import Square
 class GraphicalBoard:
     def __init__(self, boardSize):
         self.BoardSize_ = boardSize
-        self.SquareSize = 50
+        self.SquareSize = 40
         self.EdgeSize = 20
         self.WallThickness = 6
         self.HalfThickness = 2

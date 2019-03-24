@@ -13,9 +13,8 @@ from settings import Settings
 
 
 from human_player import HumanPlayer
-from graph_bredth import Graph_Search_BF
-from graph_depth_limited import Graph_Search_DF
-from depth_limited_player import Depth_Limited_Player
+from informed_bf_player import Graph_Search_BF
+from informed_df_player import Graph_Search_DF
 from a_star_player import A_Star_Player
 from AAI import Advanced_AI_Player
 
@@ -44,11 +43,49 @@ class App:
                 self.players_.append(A_Star_Player())
             elif p == 'aai':
                 self.players_.append(Advanced_AI_Player())
+            elif p == 'bfs':
+                self.players_.append(Graph_Search_BF())
+            elif p == 'i_dfs':
+                self.players_.append(Graph_Search_DF())    
             else:
                 self.players_.append(HumanPlayer(p))
 
         self.graphics_ = GraphicalBoard(s.boardsize_)
-
+        
+    
+#    def __init__(self,s,m):
+#        self.board_ = Board(s.boardsize_)
+#
+#        self.robots_ = []
+#        self.robots_.append(Robot(COLORS[0],0, 1))
+#        self.robots_.append(Robot(COLORS[1],1, 0))
+#        #self.robots_.append(Robot(COLORS[2],1, 0))
+#        #Robot.validate_positions(self.board_, self.robots_)   
+#        
+#        self.target_ = Target(s.boardsize_, self.board_, self.robots_)
+#        self.target_.color_ = COLORS[m]
+#        self.target_.x_=4
+#        self.target_.y_=5
+#         
+#
+#        if (s.test_rounds_ > 0):
+#            self.test_rounds_ = s.test_rounds_
+#        else: self.test_rounds_ = 0
+#
+#        self.players_ = []
+#        for p in s.players_:
+#            if p == 'dfs':
+#                self.players_.append(Depth_Limited_Player())
+#            elif p == 'a-star':
+#                self.players_.append(A_Star_Player())
+#            elif p == 'bfs':
+#                self.players_.append(Graph_Search_BF())
+#            else:
+#                self.players_.append(HumanPlayer(p))
+#
+#        self.graphics_ = GraphicalBoard(s.boardsize_)
+            
+         
 
     def KeyToDir(self, key):
         if key == pygame.K_UP:
@@ -105,9 +142,9 @@ class App:
 
     def RunBF(self):
         self.graphics_.drawBoardState(self.board_, self.robots_,self.target_)
-        player = Graph_Search_BF("k",15,None)
+        player = Graph_Search_BF()
         print("running")
-        solution = player.search(self.board_, self.robots_, self.target_)
+        solution = player.search(self.board_, self.robots_, self.target_,5)
 
 
         for i in solution:
@@ -236,7 +273,7 @@ class App:
             print("\n\nRunning test " + str(i+1))
             cp_move_count = current_player.execute_moves(self, 8)
             print('{cp} was able to reach the target in {count} moves.'.format(cp=current_player.name_, count=cp_move_count))
-            print('{cp} expanded {nodes} nodes to find the solution.'.format(cp=current_player.name_, nodes=current_player.nodes_expanded_))
+            print('{cp} expanded {nodes} to find the solution.'.format(cp=current_player.name_, nodes=current_player.nodes_expanded_))
             pygame.time.delay(1000)
 
             self.target_.set_target(self.board_, self.robots_)
@@ -252,3 +289,4 @@ if __name__ == '__main__':
     if (game.test_rounds_ > 0):
         game.Run_Test()
     else: game.Run()
+    
