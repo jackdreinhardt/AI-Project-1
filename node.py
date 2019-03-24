@@ -41,8 +41,20 @@ class Node:
         for i in range(len(state1.robots_)):
             
             if (state1.robots_[i].color_ == state2.robots_[i].color_ and state1.robots_[i].x_ == state2.robots_[i].x_  and state1.robots_[i].y_ == state2.robots_[i].y_):
+                #states are e
                 return False
         return True
+    
+    
+    # assuming both nodes having the same order of robots and it's colors
+    # returns True if the nodes robots are exactly the same
+    @staticmethod 
+    def compare_robots(node_1,node_2):
+        for i in range(len(node_1.robots_)):
+            if ( node_1.robots_[i].x_ != node_2.robots_[i].x_ or node_1.robots_[i].y_ != node_2.robots_[i].y_):
+                return False
+        return True    
+                
 
     def get_level(self):
         current = self

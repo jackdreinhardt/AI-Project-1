@@ -1,6 +1,8 @@
 import random as rd
 from globals import *
 from board import Board
+from robot import Robot
+from square import Square
 
 class Target:
     def __init__(self, boardSize, board, robots):
@@ -32,9 +34,5 @@ class Target:
                 if self.valid_target_loc(board, robots, i, j):
                     locations.append((i,j))
         return locations
-
-
-
-
-
-
+    
+   
