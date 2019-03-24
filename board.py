@@ -9,7 +9,10 @@ class Board:
         self.PlaceWalls(boardSize)
 
     def square(self, i, j):
-        return self.board_[i][j]
+        if i >= 0 and i <= self.boardsize_-1 and j >= 0 and j <= self.boardsize_-1:
+            return self.board_[i][j]
+        else:
+            return False
 
     def center(self, i, j):
         if self.boardsize_ == 16:

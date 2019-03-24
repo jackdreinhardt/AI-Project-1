@@ -17,6 +17,7 @@ from graph_bredth import Graph_Search_BF
 from graph_depth_limited import Graph_Search_DF
 from depth_limited_player import Depth_Limited_Player
 from a_star_player import A_Star_Player
+from AAI import Advanced_AI_Player
 
 
 class App:
@@ -41,6 +42,8 @@ class App:
                 self.players_.append(Depth_Limited_Player())
             elif p == 'a-star':
                 self.players_.append(A_Star_Player())
+            elif p == 'aai':
+                self.players_.append(Advanced_AI_Player())
             else:
                 self.players_.append(HumanPlayer(p))
 
