@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Sun Mar 24 15:13:57 2019
+
+@author: kilia
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Wed Mar 20 14:46:16 2019
 
 @author: kilia
@@ -18,12 +25,11 @@ import copy
 import random
 from globals import *
 import copy
-from goal_state import Goal_state
-from target import Target
 
+from target import Target
 #import copy
 
-class Graph_Search_BF(AIPlayer):
+class Graph_Search_BF_h(AIPlayer):
 
 
     def __init__(self):
@@ -48,9 +54,7 @@ class Graph_Search_BF(AIPlayer):
        frontier = []
        expanded = []
        
-       
-       #from all these positions the target can be reached within less than 5+1 moves
-       goal_states = target.get_goal_locations(board,1)
+       goal_states = target.get_goal_locations(board,5)
        
        initialNode = Node(robots, 0, 0, 0, 0)
        frontier.append(initialNode)
@@ -102,16 +106,6 @@ class Graph_Search_BF(AIPlayer):
                             return newNode
                         
                         
-#                        for g in goal_states:
-#                            if (g.is_goal_state(board,robots)!=False):
-#                                # goal state is reachable from the current node -> All nodes will be removed from the frontier
-#                                
-#                                frontier.clear()
-#                                frontier.append((newNode))
-#                                break
-                                
-                                
-                        
                         for m in range (len(frontier))  :
                             if (Node.compare_robots(frontier[m],newNode)):
                                 unique_node=False
@@ -133,7 +127,7 @@ class Graph_Search_BF(AIPlayer):
           else:
               return False
              
-                     
+                        
                             
                         
                         

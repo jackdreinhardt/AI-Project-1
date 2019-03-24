@@ -10,7 +10,7 @@ class AIPlayer(Player):
         Player.__init__(self, name, score)
         self.nodes_expanded_ = 0
 
-    def execute_moves(self, app, limit=8):
+    def execute_moves(self, app, limit=10):
         print("executing...")
         count = 0
         self.nodes_expanded_ = 0
