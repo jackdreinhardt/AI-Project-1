@@ -16,7 +16,7 @@ Project report on\\
 \rule{\textwidth}{0.5pt}
 \begin{description}
 \item\begin{tabular}{rll}
-    \textbf{Contributors:}& Jannis Haberhausen &(s186398)\\ & Jack Reinhardt &(s186182)\\ & Killian Speiser &(sxxxxxx)\\ & Jacob Miller &(s186093) \\
+    \textbf{Contributors:}& Jannis Haberhausen &(s186398)\\ & Jack Reinhardt &(s186182)\\ & Kilian Speiser &(s181993)\\ & Jacob Miller &(s186093) \\
 \end{tabular}
 \end{description}
 \rule{\textwidth}{1pt}
@@ -31,6 +31,7 @@ Project report on\\
 
 
 \section{State Space and Complexity}
+\label{sec:stateSpace}
 The state space and branching factor of Ricochet Robots is large, making the task of reaching the target non-trivial for both humans and AI search algorithms.
 The board consists of a sixteen-by-sixteen grid with walls placed in predetermined positions.  With four robots that can be moved anywhere on the board (other
 than on top of another robot), this leaves a total of $(16*16)(16*16-1)(16*16-2)(16*16-3) = 4,195,023,360$ board configurations for a single wall setup and
@@ -42,8 +43,7 @@ the robot must be stopped by an obstruction before moving in a different directi
 The large state space and branching factor makes the problem of reaching the goal state difficult for traditional AI search algorithms with limited memory and time.
 In order to simplify the game and drastically reduce the size of the state space and the branching factor, we implemented Ricochet Robots in a way that allows the
 user to choose the size of the board (16x16 or 6x6) as well as the number of robots. In general, the size of the state space can be approximated by $(w*h)^n$ and
-the branching factor can be approximated by $n*3$, where w is the board width, h is the board height and n is the number of robots.  This reduced implementation
-of Ricochet Robots allowed us to play and test our AI algorithms without surpassing our memory and time limitations.
+the branching factor can be approximated by $n*3$, where w is the board width, h is the board height and n is the number of robots.  This reduced implementation of Ricochet Robots allowed us to play and test our AI algorithms without surpassing our memory and time limitations.
 
 
 \section{Search Algorithms and Results}
@@ -52,7 +52,11 @@ of Ricochet Robots allowed us to play and test our AI algorithms without surpass
   \subsection{Recursive Depth-Limited Search}
 
 
-  \subsection{Breadth First Search}
+  \subsection{Informed Search: Breadth and Depth ??}
+  The team decided to develop a informed breadth first search to guarantee finding always the goal state by using as few moves as possible. However, this leads as mentioned in \ref{sec:stateSpace} this leads to a tree with up to $16^n$ knots.  
+  \begin{itemize}
+  	\item Difficulty of setting the limit to a certain level
+  \end{itemize}
 
 
   \subsection{A* Search}

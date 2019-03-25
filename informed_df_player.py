@@ -26,13 +26,13 @@ import random
 from globals import *
 import copy
 
-#import copy
+#Not proper DF as it always expands the node in all directions. Therefore, it won't get
 
 class Graph_Search_DF(AIPlayer):
 
 
     def __init__(self):
-        AIPlayer.__init__(self, 'Breadth-First', 0)
+        AIPlayer.__init__(self, 'Informed Depth First', 0)
 
 
     
@@ -68,6 +68,8 @@ class Graph_Search_DF(AIPlayer):
                
                if self.is_target(robot,target):
                             return initialNode
+                        
+       x=0                 
 
        while True:
            
@@ -82,8 +84,11 @@ class Graph_Search_DF(AIPlayer):
            expanded.append((currentNode))
 
            self.nodes_expanded_ += 1
+           if (len(expanded)>x+100):
+               x+=100
+               print(len(expanded))
            
-                        
+
           
          
                

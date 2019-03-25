@@ -13,7 +13,7 @@ class AIPlayer(Player):
         self.nodes_expanded_ = 0
         self.start_time = 0
 
-    def execute_moves(self, app, limit=10):
+    def execute_moves(self, app, limit=10, heuristic=None):
         print(self.name_, "is searching for a solution...")
         count = 0
         self.nodes_expanded_ = 0
@@ -36,5 +36,5 @@ class AIPlayer(Player):
     # moves is an array of (robot, direction) pairs
     #   robot: an instance of the Robot class
     #   direction: a string, "NORTH" "SOUTH" "EAST" or "WEST"
-    def search(self, board, robots, limit):
+    def search(self, board, robots, limit, heuristic):
         return None
