@@ -1,14 +1,17 @@
 from player import Player
+from globals import *
 import pygame
+import time
+import copy
+import random
 
-SUCCESS = "SUCCESS"
-CUTOFF = "CUTOFF"
-FAILURE = "FAILURE"
+CUTOFF_TIME = 60
 
 class AIPlayer(Player):
     def __init__(self, name, score):
         Player.__init__(self, name, score)
         self.nodes_expanded_ = 0
+        self.start_time = 0
 
     def execute_moves(self, app, limit=10):
         print("executing...")
@@ -16,6 +19,8 @@ class AIPlayer(Player):
         self.nodes_expanded_ = 0
         moves = self.search(app.board_, app.target_, app.robots_, limit)
         print(moves)
+        if (moves == FAILURE or moves == TIME_CUTOFF or moves == DEPTH_CUTOFF):
+            return moves
         for m in moves: # for each move
             for r in app.robots_: # for each robot
                 if r.color_ == m[0]: # check if robot matches
