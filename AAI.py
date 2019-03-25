@@ -172,7 +172,7 @@ class Advanced_AI_Player(AIPlayer):
         return FAILURE
     
     
-    def CombinePaths(pathNewGoal):
+    # def CombinePaths(pathNewGoal):
         
         
         
