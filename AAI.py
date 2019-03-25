@@ -10,14 +10,13 @@ class Advanced_AI_Player(AIPlayer):
 
     def search(self, board, target, robots, limit):
         robotWalls = self.graph_search(board, target, robots)
-        print("finished graph_search")
-        print(robotWalls)
+        print("robot Walls" , robotWalls)
         newGoals = self.backtrack(board, target, robots, robotWalls)
-        print("finished backtrack")
+        print("new goal states" , newGoals)
         finalNode = self.graph_search2(board, target, robots, newGoals) #Very similar to graph_search. Definitely combine them in the future
-        print("finished graph_search2")
         pathNewGoal =  Node.get_solution(finalNode) 
-        print("end")
+        solution = CombinePaths(pathNewGoal)
+        return solution
         
 
     def find_min_index(self, frontier):
@@ -33,11 +32,12 @@ class Advanced_AI_Player(AIPlayer):
     def graph_search(self, board, target, robots):
         frontier = []
         expanded = []
-        #robotWalls = []
+        robotWalls = []
         initialState = copy.deepcopy(robots)
         initialNode = Node(initialState, 0, 0, 0, 0)
         frontier.append(initialNode)
-        print(frontier)
+        for r in robots:
+            robotWalls.append((r.y_,r.x_))
         cutoff = 5
 
         while cutoff > 0:
@@ -60,18 +60,10 @@ class Advanced_AI_Player(AIPlayer):
                                 newNode = Node.copyNode(currentNode)
                                 unique_node = True
                                 newNode.robots_[i] = newNode.robots_[i].move(board, robots, direction[j])
+                                ### How can I add the tuples of the df search into the array robotWalls?? This is not working:
+                                robotWalls.append((currentNode.robots_[i].y_, currentNode.robots_[i].x_))
 
-# =============================================================================
-#                         # calculate cost of newNode
-#                         newNode.g_ = newNode.g_ + 1;
-#                         h = 0;
-#                         # for r in range(len(newNode.robots_)):
-#                         #     if (newNode.robots_[r].color_ == target.color_):
-#                         #         h = abs(newNode.robots_[r].x_ - target.x_) + abs(newNode.robots_[r].y_ - target.y_)
-#                         newNode.h_ = h;
-# =============================================================================
-
-                                print("Moving robot " + str(i) + " " + direction[j] + " at depth " + str(newNode.g_))
+                                #print("Moving robot " + str(i) + " " + direction[j] + " at depth " + str(newNode.g_))
                                 newNode.move_tuple_ = (i, direction[j])
                                 newNode.father_ = currentNode
 
@@ -85,48 +77,50 @@ class Advanced_AI_Player(AIPlayer):
                                         break
                                 if(unique_node): 
                                     frontier.append(Node.copyNode(newNode))
-        return expanded
+        return robotWalls
     
 
     def backtrack(self, board, target, robots, robotWalls):
+        ###
+        # The last square is not added to newGoals because the while loop will be True at that point
+        ###
         newGoals = []
         if board.square(target.y_, target.x_).wall_north_ == True:
             i = target.y_
             j = target.x_
             while board.square(i, j).wall_south_ != True: #Note: not checking for other robots in the way, might wanna change that (or modify: add 1 move when travelling "through" a robot)
-                if board.square(i-1, j) in robotWalls or board.square(i+1, j) in robotWalls:
-                    newGoals.append(board.square(i, j))
-                    j += 1
-                else:
-                    break
+                print(i,j)
+                if (i,j-1) in robotWalls or (i,j+1) in robotWalls:
+                    newGoals.append((i, j))
+                    print("i und j" , i, j)
+                i += 1
         if board.square(target.y_, target.x_).wall_south_ == True:
             i = target.y_
             j = target.x_
             while board.square(i, j).wall_north_ != True: #Note: not checking for other robots in the way, might wanna change that (or modify: add 1 move when travelling "through" a robot)
-                if board.square(i-1, j) in robotWalls or board.square(i+1, j) in robotWalls:
-                    newGoals.append(board.square(i, j))
-                    j -= 1
-                else:
-                    break
+                print(i,j)
+                if (i,j-1) in robotWalls or (i, j+1) in robotWalls:
+                    newGoals.append((i, j))
+                    print("i und j" , i, j)                    
+                i -= 1
         if board.square(target.y_, target.x_).wall_east_ == True:
             i = target.y_
             j = target.x_
             while board.square(i, j).wall_west_ != True: #Note: not checking for other robots in the way, might wanna change that (or modify: add 1 move when travelling "through" a robot)
-                if board.square(i, j-1) in robotWalls or board.square(i, j+1) in robotWalls:
-                    newGoals.append(board.square(i, j))
-                    i -= 1        
-                else:
-                    break
+                print(i,j)
+                if (i-1,j) in robotWalls or (i+1,j) in robotWalls:
+                    newGoals.append((i, j))
+                    print("i und j" , i, j)
+                j -= 1        
         if board.square(target.y_, target.x_).wall_west_ == True:
             i = target.y_
             j = target.x_
             while board.square(i, j).wall_east_ != True: #Note: not checking for other robots in the way, might wanna change that (or modify: add 1 move when travelling "through" a robot)
-                if board.square(i, j-1) in robotWalls or board.square(i, j+1) in robotWalls:
-                    newGoals.append(board.square(i, j))
-                    i += 1        
-                else:
-                    break
-        print(newGoals)
+                print(i,j)
+                if (i-1,j) in robotWalls or (i+1,j) in robotWalls:
+                    newGoals.append((i, j))
+                    print("i und j" , i, j)
+                j += 1        
         return newGoals
         
     
@@ -162,7 +156,7 @@ class Advanced_AI_Player(AIPlayer):
                             unique_node = True
                             newNode.robots_[i] = newNode.robots_[i].move(board, robots, direction[j])
                         
-                            print("Moving robot " + str(i) + " " + direction[j] + " at depth " + str(newNode.g_))
+                            #print("Moving robot " + str(i) + " " + direction[j] + " at depth " + str(newNode.g_))
                             newNode.move_tuple_ = (i, direction[j])
                             newNode.father_ = currentNode
 
@@ -176,6 +170,10 @@ class Advanced_AI_Player(AIPlayer):
                                     break
                             if(unique_node): frontier.append(Node.copyNode(newNode))
         return FAILURE
+    
+    
+    def CombinePaths(pathNewGoal):
+        
         
         
         
