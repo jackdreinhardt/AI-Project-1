@@ -4,7 +4,7 @@ class Depth_Limited_Player(AIPlayer):
     def __init__(self):
         AIPlayer.__init__(self, 'DFS', 0)
 
-    def search(self, board, target, robots, limit):
+    def search(self, board, target, robots, limit, heuristic=None):
         moves = [] # empty list to store history of moves
         self.start_time = time.time()
         return self.recursive_DLS(board, target, robots, limit, moves)
@@ -12,13 +12,12 @@ class Depth_Limited_Player(AIPlayer):
     def recursive_DLS(self, board, target, robots, limit, moves):
         self.nodes_expanded_ += 1
         for r in robots:
-          #if board[r.y_][r.x_].target_ != None and board[r.y_][r.x_].target_.color_ == r.color_:
           if (target.color_ == r.color_ and target.x_ == r.x_ and target.y_ == r.y_):
             return moves # return solution
-        if limit == 0: # if depth limit was reached
-            return DEPTH_CUTOFF
         if (time.time() - self.start_time > CUTOFF_TIME):
             return TIME_CUTOFF
+        if limit == 0: # if depth limit was reached
+            return DEPTH_CUTOFF
         else:
             cutoff_occurred = False
             time_cutoff_occurred = False
@@ -49,8 +48,8 @@ class Depth_Limited_Player(AIPlayer):
                             time_cutoff_occurred = True
                         elif result != FAILURE:
                             return result
-            if cutoff_occurred:
-                return DEPTH_CUTOFF
             if time_cutoff_occurred:
                 return TIME_CUTOFF
+            if cutoff_occurred:
+                return DEPTH_CUTOFF
             else: return FAILURE

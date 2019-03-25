@@ -2,6 +2,7 @@ import pygame, time
 from sys import argv
 import random as rd
 import copy
+import csv
 
 from globals import *
 
@@ -218,8 +219,18 @@ class App:
             self.target_.set_target(self.board_, self.robots_)
             self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
 
-    def Run_Test(self):
+    def Run_Test(self, limit=None, heuristic=None):
         self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
+
+        csv_file = open('test_csvs/test.csv', mode='a+')
+        csv_write = csv.writer(csv_file, delimiter=',')
+
+        csv_write.writerow([])
+        csv_write.writerow(['AI', 'Board Size', 'Robots', 'Iteration', 'Outcome', 'Moves', 'Nodes Expanded'])
+
+        successes = 0
+        total_moves = 0
+        total_nodes_expanded = 0
 
         for i in range(self.test_rounds_):
             pygame.time.delay(100)
@@ -231,26 +242,139 @@ class App:
 
             current_player = self.players_[0]
 
+            AI_name = current_player.name_
+            if (heuristic != None):
+                AI_name = current_player.name_ + " - " + str(heuristic)
+            if (limit != 0 and limit != None):
+                AI_name = current_player.name_ + " - " + str(limit)
+
             print("\n\nRunning test " + str(i+1))
-            cp_move_count = current_player.execute_moves(self, 15)
+            cp_move_count = current_player.execute_moves(self, limit, heuristic)
             if (cp_move_count == FAILURE or cp_move_count == TIME_CUTOFF or cp_move_count == DEPTH_CUTOFF):
                 print(cp_move_count)
                 print('{cp} expanded {nodes} nodes.'.format(cp=current_player.name_, nodes=current_player.nodes_expanded_))
+                csv_write.writerow([AI_name, self.board_.boardsize_, len(self.robots_), i+1, cp_move_count])
             else:
+                successes += 1
+                total_moves += cp_move_count
+                total_nodes_expanded += current_player.nodes_expanded_
                 print('{cp} was able to reach the target in {count} moves.'.format(cp=current_player.name_, count=cp_move_count))
                 print('{cp} expanded {nodes} nodes to find the solution.'.format(cp=current_player.name_, nodes=current_player.nodes_expanded_))
+                csv_write.writerow([AI_name, self.board_.boardsize_, len(self.robots_), i+1, 'SUCCESS', cp_move_count, current_player.nodes_expanded_])
             pygame.time.delay(1000)
 
             self.target_.set_target(self.board_, self.robots_)
             self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
+        csv_file.close()
         print("Finished test")
+        results = [AI_name, self.board_.boardsize_, len(self.robots_), successes/self.test_rounds_, total_moves/successes, total_nodes_expanded/successes]
+        return results
+
+def Run_Tests():
+    s = Settings()
+
+    csv_file = open('test_csvs/test_averages.csv', mode='a+')
+    csv_write = csv.writer(csv_file, delimiter=',')
+
+    csv_write.writerow([])
+    csv_write.writerow(['AI', 'Board Size', 'Robots', 'Success Ratio', 'Avg Moves', 'Avg Nodes Expanded'])
+
+    arguments = ["python", "-b", "6", "-r", "3", "-t", "30", "-p1", "dfs"]
+    s.set_settings(arguments)
+    game = App(s)
+    results = game.Run_Test(6)
+    csv_write.writerow(results)
+    results = game.Run_Test(8)
+    csv_write.writerow(results)
+    results = game.Run_Test(10)
+    csv_write.writerow(results)
+    results = game.Run_Test(12)
+    csv_write.writerow(results)
+
+    arguments = ["python", "-b", "6", "-r", "4", "-t", "30", "-p1", "dfs"]
+    s.set_settings(arguments)
+    game = App(s)
+    results = game.Run_Test(6)
+    csv_write.writerow(results)
+    results = game.Run_Test(8)
+    csv_write.writerow(results)
+    results = game.Run_Test(10)
+    csv_write.writerow(results)
+    results = game.Run_Test(12)
+    csv_write.writerow(results)
+
+    arguments = ["python", "-b", "6", "-r", "3", "-t", "30", "-p1", "a-star"]
+    s.set_settings(arguments)
+    game = App(s)
+    results = game.Run_Test(0, "Manhattan Distance")
+    csv_write.writerow(results)
+    results = game.Run_Test(0, "Row/Column")
+    csv_write.writerow(results)
+    results = game.Run_Test(0, None)
+    csv_write.writerow(results)
+
+    arguments = ["python", "-b", "6", "-r", "4", "-t", "30", "-p1", "a-star"]
+    s.set_settings(arguments)
+    game = App(s)
+    results = game.Run_Test(0, "Manhattan Distance")
+    csv_write.writerow(results)
+    results = game.Run_Test(0, "Row/Column")
+    csv_write.writerow(results)
+    results = game.Run_Test(0, None)
+    csv_write.writerow(results)
+
+    arguments = ["python", "-b", "16", "-r", "3", "-t", "30", "-p1", "dfs"]
+    s.set_settings(arguments)
+    game = App(s)
+    results = game.Run_Test(6)
+    csv_write.writerow(results)
+    results = game.Run_Test(8)
+    csv_write.writerow(results)
+    results = game.Run_Test(10)
+    csv_write.writerow(results)
+    results = game.Run_Test(12)
+    csv_write.writerow(results)
+
+    arguments = ["python", "-b", "16", "-r", "4", "-t", "30", "-p1", "dfs"]
+    s.set_settings(arguments)
+    game = App(s)
+    results = game.Run_Test(6)
+    csv_write.writerow(results)
+    results = game.Run_Test(8)
+    csv_write.writerow(results)
+    results = game.Run_Test(10)
+    csv_write.writerow(results)
+    results = game.Run_Test(12)
+    csv_write.writerow(results)
+
+    arguments = ["python", "-b", "16", "-r", "3", "-t", "30", "-p1", "a-star"]
+    s.set_settings(arguments)
+    game = App(s)
+    results = game.Run_Test(0, "Manhattan Distance")
+    csv_write.writerow(results)
+    results = game.Run_Test(0, "Row/Column")
+    csv_write.writerow(results)
+    results = game.Run_Test(0, None)
+    csv_write.writerow(results)
+
+    arguments = ["python", "-b", "16", "-r", "4", "-t", "30", "-p1", "a-star"]
+    s.set_settings(arguments)
+    game = App(s)
+    results = game.Run_Test(0, "Manhattan Distance")
+    csv_write.writerow(results)
+    results = game.Run_Test(0, "Row/Column")
+    csv_write.writerow(results)
+    results = game.Run_Test(0, None)
+    csv_write.writerow(results)
 
 if __name__ == '__main__':
 
-    print("\nusage: python app.py -b <boardsize> -r <robotcount> -t <testroundss> -p1 <playerone> -p2 <playertwo>\n")
-    s = Settings()
-    s.set_settings(argv)
-    game = App(s)
-    if (game.test_rounds_ > 0):
-        game.Run_Test()
-    else: game.Run()
+    Run_Tests()
+
+    # print("\nusage: python app.py -b <boardsize> -r <robotcount> -t <testroundss> -p1 <playerone> -p2 <playertwo>\n")
+    # s = Settings()
+    # s.set_settings(argv)
+    # game = App(s)
+    # if (game.test_rounds_ > 0):
+    #     game.Run_Test()
+    # else: game.Run()
