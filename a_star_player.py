@@ -1,17 +1,15 @@
 from ai_player import *
 from node import Node
-import copy
-import random
-from globals import *
 
 class A_Star_Player(AIPlayer):
     def __init__(self):
         AIPlayer.__init__(self, 'A-Star', 0)
 
-    def search(self, board, target, robots, limit):
-        finalNode = self.graph_search(board, target, robots)
-        if (finalNode != FAILURE): return Node.get_solution(finalNode)
-        else: return FAILURE
+    def search(self, board, target, robots, limit=0, heuristic=None):
+        self.start_time = time.time()
+        finalNode = self.graph_search(board, target, robots, heuristic)
+        if (finalNode != FAILURE and finalNode != TIME_CUTOFF): return Node.get_solution(finalNode)
+        else: return finalNode
 
     def find_min_index(self, frontier):
         min_index = 0
@@ -22,7 +20,7 @@ class A_Star_Player(AIPlayer):
                 min_cost = frontier[i].get_cost()
         return min_index
 
-    def graph_search(self, board, target, robots):
+    def graph_search(self, board, target, robots, heuristic):
         frontier = []
         expanded = []
         initialState = copy.deepcopy(robots)
@@ -32,6 +30,9 @@ class A_Star_Player(AIPlayer):
         while True:
             if (len(frontier) == 0):
                 return FAILURE
+
+            if (time.time() - self.start_time > CUTOFF_TIME):
+                return TIME_CUTOFF
 
             # remove node at top of priority queue
             min_index = self.find_min_index(frontier)
@@ -51,14 +52,32 @@ class A_Star_Player(AIPlayer):
                     if (currentNode.robots_[i].move_possible(board, robots, direction[j])): # check if valid move
                         newNode = Node.copyNode(currentNode)
                         unique_node = True
-                        newNode.robots_[i] = newNode.robots_[i].move(board, robots, direction[j])
+                        newNode.robots_[i] = newNode.robots_[i].move(board, newNode.robots_, direction[j])
 
                         # calculate cost of newNode
                         newNode.g_ = newNode.g_ + 1;
-                        h = 0;
-                        # for r in range(len(newNode.robots_)):
-                        #     if (newNode.robots_[r].color_ == target.color_):
-                        #         h = abs(newNode.robots_[r].x_ - target.x_) + abs(newNode.robots_[r].y_ - target.y_)
+                        if (heuristic == "Manhattan Distance"):
+                            for r in range(len(newNode.robots_)):
+                                if (newNode.robots_[r].color_ == target.color_):
+                                    h = abs(newNode.robots_[r].x_ - target.x_) + abs(newNode.robots_[r].y_ - target.y_)
+                        elif (heuristic == "Row/Column"):
+                            h = 0
+                            for r in range(len(newNode.robots_)):
+                                if (newNode.robots_[r].color_ == target.color_):
+                                    if (newNode.robots_[r].x_ == target.x_ or newNode.robots_[r].y_ == target.y_):
+                                        # if the robot is in the same row/column as the target
+                                        h += 0
+                                    else:
+                                        h += 1
+                                else: # robot is not the same color as target
+                                    if (newNode.robots_[r].x_ == target.x_+1 or newNode.robots_[r].y_ == target.y_+1 \
+                                    or newNode.robots_[r].x_ == target.x_-1 or newNode.robots_[r].y_ == target.y_-1):
+                                        # if the robot is in the adjacent row/column
+                                        h += 0
+                                    else:
+                                        h += 1
+                        else:
+                            h = 0;
                         newNode.h_ = h;
 
                         # print("Moving robot " + str(i) + " " + direction[j] + " at depth " + str(newNode.g_))
