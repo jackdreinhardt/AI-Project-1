@@ -208,7 +208,7 @@ class App:
             other_player = self.players_[2-p]
             robot_start_position = copy.deepcopy(self.robots_)
 
-            cp_move_count = current_player.execute_moves(self, 8)
+            cp_move_count = current_player.execute_moves(self, LIMIT)
             if cp_move_count == 0:
                 print('{cp} was not able to reach the target. If {op} can find a solution, they win the round.'\
                     .format(cp=current_player.name_, op=other_player.name_))
@@ -222,7 +222,7 @@ class App:
             self.robots_ = robot_start_position
             self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
 
-            op_move_count = other_player.execute_moves(self, 8)
+            op_move_count = other_player.execute_moves(self, LIMIT)
             if op_move_count == 0:
                 print('{op} was not able to reach the target.'\
                     .format(count=op_move_count, op=other_player.name_))
@@ -268,7 +268,7 @@ class App:
             current_player = self.players_[0]
 
             print("\n\nRunning test " + str(i+1))
-            cp_move_count = current_player.execute_moves(self, 8)
+            cp_move_count = current_player.execute_moves(self, LIMIT)
             print('{cp} was able to reach the target in {count} moves.'.format(cp=current_player.name_, count=cp_move_count))
             print('{cp} expanded {nodes} to find the solution.'.format(cp=current_player.name_, nodes=current_player.nodes_expanded_))
             pygame.time.delay(1000)

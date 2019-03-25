@@ -27,7 +27,7 @@ class Graph_Search_BF(AIPlayer):
 
 
     def __init__(self):
-        AIPlayer.__init__(self, 'Breadth-First', 0)
+        AIPlayer.__init__(self, 'Informed Breadth First', 0)
 
 
     
@@ -55,7 +55,7 @@ class Graph_Search_BF(AIPlayer):
        initialNode = Node(robots, 0, 0, 0, 0)
        frontier.append(initialNode)
        
-       
+       x=0
        for robot in robots:
                
                if self.is_target(robot,target):
@@ -73,13 +73,7 @@ class Graph_Search_BF(AIPlayer):
            del frontier[0]
            expanded.append((currentNode))
 
-           self.nodes_expanded_ += 1
            
-                        
-          
-         
-               
-               
            for i in range (len(currentNode.robots_)):
                 
                 #move robot in one direction
