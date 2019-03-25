@@ -39,6 +39,7 @@ class GraphicalBoard:
         self.drawTarget(target)
         pygame.display.update()
         self.drawRobots(board, robots, target)
+        self.pygame_update()
         
         
     #Here, the chess board is drawn    
@@ -88,5 +89,9 @@ class GraphicalBoard:
             if click[0] > west_click_bound and click[0] < east_click_bound and click[1] > north_click_bound and click[1] < south_click_bound:
                 return r
         return None
+
+    def pygame_update(self):
+        for event in pygame.event.get():
+            pass
         
 
