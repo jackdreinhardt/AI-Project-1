@@ -1,17 +1,15 @@
 from ai_player import *
 from node import Node
-import copy
-import random
-from globals import *
 
 class A_Star_Player(AIPlayer):
     def __init__(self):
         AIPlayer.__init__(self, 'A-Star', 0)
 
     def search(self, board, target, robots, limit):
+        self.start_time = time.time()
         finalNode = self.graph_search(board, target, robots)
-        if (finalNode != FAILURE): return Node.get_solution(finalNode)
-        else: return FAILURE
+        if (finalNode != FAILURE and finalNode != TIME_CUTOFF): return Node.get_solution(finalNode)
+        else: return finalNode
 
     def find_min_index(self, frontier):
         min_index = 0
@@ -33,6 +31,9 @@ class A_Star_Player(AIPlayer):
             if (len(frontier) == 0):
                 return FAILURE
 
+            if (time.time() - self.start_time > CUTOFF_TIME):
+                return TIME_CUTOFF
+
             # remove node at top of priority queue
             min_index = self.find_min_index(frontier)
             currentNode = Node.copyNode(frontier[min_index])
@@ -51,7 +52,7 @@ class A_Star_Player(AIPlayer):
                     if (currentNode.robots_[i].move_possible(board, robots, direction[j])): # check if valid move
                         newNode = Node.copyNode(currentNode)
                         unique_node = True
-                        newNode.robots_[i] = newNode.robots_[i].move(board, robots, direction[j])
+                        newNode.robots_[i] = newNode.robots_[i].move(board, newNode.robots_, direction[j])
 
                         # calculate cost of newNode
                         newNode.g_ = newNode.g_ + 1;

@@ -16,6 +16,7 @@ from human_player import HumanPlayer
 from informed_bf_player import Graph_Search_BF
 from informed_df_player import Graph_Search_DF
 from a_star_player import A_Star_Player
+from depth_limited_player import Depth_Limited_Player
 from AAI import Advanced_AI_Player
 
 
@@ -46,13 +47,13 @@ class App:
             elif p == 'bfs':
                 self.players_.append(Graph_Search_BF())
             elif p == 'i_dfs':
-                self.players_.append(Graph_Search_DF())    
+                self.players_.append(Graph_Search_DF())
             else:
                 self.players_.append(HumanPlayer(p))
 
         self.graphics_ = GraphicalBoard(s.boardsize_)
-        
-    
+
+
 #    def __init__(self,s,m):
 #        self.board_ = Board(s.boardsize_)
 #
@@ -60,13 +61,13 @@ class App:
 #        self.robots_.append(Robot(COLORS[0],0, 1))
 #        self.robots_.append(Robot(COLORS[1],1, 0))
 #        #self.robots_.append(Robot(COLORS[2],1, 0))
-#        #Robot.validate_positions(self.board_, self.robots_)   
-#        
+#        #Robot.validate_positions(self.board_, self.robots_)
+#
 #        self.target_ = Target(s.boardsize_, self.board_, self.robots_)
 #        self.target_.color_ = COLORS[m]
 #        self.target_.x_=4
 #        self.target_.y_=5
-#         
+#
 #
 #        if (s.test_rounds_ > 0):
 #            self.test_rounds_ = s.test_rounds_
@@ -84,8 +85,8 @@ class App:
 #                self.players_.append(HumanPlayer(p))
 #
 #        self.graphics_ = GraphicalBoard(s.boardsize_)
-            
-         
+
+
 
     def KeyToDir(self, key):
         if key == pygame.K_UP:
@@ -99,46 +100,6 @@ class App:
         else:
             return "NOT SUPPORTED"
 
-
-    def RunAI(self):
-        self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
-
-        pygame.time.delay(100)
-        ai_player = Depth_Limited_Player()
-        print("Searching for solution")
-        start_time = time.time()
-        solution = ai_player.search(self.board_, self.target_, self.robots_, 7)
-        if (solution != "FAILURE" and solution != "CUTOFF"):
-            print("Found solution of length " + str(len(solution)))
-            solution_time = time.time() - start_time
-            print("The algorithm took " + str(solution_time) + " seconds to find a solution")
-            for m in range(len(solution)):
-                #print(solution)
-                self.robots_[solution[m][0]] = self.robots_[solution[m][0]].move(self.board_, self.robots_, solution[m][1]) # move robot
-                self.graphics_.drawRobots(self.board_, self.robots_, self.target_)
-                time.sleep(1)
-        else:
-            print("No solution found")
-
-    def RunAStar(self):
-        self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
-
-        pygame.time.delay(100)
-        ai_player = A_Star_Player()
-        print("Searching for solution")
-        start_time = time.time()
-        solution = ai_player.search(self.board_, self.target_, self.robots_)
-        if (solution != "FAILURE"):
-            print("Found solution of length " + str(len(solution)))
-            solution_time = time.time() - start_time
-            print("The algorithm took " + str(solution_time) + " seconds to find a solution")
-            for m in range(len(solution)):
-                #print(solution)
-                self.robots_[solution[m][0]] = self.robots_[solution[m][0]].move(self.board_, self.robots_, solution[m][1]) # move robot
-                self.graphics_.drawRobots(self.board_, self.robots_, self.target_)
-                time.sleep(1)
-        else:
-            print("No solution found")
 
     def RunBF(self):
         self.graphics_.drawBoardState(self.board_, self.robots_,self.target_)
@@ -271,9 +232,13 @@ class App:
             current_player = self.players_[0]
 
             print("\n\nRunning test " + str(i+1))
-            cp_move_count = current_player.execute_moves(self, 8)
-            print('{cp} was able to reach the target in {count} moves.'.format(cp=current_player.name_, count=cp_move_count))
-            print('{cp} expanded {nodes} to find the solution.'.format(cp=current_player.name_, nodes=current_player.nodes_expanded_))
+            cp_move_count = current_player.execute_moves(self, 15)
+            if (cp_move_count == FAILURE or cp_move_count == TIME_CUTOFF or cp_move_count == DEPTH_CUTOFF):
+                print(cp_move_count)
+                print('{cp} expanded {nodes} nodes.'.format(cp=current_player.name_, nodes=current_player.nodes_expanded_))
+            else:
+                print('{cp} was able to reach the target in {count} moves.'.format(cp=current_player.name_, count=cp_move_count))
+                print('{cp} expanded {nodes} nodes to find the solution.'.format(cp=current_player.name_, nodes=current_player.nodes_expanded_))
             pygame.time.delay(1000)
 
             self.target_.set_target(self.board_, self.robots_)
@@ -289,4 +254,3 @@ if __name__ == '__main__':
     if (game.test_rounds_ > 0):
         game.Run_Test()
     else: game.Run()
-    
