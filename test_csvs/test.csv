@@ -894,3 +894,225 @@ A-Star,16,4,27,SUCCESS,2,30
 A-Star,16,4,28,TIME_CUTOFF
 A-Star,16,4,29,TIME_CUTOFF
 A-Star,16,4,30,TIME_CUTOFF
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,3,1,SUCCESS,3,1835
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 8,6,3,1,SUCCESS,4,79
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 10,6,3,1,SUCCESS,5,13990
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 12,6,3,1,SUCCESS,6,2452
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,4,1,SUCCESS,3,8
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,3,1,SUCCESS,1,3
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 8,6,3,1,SUCCESS,4,3680
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 10,6,3,1,SUCCESS,5,2843
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,3,1,SUCCESS,0,2482
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 8,6,3,1,SUCCESS,6,7
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 10,6,3,1,SUCCESS,3,4
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 12,6,3,1,SUCCESS,12,430
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,4,1,SUCCESS,6,6907
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 8,6,4,1,SUCCESS,8,115
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 10,6,4,1,SUCCESS,10,70
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,3,1,SUCCESS,6,1921
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 8,6,3,1,SUCCESS,8,2790
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 10,6,3,1,SUCCESS,10,11735
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 12,6,3,1,SUCCESS,12,2830
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,4,1,SUCCESS,6,39
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 8,6,4,1,SUCCESS,8,4471
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 10,6,4,1,SUCCESS,10,4236
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 12,6,4,1,SUCCESS,12,13485
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+A-Star - Manhattan Distance,6,3,1,SUCCESS,5,94
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+A-Star - Row/Column,6,3,1,SUCCESS,0,2934
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+A-Star,6,3,1,SUCCESS,0,2867
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+A-Star - Manhattan Distance,6,4,1,SUCCESS,0,1557
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+A-Star - Row/Column,6,4,1,SUCCESS,4,742
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+A-Star,6,4,1,SUCCESS,1,4
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,16,3,1,SUCCESS,0,223308
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,3,1,SUCCESS,6,4831
+DFS - 6,6,3,2,SUCCESS,6,1187
+DFS - 6,6,3,3,SUCCESS,6,2563
+DFS - 6,6,3,4,SUCCESS,0,2180
+DFS - 6,6,3,5,SUCCESS,4,49
+DFS - 6,6,3,6,SUCCESS,0,7498
+DFS - 6,6,3,7,SUCCESS,4,13
+DFS - 6,6,3,8,SUCCESS,0,3104
+DFS - 6,6,3,9,SUCCESS,6,3059
+DFS - 6,6,3,10,SUCCESS,0,2737
+DFS - 6,6,3,11,SUCCESS,2,3
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,3,1,SUCCESS,6,273
+DFS - 6,6,3,2,SUCCESS,0,7902
+DFS - 6,6,3,3,SUCCESS,0,8224
+DFS - 6,6,3,4,SUCCESS,0,7792
+DFS - 6,6,3,5,SUCCESS,6,23
+DFS - 6,6,3,6,SUCCESS,6,1417
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,3,1,SUCCESS,5,3829
+DFS - 6,6,3,2,SUCCESS,0,14743
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,3,1,SUCCESS,0,25102
+DFS - 6,6,3,2,SUCCESS,6,101
+DFS - 6,6,3,3,SUCCESS,6,119
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,3,1,SUCCESS,0,6607
+DFS - 6,6,3,2,SUCCESS,0,7512
+DFS - 6,6,3,3,SUCCESS,0,6927
+DFS - 6,6,3,4,SUCCESS,0,7134
+DFS - 6,6,3,5,SUCCESS,0,7260
+DFS - 6,6,3,6,SUCCESS,6,13
+DFS - 6,6,3,7,SUCCESS,6,1412
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,3,1,SUCCESS,0,17859
+DFS - 6,6,3,2,SUCCESS,1,2
+DFS - 6,6,3,3,SUCCESS,0,20428
+DFS - 6,6,3,4,SUCCESS,3,242
+DFS - 6,6,3,5,SUCCESS,0,16558
+DFS - 6,6,3,6,SUCCESS,4,4603
+DFS - 6,6,3,7,SUCCESS,0,16421
+DFS - 6,6,3,8,SUCCESS,5,23
+DFS - 6,6,3,9,SUCCESS,1,10
+DFS - 6,6,3,10,SUCCESS,4,14
+DFS - 6,6,3,11,SUCCESS,0,3072
+DFS - 6,6,3,12,SUCCESS,6,239
+DFS - 6,6,3,13,SUCCESS,2,3
+DFS - 6,6,3,14,SUCCESS,0,2404
+DFS - 6,6,3,15,SUCCESS,3,4
+DFS - 6,6,3,16,SUCCESS,1,10
+DFS - 6,6,3,17,SUCCESS,0,4095
+DFS - 6,6,3,18,SUCCESS,5,791
+DFS - 6,6,3,19,SUCCESS,0,2114
+DFS - 6,6,3,20,SUCCESS,0,2324
+DFS - 6,6,3,21,SUCCESS,0,2406
+DFS - 6,6,3,22,SUCCESS,5,128
+DFS - 6,6,3,23,SUCCESS,3,11
+DFS - 6,6,3,24,SUCCESS,0,1714
+DFS - 6,6,3,25,SUCCESS,0,1500
+DFS - 6,6,3,26,SUCCESS,4,21
+DFS - 6,6,3,27,SUCCESS,3,43
+DFS - 6,6,3,28,SUCCESS,3,4
+DFS - 6,6,3,29,SUCCESS,0,1218
+DFS - 6,6,3,30,SUCCESS,4,12
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 8,6,3,1,SUCCESS,2,10
+DFS - 8,6,3,2,SUCCESS,6,8693
+DFS - 8,6,3,3,SUCCESS,7,4894
+DFS - 8,6,3,4,SUCCESS,0,108314
+DFS - 8,6,3,5,SUCCESS,1,3
+DFS - 8,6,3,6,SUCCESS,7,66571
+DFS - 8,6,3,7,SUCCESS,2,5
+DFS - 8,6,3,8,SUCCESS,0,121209
+DFS - 8,6,3,9,SUCCESS,6,1555
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,16,3,1,SUCCESS,0,181147
+DFS - 6,16,3,2,SUCCESS,4,46467
+DFS - 6,16,3,3,SUCCESS,3,1070
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 12,16,4,1,SUCCESS,7,45923
+DFS - 12,16,4,2,SUCCESS,7,158
+DFS - 12,16,4,3,SUCCESS,8,304017
+DFS - 12,16,4,4,SUCCESS,0,459733
+DFS - 12,16,4,5,SUCCESS,0,421469
+DFS - 12,16,4,6,SUCCESS,9,8156
+DFS - 12,16,4,7,SUCCESS,6,166155
+DFS - 12,16,4,8,SUCCESS,8,308867
+DFS - 12,16,4,9,SUCCESS,2,69
+DFS - 12,16,4,10,SUCCESS,0,424490
+DFS - 12,16,4,11,SUCCESS,1,18
+DFS - 12,16,4,12,SUCCESS,0,399098
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+DFS - 6,6,3,1,SUCCESS,4,1364
+DFS - 6,6,3,2,SUCCESS,2,8
+DFS - 6,6,3,3,SUCCESS,4,518
+DFS - 6,6,3,4,DEPTH_CUTOFF
+DFS - 6,6,3,5,DEPTH_CUTOFF
+DFS - 6,6,3,6,DEPTH_CUTOFF
+DFS - 6,6,3,7,SUCCESS,4,874
+DFS - 6,6,3,8,DEPTH_CUTOFF
+DFS - 6,6,3,9,SUCCESS,1,11
+DFS - 6,6,3,10,SUCCESS,2,11
+DFS - 6,6,3,11,SUCCESS,1,10
+DFS - 6,6,3,12,SUCCESS,6,7409
+DFS - 6,6,3,13,DEPTH_CUTOFF

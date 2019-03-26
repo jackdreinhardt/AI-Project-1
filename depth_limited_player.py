@@ -7,7 +7,33 @@ class Depth_Limited_Player(AIPlayer):
     def search(self, board, target, robots, limit, heuristic=None):
         moves = [] # empty list to store history of moves
         self.start_time = time.time()
-        return self.recursive_DLS(board, target, robots, limit, moves)
+        solution = self.recursive_DLS(board, target, robots, limit, moves)
+        if (solution != FAILURE and solution != DEPTH_CUTOFF and solution != TIME_CUTOFF):
+            new_solution = self.optimize_solution(board, target, robots, solution)
+            print("removed " + str(len(solution)-len(new_solution)) + " moves")
+            return new_solution
+        else: return solution
+
+    def optimize_solution(self, board, target, robots, solution):
+        solution_len = len(solution)
+        minimal_solution = copy.deepcopy(solution)
+        for i in range(solution_len-1):
+            solution = copy.deepcopy(minimal_solution)
+            reached_goal = False
+            if (solution_len-i-2 >= 0):
+                del solution[solution_len-i-2]
+            else:
+                break
+            new_robots = copy.deepcopy(robots)
+            for m in solution: # for each move
+                for i in range(len(new_robots)): # for each robot
+                    if new_robots[i].color_ == m[0]: # check if robot matches
+                        new_robots[i] = new_robots[i].move(board, new_robots, m[1])
+                for r in new_robots: # goal test
+                  if (target.color_ == r.color_ and target.x_ == r.x_ and target.y_ == r.y_):
+                    reached_goal = True
+            if reached_goal: minimal_solution = copy.deepcopy(solution) # reaches goal state - update minimal solution
+        return minimal_solution
 
     def recursive_DLS(self, board, target, robots, limit, moves):
         self.nodes_expanded_ += 1

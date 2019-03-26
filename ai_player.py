@@ -5,7 +5,7 @@ import time
 import copy
 import random
 
-CUTOFF_TIME = 5
+CUTOFF_TIME = 60
 
 class AIPlayer(Player):
     def __init__(self, name, score):
@@ -20,7 +20,7 @@ class AIPlayer(Player):
         moves = self.search(app.board_, app.target_, app.robots_, limit)
         print("Result: ", moves)
         if (moves == FAILURE or moves == TIME_CUTOFF or moves == DEPTH_CUTOFF):
-            return 0
+            return moves
         for m in moves: # for each move
             for r in app.robots_: # for each robot
                 if r.color_ == m[0]: # check if robot matches
