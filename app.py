@@ -216,7 +216,6 @@ class App:
 
             cp_move_count = current_player.execute_moves(self, limit, heuristic)
             if (cp_move_count == FAILURE or cp_move_count == TIME_CUTOFF or cp_move_count == DEPTH_CUTOFF):
-                print(cp_move_count)
                 print('{cp} expanded {nodes} nodes.'.format(cp=AI_name, nodes=current_player.nodes_expanded_))
                 csv_writer.writerow([AI_name, self.board_.boardsize_, len(self.robots_), i+1, cp_move_count])
             else:
@@ -368,10 +367,10 @@ def Run_Tests():
     csv_file.close()
 
 if __name__ == '__main__':
-    print("\nusage: python app.py -b <boardsize> -r <robotcount> -t <testroundss> -p1 <playerone> -p2 <playertwo>\n")
+    print("\nusage: python app.py -b <boardsize> -r <robotcount> -t <testrounds> -p1 <playerone> -p2 <playertwo>\n")
     s = Settings()
     s.set_settings(argv)
     game = App(s)
     if game.test_rounds_:
-        game.Run_Tests()
+        Run_Tests()
     else: game.Run()
