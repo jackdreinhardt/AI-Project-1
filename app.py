@@ -129,10 +129,10 @@ class App:
 
                     # execute the moves of the current player
                     cp_move_count = current_player.execute_moves(self, 8)
-                    if cp_move_count == 0:
+                    if cp_move_count == FAILURE or cp_move_count == TIME_CUTOFF or cp_move_count == DEPTH_CUTOFF:
                         print('{cp} was not able to reach the target. If {op} can find a solution, they win the round.'\
                             .format(cp=current_player.name_, op=other_player.name_))
-                        cp_move_count = 999
+                        cp_move_count = float("inf")
                     else:
                         print('{cp} was able to reach the target in {count} moves. {op} gets 1 minute to find a better solution.'\
                             .format(cp=current_player.name_, count=cp_move_count, op=other_player.name_))
@@ -146,10 +146,10 @@ class App:
 
                     # execute moves of the other player
                     op_move_count = other_player.execute_moves(self, 8)
-                    if op_move_count == 0:
+                    if op_move_count == FAILURE or op_move_count == TIME_CUTOFF or op_move_count == DEPTH_CUTOFF:
                         print('{op} was not able to reach the target.'\
                             .format(count=op_move_count, op=other_player.name_))
-                        op_move_count = 999
+                        op_move_count = float("inf")
                     else:
                         print('{op} was able to reach the target in {count} moves.'\
                             .format(count=op_move_count, op=other_player.name_))
@@ -159,7 +159,7 @@ class App:
                     self.sidebar_.noPlayer()
                     if op_move_count < cp_move_count:
                         other_player.score_ += 1
-                    elif cp_move_count == 999 and op_move_count == 999:
+                    elif cp_move_count == float("inf") and op_move_count == float("inf"):
                         self.robots = robot_start_position
                         self.sidebar_.displayMessage(["Neither player found a", "solution, no points awarded"])
                         pygame.time.delay(3000)
