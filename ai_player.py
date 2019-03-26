@@ -38,3 +38,5 @@ class AIPlayer(Player):
     #   direction: a string, "NORTH" "SOUTH" "EAST" or "WEST"
     def search(self, board, robots, limit, heuristic):
         return None
+
+
