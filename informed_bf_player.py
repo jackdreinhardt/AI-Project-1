@@ -28,13 +28,14 @@ class Graph_Search_BF(AIPlayer):
 
     def __init__(self):
         AIPlayer.__init__(self, 'Informed Breadth First', 0)
+        self.nodes_expanded_ = 0
 
 
     
 
-    def search(self, board, target, robots, limit):
+    def search(self, board, target, robots, limit,heuristic):
         start_time = time.clock()
-        finalNode = self.graph_search(board, target, robots,limit)
+        finalNode = self.graph_search(board, target, robots,limit,heuristic)
         if (finalNode != FAILURE): 
             print (time.clock() - start_time, "seconds")
             return Node.get_solution(finalNode)
@@ -43,19 +44,13 @@ class Graph_Search_BF(AIPlayer):
             return FAILURE
 
 
-    def graph_search(self,board, target,robots,limit):
+    def graph_search(self,board, target,robots,limit,heuristic):
 
        frontier = []
        expanded = []
-       
-       
-       #from all these positions the target can be reached within less than 5+1 moves
-       goal_states = target.get_goal_locations(board,1)
-       
        initialNode = Node(robots, 0, 0, 0, 0)
        frontier.append(initialNode)
        
-       x=0
        for robot in robots:
                
                if self.is_target(robot,target):
@@ -72,7 +67,7 @@ class Graph_Search_BF(AIPlayer):
            currentNode = Node.copyNode(frontier[0])
            del frontier[0]
            expanded.append((currentNode))
-
+           self.nodes_expanded_ += 1
            
            for i in range (len(currentNode.robots_)):
                 
@@ -80,11 +75,8 @@ class Graph_Search_BF(AIPlayer):
                 direction = ["NORTH", "SOUTH", "EAST", "WEST"]
                 
                 for j in range (len(direction)):
-                   
                     
                     if (currentNode.robots_[i].move_possible(board,currentNode.robots_,direction[j])) :
-                        
-                        
                         newNode =  Node.copyNode(currentNode)
                         unique_node=True
                         newNode.robots_[i] = newNode.robots_[i].move(board,currentNode.robots_,direction[j])
@@ -94,17 +86,7 @@ class Graph_Search_BF(AIPlayer):
                         r=newNode.robots_[i]
                         if self.is_target(r,target):
                             return newNode
-                        
-                        
-#                        for g in goal_states:
-#                            if (g.is_goal_state(board,robots)!=False):
-#                                # goal state is reachable from the current node -> All nodes will be removed from the frontier
-#                                
-#                                frontier.clear()
-#                                frontier.append((newNode))
-#                                break
-                                
-                                
+                             
                         
                         for m in range (len(frontier))  :
                             if (Node.compare_robots(frontier[m],newNode)):

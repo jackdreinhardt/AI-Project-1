@@ -1,0 +1,200 @@
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+Informed Breadth First - 6,6,3,1,SUCCESS,5,0
+Informed Breadth First - 6,6,3,2,SUCCESS,5,0
+Informed Breadth First - 6,6,3,3,FAILURE
+Informed Breadth First - 6,6,3,4,SUCCESS,4,0
+Informed Breadth First - 6,6,3,5,SUCCESS,2,0
+Informed Breadth First - 6,6,3,6,FAILURE
+Informed Breadth First - 6,6,3,7,SUCCESS,6,0
+Informed Breadth First - 6,6,3,8,SUCCESS,5,0
+Informed Breadth First - 6,6,3,9,SUCCESS,5,0
+Informed Breadth First - 6,6,3,10,SUCCESS,5,0
+Informed Breadth First - 6,6,3,11,SUCCESS,1,0
+Informed Breadth First - 6,6,3,12,SUCCESS,6,0
+Informed Breadth First - 6,6,3,13,SUCCESS,1,0
+Informed Breadth First - 6,6,3,14,FAILURE
+Informed Breadth First - 6,6,3,15,SUCCESS,4,0
+Informed Breadth First - 6,6,3,16,SUCCESS,5,0
+Informed Breadth First - 6,6,3,17,FAILURE
+Informed Breadth First - 6,6,3,18,SUCCESS,4,0
+Informed Breadth First - 6,6,3,19,SUCCESS,5,0
+Informed Breadth First - 6,6,3,20,SUCCESS,2,0
+Informed Breadth First - 6,6,3,21,SUCCESS,3,0
+Informed Breadth First - 6,6,3,22,SUCCESS,2,0
+Informed Breadth First - 6,6,3,23,SUCCESS,6,0
+Informed Breadth First - 6,6,3,24,FAILURE
+Informed Breadth First - 6,6,3,25,SUCCESS,5,0
+Informed Breadth First - 6,6,3,26,FAILURE
+Informed Breadth First - 6,6,3,27,SUCCESS,4,0
+Informed Breadth First - 6,6,3,28,SUCCESS,4,0
+Informed Breadth First - 6,6,3,29,SUCCESS,5,0
+Informed Breadth First - 6,6,3,30,SUCCESS,2,0
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+Informed Breadth First - 8,6,3,1,SUCCESS,8,0
+Informed Breadth First - 8,6,3,2,SUCCESS,4,0
+Informed Breadth First - 8,6,3,3,SUCCESS,4,0
+Informed Breadth First - 8,6,3,4,SUCCESS,4,0
+Informed Breadth First - 8,6,3,5,FAILURE
+Informed Breadth First - 8,6,3,6,SUCCESS,8,0
+Informed Breadth First - 8,6,3,7,FAILURE
+Informed Breadth First - 8,6,3,8,SUCCESS,6,0
+Informed Breadth First - 8,6,3,9,FAILURE
+Informed Breadth First - 8,6,3,10,FAILURE
+Informed Breadth First - 8,6,3,11,SUCCESS,5,0
+Informed Breadth First - 8,6,3,12,SUCCESS,8,0
+Informed Breadth First - 8,6,3,13,SUCCESS,3,0
+Informed Breadth First - 8,6,3,14,FAILURE
+Informed Breadth First - 8,6,3,15,SUCCESS,6,0
+Informed Breadth First - 8,6,3,16,SUCCESS,6,0
+Informed Breadth First - 8,6,3,17,SUCCESS,4,0
+Informed Breadth First - 8,6,3,18,SUCCESS,4,0
+Informed Breadth First - 8,6,3,19,SUCCESS,4,0
+Informed Breadth First - 8,6,3,20,SUCCESS,6,0
+Informed Breadth First - 8,6,3,21,SUCCESS,7,0
+Informed Breadth First - 8,6,3,22,FAILURE
+Informed Breadth First - 8,6,3,23,SUCCESS,5,0
+Informed Breadth First - 8,6,3,24,FAILURE
+Informed Breadth First - 8,6,3,25,SUCCESS,6,0
+Informed Breadth First - 8,6,3,26,SUCCESS,4,0
+Informed Breadth First - 8,6,3,27,SUCCESS,8,0
+Informed Breadth First - 8,6,3,28,SUCCESS,7,0
+Informed Breadth First - 8,6,3,29,FAILURE
+Informed Breadth First - 8,6,3,30,SUCCESS,3,0
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+Informed Breadth First - 10,6,3,1,SUCCESS,5,0
+Informed Breadth First - 10,6,3,2,SUCCESS,6,0
+Informed Breadth First - 10,6,3,3,SUCCESS,4,0
+Informed Breadth First - 10,6,3,4,FAILURE
+Informed Breadth First - 10,6,3,5,SUCCESS,1,0
+Informed Breadth First - 10,6,3,6,SUCCESS,7,0
+Informed Breadth First - 10,6,3,7,SUCCESS,6,0
+Informed Breadth First - 10,6,3,8,SUCCESS,2,0
+Informed Breadth First - 10,6,3,9,SUCCESS,5,0
+Informed Breadth First - 10,6,3,10,SUCCESS,7,0
+Informed Breadth First - 10,6,3,11,SUCCESS,4,0
+Informed Breadth First - 10,6,3,12,SUCCESS,6,0
+Informed Breadth First - 10,6,3,13,FAILURE
+Informed Breadth First - 10,6,3,14,SUCCESS,2,0
+Informed Breadth First - 10,6,3,15,SUCCESS,1,0
+Informed Breadth First - 10,6,3,16,SUCCESS,5,0
+Informed Breadth First - 10,6,3,17,FAILURE
+Informed Breadth First - 10,6,3,18,SUCCESS,3,0
+Informed Breadth First - 10,6,3,19,SUCCESS,3,0
+Informed Breadth First - 10,6,3,20,SUCCESS,3,0
+Informed Breadth First - 10,6,3,21,SUCCESS,5,0
+Informed Breadth First - 10,6,3,22,SUCCESS,6,0
+Informed Breadth First - 10,6,3,23,SUCCESS,3,0
+Informed Breadth First - 10,6,3,24,FAILURE
+Informed Breadth First - 10,6,3,25,SUCCESS,5,0
+Informed Breadth First - 10,6,3,26,FAILURE
+Informed Breadth First - 10,6,3,27,SUCCESS,4,0
+Informed Breadth First - 10,6,3,28,SUCCESS,2,0
+Informed Breadth First - 10,6,3,29,FAILURE
+Informed Breadth First - 10,6,3,30,FAILURE
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+Informed Breadth First - 12,6,3,1,SUCCESS,5,0
+Informed Breadth First - 12,6,3,2,SUCCESS,6,0
+Informed Breadth First - 12,6,3,3,SUCCESS,1,0
+Informed Breadth First - 12,6,3,4,SUCCESS,7,0
+Informed Breadth First - 12,6,3,5,SUCCESS,1,0
+Informed Breadth First - 12,6,3,6,SUCCESS,2,0
+Informed Breadth First - 12,6,3,7,SUCCESS,2,0
+Informed Breadth First - 12,6,3,8,SUCCESS,3,0
+Informed Breadth First - 12,6,3,9,FAILURE
+Informed Breadth First - 12,6,3,10,FAILURE
+Informed Breadth First - 12,6,3,11,FAILURE
+Informed Breadth First - 12,6,3,12,SUCCESS,4,0
+Informed Breadth First - 12,6,3,13,SUCCESS,3,0
+Informed Breadth First - 12,6,3,14,SUCCESS,2,0
+Informed Breadth First - 12,6,3,15,SUCCESS,4,0
+Informed Breadth First - 12,6,3,16,FAILURE
+Informed Breadth First - 12,6,3,17,FAILURE
+Informed Breadth First - 12,6,3,18,SUCCESS,5,0
+Informed Breadth First - 12,6,3,19,SUCCESS,4,0
+Informed Breadth First - 12,6,3,20,SUCCESS,3,0
+Informed Breadth First - 12,6,3,21,SUCCESS,3,0
+Informed Breadth First - 12,6,3,22,SUCCESS,6,0
+Informed Breadth First - 12,6,3,23,SUCCESS,1,0
+Informed Breadth First - 12,6,3,24,FAILURE
+Informed Breadth First - 12,6,3,25,SUCCESS,2,0
+Informed Breadth First - 12,6,3,26,SUCCESS,6,0
+Informed Breadth First - 12,6,3,27,SUCCESS,4,0
+Informed Breadth First - 12,6,3,28,SUCCESS,8,0
+Informed Breadth First - 12,6,3,29,SUCCESS,6,0
+Informed Breadth First - 12,6,3,30,SUCCESS,3,0
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+Informed Breadth First - 6,6,4,1,SUCCESS,4,0
+Informed Breadth First - 6,6,4,2,SUCCESS,6,0
+Informed Breadth First - 6,6,4,3,SUCCESS,5,0
+Informed Breadth First - 6,6,4,4,SUCCESS,1,0
+Informed Breadth First - 6,6,4,5,SUCCESS,6,0
+Informed Breadth First - 6,6,4,6,SUCCESS,5,0
+Informed Breadth First - 6,6,4,7,SUCCESS,2,0
+Informed Breadth First - 6,6,4,8,SUCCESS,5,0
+Informed Breadth First - 6,6,4,9,FAILURE
+Informed Breadth First - 6,6,4,10,FAILURE
+Informed Breadth First - 6,6,4,11,FAILURE
+Informed Breadth First - 6,6,4,12,SUCCESS,4,0
+Informed Breadth First - 6,6,4,13,FAILURE
+Informed Breadth First - 6,6,4,14,SUCCESS,6,0
+Informed Breadth First - 6,6,4,15,FAILURE
+Informed Breadth First - 6,6,4,16,SUCCESS,5,0
+Informed Breadth First - 6,6,4,17,FAILURE
+Informed Breadth First - 6,6,4,18,SUCCESS,3,0
+Informed Breadth First - 6,6,4,19,SUCCESS,1,0
+Informed Breadth First - 6,6,4,20,FAILURE
+Informed Breadth First - 6,6,4,21,FAILURE
+Informed Breadth First - 6,6,4,22,SUCCESS,5,0
+Informed Breadth First - 6,6,4,23,SUCCESS,5,0
+Informed Breadth First - 6,6,4,24,SUCCESS,5,0
+Informed Breadth First - 6,6,4,25,SUCCESS,3,0
+Informed Breadth First - 6,6,4,26,SUCCESS,3,0
+Informed Breadth First - 6,6,4,27,FAILURE
+Informed Breadth First - 6,6,4,28,FAILURE
+Informed Breadth First - 6,6,4,29,SUCCESS,6,0
+Informed Breadth First - 6,6,4,30,FAILURE
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+
+AI,Board Size,Robots,Iteration,Outcome,Moves,Nodes Expanded
+Informed Breadth First - 6,6,3,1,SUCCESS,6,118
+Informed Breadth First - 6,6,3,2,FAILURE
+Informed Breadth First - 6,6,3,3,FAILURE
+Informed Breadth First - 6,6,3,4,SUCCESS,1,1
+Informed Breadth First - 6,6,3,5,SUCCESS,5,168
+Informed Breadth First - 6,6,3,6,FAILURE
+Informed Breadth First - 6,6,3,7,SUCCESS,5,75
+Informed Breadth First - 6,6,3,8,FAILURE
+Informed Breadth First - 6,6,3,9,SUCCESS,5,127
+Informed Breadth First - 6,6,3,10,SUCCESS,2,4
+Informed Breadth First - 6,6,3,11,SUCCESS,2,4
+Informed Breadth First - 6,6,3,12,SUCCESS,6,94
+Informed Breadth First - 6,6,3,13,SUCCESS,4,46
+Informed Breadth First - 6,6,3,14,SUCCESS,1,1
+Informed Breadth First - 6,6,3,15,SUCCESS,1,1
+Informed Breadth First - 6,6,3,16,SUCCESS,3,18
+Informed Breadth First - 6,6,3,17,SUCCESS,3,14
+Informed Breadth First - 6,6,3,18,FAILURE
+Informed Breadth First - 6,6,3,19,SUCCESS,5,136
+Informed Breadth First - 6,6,3,20,SUCCESS,3,12
+Informed Breadth First - 6,6,3,21,FAILURE
+Informed Breadth First - 6,6,3,22,SUCCESS,3,21
+Informed Breadth First - 6,6,3,23,SUCCESS,4,40
+Informed Breadth First - 6,6,3,24,FAILURE
+Informed Breadth First - 6,6,3,25,FAILURE
+Informed Breadth First - 6,6,3,26,FAILURE
+Informed Breadth First - 6,6,3,27,FAILURE
+Informed Breadth First - 6,6,3,28,SUCCESS,1,1
+Informed Breadth First - 6,6,3,29,SUCCESS,1,1
+Informed Breadth First - 6,6,3,30,FAILURE

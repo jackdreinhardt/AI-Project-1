@@ -28,3 +28,59 @@ A-Star,16.00,3.00,0.27,3.13,181.50
 A-Star - Manhattan Distance,16.00,4.00,0.17,1.40,30.00
 A-Star - Row/Column,16.00,4.00,0.20,2.83,162.00
 A-Star,16.00,4.00,0.10,2.33,118.33
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+DFS - 6,6,3,1.0,3.0,1835.0
+DFS - 8,6,3,1.0,4.0,79.0
+DFS - 10,6,3,1.0,5.0,13990.0
+DFS - 12,6,3,1.0,6.0,2452.0
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+DFS - 6,6,3,1.0,0.0,2482.0
+DFS - 8,6,3,1.0,6.0,7.0
+DFS - 10,6,3,1.0,3.0,4.0
+DFS - 12,6,3,1.0,12.0,430.0
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+DFS - 6,6,3,1.0,6.0,1921.0
+DFS - 8,6,3,1.0,8.0,2790.0
+DFS - 10,6,3,1.0,10.0,11735.0
+DFS - 12,6,3,1.0,12.0,2830.0
+DFS - 6,6,4,1.0,6.0,39.0
+DFS - 8,6,4,1.0,8.0,4471.0
+DFS - 10,6,4,1.0,10.0,4236.0
+DFS - 12,6,4,1.0,12.0,13485.0
+A-Star - Manhattan Distance,6,3,1.0,5.0,94.0
+A-Star - Row/Column,6,3,1.0,0.0,2934.0
+A-Star,6,3,1.0,0.0,2867.0
+A-Star - Manhattan Distance,6,4,1.0,0.0,1557.0
+A-Star - Row/Column,6,4,1.0,4.0,742.0
+A-Star,6,4,1.0,1.0,4.0
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
+
+AI,Board Size,Robots,Success Ratio,Avg Moves,Avg Nodes Expanded
