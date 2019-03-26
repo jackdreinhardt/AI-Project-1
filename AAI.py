@@ -9,7 +9,9 @@ class Advanced_AI_Player(AIPlayer):
 
     def search(self, board, target, robots, limit):
         robotWalls = self.graph_search(board, target, robots)
-        print("robot Walls" , robotWalls)
+        print("robot Walls")
+        for i in range(len(robotWalls)):
+            print(robotWalls[i])
         newGoals = self.backtrack(board, target, robots, robotWalls)
         print("new goal states" , newGoals)
         finalNode = self.graph_search2(board, target, robots, newGoals) #Very similar to graph_search. Definitely combine them in the future
@@ -38,32 +40,38 @@ class Advanced_AI_Player(AIPlayer):
         for r in robots:
             if target.color_ != r.color_:
                 robotWalls.append((r.y_,r.x_))
-        cutoff = 5
         direction = ["NORTH", "SOUTH", "EAST", "WEST"]
 
-        while cutoff > 0:
-            print("loop")
-            if (len(frontier) == 0):
-                return FAILURE
-
-            # remove node at top of priority queue
-            min_index = self.find_min_index(frontier)
-            currentNode = Node.copyNode(frontier[min_index])
-            del frontier[min_index]
-            expanded.append(Node.copyNode(currentNode))
-
-            for i in range(len(robots)):
+        for i in range(len(robots)):
+            cutoff = 5
+            while cutoff > 0:
+                if (len(frontier) == 0):
+                    return FAILURE
+    
+                # remove node at top of priority queue
+                min_index = self.find_min_index(frontier)
+                currentNode = Node.copyNode(frontier[min_index])
+                del frontier[min_index]
+                expanded.append(Node.copyNode(currentNode))
+                
+                print(currentNode.robots_[i].color_)
                 if target.color_ != currentNode.robots_[i].color_:
+                    print("Hi")
                     for j in range (len(direction)): # for each direction
                         if (currentNode.robots_[i].move_possible(board, currentNode.robots_, direction[j])): # check if valid move
                             newNode = Node.copyNode(currentNode)
                             unique_node = True
                             newNode.robots_[i] = newNode.robots_[i].move(board, newNode.robots_, direction[j])
-
+    
                             #print("Moving robot " + str(i) + " " + direction[j] + " at depth " + str(newNode.g_))
                             newNode.move_tuple_ = (i, direction[j])
                             newNode.father_ = currentNode
-
+                            
+                            if (newNode.robots_[i].y_, newNode.robots_[i].x_) in robotWalls:
+                                pass
+                            else:
+                                robotWalls.append((newNode.robots_[i].y_, newNode.robots_[i].x_, newNode.robots_[i].color_, direction[j]))
+    
                             for m in range (len(frontier)): # check if newNode is already in frontier
                                 if (Node.compareState(frontier[m],newNode)==True):
                                     unique_node = False
@@ -74,8 +82,7 @@ class Advanced_AI_Player(AIPlayer):
                                     break
                             if(unique_node): 
                                 frontier.append(Node.copyNode(newNode))
-                                robotWalls.append((newNode.robots_[i].y_, newNode.robots_[i].x_, newNode.robots_[i].color_, direction[j]))
-            cutoff -= 1
+                cutoff -= 1
         return robotWalls
     
         
