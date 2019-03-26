@@ -1,5 +1,3 @@
-from globals import BOARDSIZE
-
 class Map:
     def __init__(self, v, h, t):
         # border
