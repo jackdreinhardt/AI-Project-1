@@ -5,7 +5,7 @@ import time
 import copy
 import random
 
-CUTOFF_TIME = 60
+CUTOFF_TIME = 5
 
 class AIPlayer(Player):
     def __init__(self, name, score):
