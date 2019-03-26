@@ -10,6 +10,7 @@ from board import Board
 from robot import Robot
 from target import Target
 from drawks import GraphicalBoard
+from sidebar import Sidebar
 from settings import Settings
 
 
@@ -53,6 +54,8 @@ class App:
                 self.players_.append(HumanPlayer(p))
 
         self.graphics_ = GraphicalBoard(s.boardsize_)
+        self.sidebar_ = Sidebar(self.graphics_, self.players_)
+        self.games_to_win_ = 2
 
 
 #    def __init__(self,s,m):
@@ -87,8 +90,6 @@ class App:
 #
 #        self.graphics_ = GraphicalBoard(s.boardsize_)
 
-
-
     def KeyToDir(self, key):
         if key == pygame.K_UP:
             return "NORTH"
@@ -102,57 +103,11 @@ class App:
             return "NOT SUPPORTED"
 
 
-    def RunBF(self):
-        self.graphics_.drawBoardState(self.board_, self.robots_,self.target_)
-        player = Graph_Search_BF()
-        print("running")
-        solution = player.search(self.board_, self.robots_, self.target_,5)
-
-
-        for i in solution:
-            print(i)
-
-        input()
-        pygame.display.quit()
-        pygame.quit()
-
-
-    def Run1(self):
-        self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
-
-        moveCount = 0
-        robot = None
-
-        while True:
-            pygame.time.delay(100)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.display.quit()
-                    pygame.quit()
-                    exit()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    robot = self.graphics_.DetermineRobo(event.pos, self.robots_)
-                if event.type == pygame.KEYDOWN and robot != None:
-                    d = self.KeyToDir(event.key)
-                    if robot.move_possible(self.board_, self.robots_, d):
-                        robot = robot.move(self.board_, self.robots_, d)
-                        moveCount += 1
-                        print("Moves: " + str(moveCount))
-                        for i in range(len(self.robots_)):
-                            if robot.color_ == self.robots_[i].color_:
-                                self.robots_[i] = robot
-                    self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
-
-                    for r in self.robots_:
-                        if r.y_ == self.target_.y_ and r.x_ == self.target_.x_ and r.color_ == self.target_.color_:
-                            print("Success! New target placed")
-                            print("You took " + str(moveCount) + " moves to find a solution")
-                            moveCount = 0
-                            self.target_.set_target(self.board_, self.robots_)
-                            self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
-
     def Run(self):
         self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
+        self.sidebar_.drawScoreboard(self.players_)
+        self.sidebar_.displayMessage(["Click a player name to select."])
+        game_over = False
 
         while True:
             pygame.time.delay(100)
@@ -161,63 +116,72 @@ class App:
                     pygame.display.quit()
                     pygame.quit()
                     exit()
-            while True:
-                print("Type 1 or 2 to select player.\n\nplayer1: {p1} or player2: {p2}"\
-                        .format(p1=self.players_[0].name_, p2=self.players_[1].name_))
-                p = input()
-                if not (p != '1' and p != '2'):
-                    p = int(p)
-                    break
-                print("Invalid Player, try again")
-            current_player = self.players_[p-1]
-            other_player = self.players_[2-p]
-            robot_start_position = copy.deepcopy(self.robots_)
+                if event.type == pygame.MOUSEBUTTONDOWN and not game_over:
+                    # get mouse input to determine player
+                    current_player, other_player = self.sidebar_.DeterminePlayer(event.pos)
+                    if current_player == None:
+                        break
 
-            cp_move_count = current_player.execute_moves(self, 8)
-            if cp_move_count == 0:
-                print('{cp} was not able to reach the target. If {op} can find a solution, they win the round.'\
-                    .format(cp=current_player.name_, op=other_player.name_))
-                cp_move_count = 999
-            else:
-                print('{cp} was able to reach the target in {count} moves. {op} gets 1 minute to find a better solution.'\
-                    .format(cp=current_player.name_, count=cp_move_count, op=other_player.name_))
-            pygame.time.delay(1000)
+                    # copy robot position for second player to try to find a better solution
+                    robot_start_position = copy.deepcopy(self.robots_)
 
-            first_player_robots = self.robots_
-            self.robots_ = robot_start_position
-            self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
+                    self.sidebar_.displayMessage(["Click a robot and move", " with arrow keys."])
 
-            op_move_count = other_player.execute_moves(self, 8)
-            if op_move_count == 0:
-                print('{op} was not able to reach the target.'\
-                    .format(count=op_move_count, op=other_player.name_))
-                op_move_count == 999
-            else:
-                print('{op} was able to reach the target in {count} moves.'\
-                    .format(count=op_move_count, op=other_player.name_))
-            pygame.time.delay(1000)
+                    # execute the moves of the current player
+                    cp_move_count = current_player.execute_moves(self, 8)
+                    if cp_move_count == 0:
+                        print('{cp} was not able to reach the target. If {op} can find a solution, they win the round.'\
+                            .format(cp=current_player.name_, op=other_player.name_))
+                        cp_move_count = 999
+                    else:
+                        print('{cp} was able to reach the target in {count} moves. {op} gets 1 minute to find a better solution.'\
+                            .format(cp=current_player.name_, count=cp_move_count, op=other_player.name_))
+                    pygame.time.delay(1000)
 
-            if op_move_count < cp_move_count:
-                other_player.score_ += 1
-            elif cp_move_count == 999 and op_move_count == 999:
-                self.robots = robot_start_position
-                print("Neither player was able to find a solution, no points awarded")
-            else:
-                current_player.score_ += 1
-                self.robots_ = first_player_robots
+                    # reset board to the original, before any moves in the round
+                    self.sidebar_.switchPlayer()
+                    first_player_robots = self.robots_
+                    self.robots_ = robot_start_position
+                    self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
 
-            print("Round complete.")
-            print("Scores: {p1} - {p1p}, {p2} - {p2p}"\
-                .format(p1=self.players_[0].name_, p1p=self.players_[0].score_,
-                        p2=self.players_[1].name_, p2p=self.players_[1].score_))
+                    # execute moves of the other player
+                    op_move_count = other_player.execute_moves(self, 8)
+                    if op_move_count == 0:
+                        print('{op} was not able to reach the target.'\
+                            .format(count=op_move_count, op=other_player.name_))
+                        op_move_count = 999
+                    else:
+                        print('{op} was able to reach the target in {count} moves.'\
+                            .format(count=op_move_count, op=other_player.name_))
+                    pygame.time.delay(1000)
 
-            for p in self.players_:
-                if p.score_ == 2:
-                    print("{p} wins!".format(p=p.name_))
-                    exit()
+                    # deselect all players, and calculate the score of the round
+                    self.sidebar_.noPlayer()
+                    if op_move_count < cp_move_count:
+                        other_player.score_ += 1
+                    elif cp_move_count == 999 and op_move_count == 999:
+                        self.robots = robot_start_position
+                        self.sidebar_.displayMessage(["Neither player found a", "solution, no points awarded"])
+                        pygame.time.delay(3000)
+                    else:
+                        current_player.score_ += 1
+                        self.robots_ = first_player_robots
 
-            self.target_.set_target(self.board_, self.robots_)
-            self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
+                    # final messages of the round
+                    self.sidebar_.displayMessage(["Round complete.", "Click a player name to select."])
+                    self.sidebar_.drawScoreboard(self.players_)
+
+                    # check if a player won
+                    for p in self.players_:
+                        if p.score_ == self.games_to_win_:
+                            self.sidebar_.displayMessage(["{p} wins!".format(p=p.name_)])
+                            game_over = True
+
+                    # reset the target location
+                    self.target_.set_target(self.board_, self.robots_)
+                    self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
+
+
 
     def Run_Test(self, limit=None, heuristic=None):
         self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
@@ -249,6 +213,7 @@ class App:
                 AI_name = current_player.name_ + " - " + str(limit)
 
             print("\n\nRunning test " + str(i+1))
+
             cp_move_count = current_player.execute_moves(self, limit, heuristic)
             if (cp_move_count == FAILURE or cp_move_count == TIME_CUTOFF or cp_move_count == DEPTH_CUTOFF):
                 print(cp_move_count)
@@ -403,13 +368,10 @@ def Run_Tests():
     csv_file.close()
 
 if __name__ == '__main__':
-
-    Run_Tests()
-
-    # print("\nusage: python app.py -b <boardsize> -r <robotcount> -t <testroundss> -p1 <playerone> -p2 <playertwo>\n")
-    # s = Settings()
-    # s.set_settings(argv)
-    # game = App(s)
-    # if (game.test_rounds_ > 0):
-    #     game.Run_Test()
-    # else: game.Run()
+    print("\nusage: python app.py -b <boardsize> -r <robotcount> -t <testroundss> -p1 <playerone> -p2 <playertwo>\n")
+    s = Settings()
+    s.set_settings(argv)
+    game = App(s)
+    if game.test_rounds_:
+        game.Run_Tests()
+    else: game.Run()

@@ -15,10 +15,14 @@ class HumanPlayer(Player):
                 if event.type == pygame.QUIT:
                     pygame.display.quit()
                     pygame.quit()
-                    exit()
+                    exit()      
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     robot = app.graphics_.DetermineRobo(event.pos, app.robots_)
-                if event.type == pygame.KEYDOWN and robot != None:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        return 0
+                    if robot == None:
+                        break
                     d = app.KeyToDir(event.key)
                     if robot.move_possible(app.board_, app.robots_, d):
                         robot = robot.move(app.board_, app.robots_, d)
@@ -31,7 +35,6 @@ class HumanPlayer(Player):
 
                     for r in app.robots_:
                         if r.y_ == app.target_.y_ and r.x_ == app.target_.x_ and r.color_ == app.target_.color_:
-                            print("Success!")
                             return moveCount
 
     # since the user is playing the game, no search algorithm is needed
