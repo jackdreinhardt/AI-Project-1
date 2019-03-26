@@ -10,10 +10,12 @@ class GraphicalBoard:
         self.EdgeSize = 20
         self.WallThickness = 6
         self.HalfThickness = 2
+
+        self.ScoreBoard = 300
         
         pygame.init()
-        window_dim = self.SquareSize * self.BoardSize_
-        self.WindowSize = (window_dim + 2 * self.EdgeSize, window_dim + 2 * self.EdgeSize)
+        self.BoardArea = self.SquareSize * self.BoardSize_ + 2 * self.EdgeSize
+        self.WindowSize = (self.BoardArea + self.ScoreBoard, self.BoardArea)
         self.WindowTitle = "Ricochet Robots"
         self.Screen = pygame.display.set_mode(self.WindowSize)
         pygame.display.set_caption(self.WindowTitle)
@@ -37,18 +39,18 @@ class GraphicalBoard:
         self.drawBoard()
         self.drawWalls(board)
         self.drawTarget(target)
-        pygame.display.update()
         self.drawRobots(board, robots, target)
+        pygame.display.update()
         self.pygame_update()
         
         
     #Here, the chess board is drawn    
     def drawBoard(self):
-        self.Screen.fill(self.Tile2)
-        pygame.draw.rect(self.Screen, self.Edgecol, (0, 0, self.WindowSize[0], self.EdgeSize), 0)
-        pygame.draw.rect(self.Screen, self.Edgecol, (0, 0, self.EdgeSize, self.WindowSize[0]), 0)
-        pygame.draw.rect(self.Screen, self.Edgecol, (0, self.WindowSize[0] - self.EdgeSize, self.WindowSize[0], self.EdgeSize), 0)
-        pygame.draw.rect(self.Screen, self.Edgecol, (self.WindowSize[0] - self.EdgeSize, 0, self.EdgeSize, self.WindowSize[0]), 0)
+        pygame.draw.rect(self.Screen, self.Tile2, (0,0, self.BoardArea, self.BoardArea))
+        pygame.draw.rect(self.Screen, self.Edgecol, (0, 0, self.BoardArea, self.EdgeSize), 0)
+        pygame.draw.rect(self.Screen, self.Edgecol, (0, 0, self.EdgeSize, self.BoardArea), 0)
+        pygame.draw.rect(self.Screen, self.Edgecol, (0, self.BoardArea - self.EdgeSize, self.BoardArea, self.EdgeSize), 0)
+        pygame.draw.rect(self.Screen, self.Edgecol, (self.BoardArea - self.EdgeSize, 0, self.EdgeSize, self.BoardArea), 0)
 
         for i in range(0, self.BoardSize_, 2):
             for j in range(0, self.BoardSize_, 2):
@@ -90,6 +92,7 @@ class GraphicalBoard:
                 return r
         return None
 
+    # I hate this, but its the only way the AI moves are shown on the board
     def pygame_update(self):
         for event in pygame.event.get():
             pass

@@ -1,7 +1,6 @@
 from ai_player import AIPlayer
 import copy
 
-from stack import Stack
 from node import Node
 
 class Advanced_AI_Player(AIPlayer):
@@ -172,7 +171,7 @@ class Advanced_AI_Player(AIPlayer):
         return FAILURE
     
     
-    def CombinePaths(pathNewGoal):
+    # def CombinePaths(pathNewGoal):
         
         
         

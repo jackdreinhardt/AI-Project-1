@@ -13,14 +13,12 @@ class AIPlayer(Player):
         self.nodes_expanded_ = 0
         self.start_time = 0
 
-
     def execute_moves(self, app, limit=10, heuristic=None):
-
-        print("executing...")
+        print(self.name_, "is searching for a solution...")
         count = 0
         self.nodes_expanded_ = 0
-        moves = self.search(app.board_, app.target_, app.robots_, limit, heuristic)
-        print(moves)
+        moves = self.search(app.board_, app.target_, app.robots_, limit)
+        print("Result: ", moves)
         if (moves == FAILURE or moves == TIME_CUTOFF or moves == DEPTH_CUTOFF):
             return moves
         for m in moves: # for each move
@@ -30,8 +28,8 @@ class AIPlayer(Player):
                     for i in range(len(app.robots_)):
                             if robot.color_ == app.robots_[i].color_:
                                 app.robots_[i] = robot # move robot on board
-                    app.graphics_.drawBoardState(app.board_, app.robots_, app.target_)
                     pygame.time.delay(1000)
+                    app.graphics_.drawBoardState(app.board_, app.robots_, app.target_)
                     count += 1
         return count
 
@@ -40,3 +38,5 @@ class AIPlayer(Player):
     #   direction: a string, "NORTH" "SOUTH" "EAST" or "WEST"
     def search(self, board, robots, limit, heuristic):
         return None
+
+
