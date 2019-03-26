@@ -16,13 +16,14 @@ class Node:
 #         self.move_tuple_ = movetuple # what robot was moved to what direction
 # =============================================================================
 
-    def __init__(self, robots, father, movetuple, g=0, h=0):
+    def __init__(self, robots, father, movetuple, g=0, h=0,level=0):
         self.robots_ = robots
         self.father_ = father
         self.move_tuple_ = movetuple # what robot was moved to what direction
         self.g_ = g # g(n)
         self.h_ = h # heuristic
         self.children_ = []
+        self.level_ = level
 
     def get_cost(self):
         return self.g_ + self.h_
@@ -68,10 +69,11 @@ class Node:
     def copyNode(oldNode):
         mt = copy.deepcopy(oldNode.move_tuple_)
         father = copy.deepcopy(oldNode.father_)
+        level = oldNode.level_
         robots =[]
         for r in oldNode.robots_:
             robots.append (Robot(r.color_,r.x_,r.y_))
-        return Node(robots,father,mt,0,0)
+        return Node(robots,father,mt,0,0,level)
     
 
     
