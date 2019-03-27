@@ -4,3 +4,5 @@
 *.synctex.gz
 *.DS_Store
 __pycache__/
+test_csvs/
+jacob_tests/
