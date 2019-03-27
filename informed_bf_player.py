@@ -37,7 +37,11 @@ class Graph_Search_BF(AIPlayer):
     def search(self, board, target, robots, limit,heuristic):
        
         self.start_time = time.time()
-        return Node.get_solution(self.graph_search(board, target, robots, limit, heuristic))
+        solution = (self.graph_search(board, target, robots, limit, heuristic))
+        
+        if (solution !=FAILURE and solution != TIME_CUTOFF and solution != DEPTH_CUTOFF):
+            return Node.get_solution(solution)
+        else: return solution
         
 
     def graph_search(self,board, target,robots,limit,heuristic):

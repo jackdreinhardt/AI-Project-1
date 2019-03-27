@@ -7,11 +7,9 @@ Created on Sun Mar 24 14:57:54 2019
 from square import Square
 class Goal_state:
     
-    def __init__(self,color,x,y,level):
+    def __init__(self,x,y):
         self.x_ = x
         self.y_ = y
-        self.color_ = color
-        self.level_ = level
         
         
     def is_goal_state(self,board,robots):
