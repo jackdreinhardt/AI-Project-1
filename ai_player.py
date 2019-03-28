@@ -17,7 +17,7 @@ class AIPlayer(Player):
         print(self.name_, "is searching for a solution...")
         count = 0
         self.nodes_expanded_ = 0
-        moves = self.search(app.board_, app.target_, app.robots_, limit)
+        moves = self.search(app.board_, app.target_, app.robots_, limit, heuristic)
         print("Result: ", moves)
         if (moves == FAILURE or moves == TIME_CUTOFF or moves == DEPTH_CUTOFF):
             return moves
