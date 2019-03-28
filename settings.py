@@ -4,7 +4,6 @@ from informed_df_player import Graph_Search_DF
 from a_star_player import A_Star_Player
 from depth_limited_player import Depth_Limited_Player
 from AAI import Advanced_AI_Player
-from limited_bfs import LimitedBFS
 
 class Settings:
     def __init__(self, boardsize=16, robots=4, players=['Player 1','Player 2']):
