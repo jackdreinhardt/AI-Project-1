@@ -42,8 +42,6 @@ class Settings:
                 players.append(Graph_Search_BF())
             elif name == 'i_dfs':
                 players.append(Graph_Search_DF())
-            elif name == 't_bfs':
-                players.append(LimitedBFS())
             else:
                 players.append(HumanPlayer(name))
         return players
