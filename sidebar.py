@@ -52,7 +52,7 @@ class Sidebar:
             text = font.render(p.name_, True, (0, 0, 0))
             self.g_.Screen.blit(text,(p.west_click_bound, p.north_click_bound))
             text = font.render(str(p.score_), True, (0, 0, 0))
-            self.g_.Screen.blit(text,(self.g_.BoardArea + 0.8 * self.g_.ScoreBoard - text.get_width() // 2, p.north_click_bound))
+            self.g_.Screen.blit(text,(self.g_.BoardArea + 0.9 * self.g_.ScoreBoard - text.get_width() // 2, p.north_click_bound))
             if p.selected_:
                 s = pygame.Surface((p.east_click_bound - p.west_click_bound, p.south_click_bound - p.north_click_bound))  # the size of your rect
                 s.set_alpha(30)                # alpha level
