@@ -1,6 +1,6 @@
 import pygame, time
 from sys import argv
-import random as rd
+from random import randrange as rd
 import copy
 import csv
 
@@ -14,14 +14,6 @@ from sidebar import Sidebar
 from settings import Settings
 
 
-from human_player import HumanPlayer
-from informed_bf_player import Graph_Search_BF
-from informed_df_player import Graph_Search_DF
-from a_star_player import A_Star_Player
-from depth_limited_player import Depth_Limited_Player
-from AAI import Advanced_AI_Player
-
-
 class App:
 
     def __init__(self, s):
@@ -29,7 +21,7 @@ class App:
 
         self.robots_ = []
         for i in range(s.robots_):
-            self.robots_.append(Robot(COLORS[i], rd.randrange(s.boardsize_), rd.randrange(s.boardsize_)))
+            self.robots_.append(Robot(COLORS[i], rd(s.boardsize_), rd(s.boardsize_)))
         Robot.validate_positions(self.board_, self.robots_)
 
         self.target_ = Target(s.boardsize_, self.board_, self.robots_)
@@ -38,57 +30,11 @@ class App:
             self.test_rounds_ = s.test_rounds_
         else: self.test_rounds_ = 0
 
-        self.players_ = []
-        for p in s.players_:
-            if p == 'dfs':
-                self.players_.append(Depth_Limited_Player())
-            elif p == 'a-star':
-                self.players_.append(A_Star_Player())
-            elif p == 'aai':
-                self.players_.append(Advanced_AI_Player())
-            elif p == 'bfs':
-                self.players_.append(Graph_Search_BF())
-            elif p == 'i_dfs':
-                self.players_.append(Graph_Search_DF())
-            else:
-                self.players_.append(HumanPlayer(p))
+        self.players_ = s.assign_players()
 
         self.graphics_ = GraphicalBoard(s.boardsize_)
         self.sidebar_ = Sidebar(self.graphics_, self.players_)
-        self.games_to_win_ = 2
-
-
-#    def __init__(self,s,m):
-#        self.board_ = Board(s.boardsize_)
-#
-#        self.robots_ = []
-#        self.robots_.append(Robot(COLORS[0],0, 1))
-#        self.robots_.append(Robot(COLORS[1],1, 0))
-#        #self.robots_.append(Robot(COLORS[2],1, 0))
-#        #Robot.validate_positions(self.board_, self.robots_)
-#
-#        self.target_ = Target(s.boardsize_, self.board_, self.robots_)
-#        self.target_.color_ = COLORS[m]
-#        self.target_.x_=4
-#        self.target_.y_=5
-#
-#
-#        if (s.test_rounds_ > 0):
-#            self.test_rounds_ = s.test_rounds_
-#        else: self.test_rounds_ = 0
-#
-#        self.players_ = []
-#        for p in s.players_:
-#            if p == 'dfs':
-#                self.players_.append(Depth_Limited_Player())
-#            elif p == 'a-star':
-#                self.players_.append(A_Star_Player())
-#            elif p == 'bfs':
-#                self.players_.append(Graph_Search_BF())
-#            else:
-#                self.players_.append(HumanPlayer(p))
-#
-#        self.graphics_ = GraphicalBoard(s.boardsize_)
+        self.games_to_win_ = 7
 
     def KeyToDir(self, key):
         if key == pygame.K_UP:
