@@ -8,86 +8,90 @@ class Advanced_AI_Player(AIPlayer):
         
     def search(self, board, target, robots, limit, heuristic=None):
         moves = [] # empty list to store history of moves
+        frontier = []
+        frontier.append(robots)
         self.start_time = time.time()
-        for r in robots:
-            if target.color_ == r.color_:
-                print(r)
-                currentRobot = r
-        solution = self.recursive_DLS(board, target, robots, limit, moves, currentRobot)
-        if (solution != FAILURE and solution != DEPTH_CUTOFF and solution != TIME_CUTOFF):
-            new_solution = self.optimize_solution(board, target, robots, solution)
-            print("removed " + str(len(solution)-len(new_solution)) + " moves")
-            return new_solution
-        else: return solution
+        for i in range(len(robots)):
+            if target.color_ == robots[i].color_:
+                limit = 3
+                solution = self.recursive_BFS(board, target, robots, limit, moves, robots[i], frontier)
+        if solution == DEPTH_CUTOFF:
+            # robotWalls = self.recursive_DFS(board, target, robots, limit, moves, solution)
 
-    def optimize_solution(self, board, target, robots, solution):
-        solution_len = len(solution)
-        minimal_solution = copy.deepcopy(solution)
-        for i in range(solution_len-1):
-            solution = copy.deepcopy(minimal_solution)
-            reached_goal = False
-            if (solution_len-i-2 >= 0):
-                del solution[solution_len-i-2]
-            else:
-                break
-            new_robots = copy.deepcopy(robots)
-            for m in solution: # for each move
-                for i in range(len(new_robots)): # for each robot
-                    if new_robots[i].color_ == m[0]: # check if robot matches
-                        new_robots[i] = new_robots[i].move(board, new_robots, m[1])
-                for r in new_robots: # goal test
-                  if (target.color_ == r.color_ and target.x_ == r.x_ and target.y_ == r.y_):
-                    reached_goal = True
-            if reached_goal: minimal_solution = copy.deepcopy(solution) # reaches goal state - update minimal solution
-        return minimal_solution
+            return solution
 
-    def recursive_DLS(self, board, target, robots, limit, moves, currentRobot):
+
+    def recursive_BFS(self, board, target, robots, limit, moves, currentRobot, frontier):
+        print("loop")
         self.nodes_expanded_ += 1
-        for r in robots:
-          if (target.color_ == r.color_ and target.x_ == r.x_ and target.y_ == r.y_):
-            return moves # return solution
-        if (time.time() - self.start_time > CUTOFF_TIME):
-            return TIME_CUTOFF
-        if limit == 0: # if depth limit was reached
-            return DEPTH_CUTOFF
-        else:
-            cutoff_occurred = False
-            time_cutoff_occurred = False
-            direction = ["NORTH", "SOUTH", "EAST", "WEST"]
-        #for i in range(len(robots)): # for each robot in robots
-            random.shuffle(direction) # randomize order of directions
-            for j in range(len(direction)): # for each direction
-                if currentRobot.move_possible(board, robots, direction[j]): # check if move successful
-                    if len(moves) > 0 \
-                    and currentRobot.color_ == moves[len(moves)-1][0] \
-                    and ((direction[j] == "NORTH" and moves[len(moves)-1][1] == "SOUTH") \
-                    or (direction[j] == "SOUTH" and moves[len(moves)-1][1] == "NORTH") \
-                    or (direction[j] == "EAST" and moves[len(moves)-1][1] == "WEST") \
-                    or (direction[j] == "WEST" and moves[len(moves)-1][1] == "EAST")):
-                        break # don't allow the opposite of the previous move
-
-                    new_robots = copy.deepcopy(robots)
-                    # new_board = copy.deepcopy(board)
-                    new_moves = copy.deepcopy(moves)
-                    for i in range(len(robots)):
-                        if new_robots[i].color_ == currentRobot.color_:
-                            newRobot = new_robots[i]
-                    newRobot = newRobot.move(board, new_robots, direction[j])
-
-                    #print("Moving robot " + str(i) + " " + direction[j])
-                    new_moves.append((currentRobot.color_, direction[j])) # add move to history
-                    result = self.recursive_DLS(board, target, new_robots, limit-1, new_moves)
+        for i in range(len(robots)):
+            if robots[i].color_ == currentRobot.color_:
+                if (target.x_ == currentRobot.x_ and target.y_ == currentRobot.y_):
+                    return moves # return solution
+                if (time.time() - self.start_time > CUTOFF_TIME):
+                    return TIME_CUTOFF
+                if limit == 0: # if depth limit was reached
+                    return DEPTH_CUTOFF
+                else:
+                    cutoff_occurred = False
+                    time_cutoff_occurred = False
+                    direction = ["NORTH", "SOUTH", "EAST", "WEST"]
+                    for j in range(len(direction)): # for each direction
+                        print("for loop", j)
+                        if frontier[0][i].move_possible(board, robots, direction[j]): # check if move successful
+                            print("possible")
+# =============================================================================
+#                             if len(moves) > 0 \
+#                             and ((direction[j] == "NORTH" and moves[len(moves)-1][1] == "SOUTH") \
+#                             or (direction[j] == "SOUTH" and moves[len(moves)-1][1] == "NORTH") \
+#                             or (direction[j] == "EAST" and moves[len(moves)-1][1] == "WEST") \
+#                             or (direction[j] == "WEST" and moves[len(moves)-1][1] == "EAST")):
+#                                 continue # don't allow the opposite of the previous move
+# =============================================================================
+                                
+# =============================================================================
+#                             passedTarget = passed_Target(board, target, robots, moves, currentRobot)
+#                             if passedTarget:
+#                                 newGoals.append()
+# =============================================================================
+                                
+                            new_robots = copy.deepcopy(robots)
+                            new_moves = copy.deepcopy(moves)
+                            for i in range(len(robots)):
+                                if currentRobot.color_ == new_robots[i].color_:
+                                    new_robots[i] = new_robots[i].move(board, new_robots, direction[j])
+                                    print(new_robots[i].y_, new_robots[i].x_)
+                            frontier.append(new_robots)
+                                    
+        
+                            #print("Moving robot " + str(i) + " " + direction[j])
+                            new_moves.append((currentRobot.color_, direction[j])) # add move to history
+                        else:
+                            continue
+                    del frontier[0];
+                    result = self.recursive_BFS(board, target, new_robots, limit-1, new_moves, currentRobot, frontier)
                     if result == DEPTH_CUTOFF:
                         cutoff_occurred = True
                     elif result == TIME_CUTOFF:
                         time_cutoff_occurred = True
                     elif result != FAILURE:
                         return result
-        if time_cutoff_occurred:
-            return TIME_CUTOFF
-        if cutoff_occurred:
-            return DEPTH_CUTOFF
-        else: return FAILURE
+                if time_cutoff_occurred:
+                    return TIME_CUTOFF
+                if cutoff_occurred:
+                    return DEPTH_CUTOFF
+                else: return FAILURE
+                
+                
+# =============================================================================
+#     def passed_Target(self, board, target, robots, moves, currentRobot):
+#         for i in range(len(robots)):
+#             if robots[i].color_ == currentRobot.color_:
+# =============================================================================
+                
+    
+
+   # def recursive_DFS(self, board, target, robots, limit, moves, solution):
      
         
         
