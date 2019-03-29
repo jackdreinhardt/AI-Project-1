@@ -26,9 +26,11 @@ Project report on\\
 \thispagestyle{empty}
 \newpage
 \section{Game Rules}
-
+\label{sec:gameRules}
 
 \section{Game Representation}
+\label{sec:gameRep}
+The representation of the game state only includes the locations of the game pieces - the robots - and the location of the target. The walls on the board are static, so these are not included in the game state. More specifically, the state is represented by a tuple of robots, and the target. The possible moves, dictated by Section \ref{sec:gameRules}, can be retrieved from the tuple in conjunction with the static game board. There is perfect observability in the game, so there is no need to represent the game state as a belief state. The state is simple to represent, which makes the AI algorithms run more efficiently and accurately.
 
 
 \section{State Space and Complexity}

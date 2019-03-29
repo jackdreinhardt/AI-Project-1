@@ -19,7 +19,7 @@ class Robot:
     def move(self, board, robots, d):
         x = self.x_
         y = self.y_
-        c = copy.deepcopy(self.color_)
+        c = self.color_
         if d == "NORTH":
             while not board.square(y, x).wall_north_:
                 for r in robots:

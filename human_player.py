@@ -1,6 +1,7 @@
 import pygame
 
 from player import Player
+from globals import FAILURE
 
 class HumanPlayer(Player):
     def __init__(self, name):
@@ -20,7 +21,7 @@ class HumanPlayer(Player):
                     robot = app.graphics_.DetermineRobo(event.pos, app.robots_)
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        return 0
+                        return FAILURE
                     if robot == None:
                         break
                     d = app.KeyToDir(event.key)
