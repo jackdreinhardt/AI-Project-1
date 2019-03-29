@@ -6,7 +6,7 @@ from depth_limited_player import Depth_Limited_Player
 from AAI import Advanced_AI_Player
 
 class Settings:
-    def __init__(self, boardsize=16, robots=4, players=['Player 1','i_dfs']):
+    def __init__(self, boardsize=16, robots=4, players=['Player 1','Player 2']):
         self.boardsize_ = boardsize
         self.robots_ = robots
         self.players_ = players
