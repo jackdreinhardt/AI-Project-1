@@ -5,6 +5,7 @@
 \usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{indentfirst}
+\usepackage{graphicx}
 
 \begin{document}
 \begin{center}
@@ -24,7 +25,26 @@ Project report on\\
 \tableofcontents
 \thispagestyle{empty}
 \newpage
-\section{Game Rules}
+\section{Game Background}
+\subsection{Game Rules}
+\textit{Ricochet Robots} is a competitive game first published in Germany in 1999. In the original game four different colored robots are placed on a 16 by 16 board. The objective of the game is to reach a target that is placed somewhere on the board each round. The targets have different colors matching the colors of the four robots. A red target has to be reached by the red robot, a blue target by the blue robot and so on. The challenge of the game comes from the allowed movements of the robots. All robots can move in four directions: up, down, left and right, however once a robot is moved it will only stop when it hits a wall or another robot. The outer edges of the board, the four middle squares as well as additional squares on the board are blocked on up to two sides by walls. In order to reach the target often robots of other colors need to be used as 'walls'.
+\begin{figure}[!htb]
+\center{\includegraphics[width=6cm]{figures/originalgame.jpg}}
+\caption{The original boardgame 'Ricochet Robots'}
+\label{fig:originalgame}
+\end{figure}
+\subsection{Changes in the Implementation}
+In the original game the board consists of four quaters printed on both sides that can be put together such that 96 unique board setups are possible. In a later version of the game there are eight quaters resulting in 1536 possible board configurations. For the assignment only one, randomly chosen, board configuration from the original game has been implemented.
+\par
+In order to run tests on the AIs an additional 6 by 6 board has been implemented. The game rules are exactly the same, only some squares have walls on three sides. That is because of the reduced space on the small board.
+% Game rules, in particular if you choose a game not on the list above or if you make
+% simplifications to the game. Make this part as short as possible. If you have simplified
+% the rules, explain why and explain what it would take to make AI for the full game.
+
+% What kind of game is it? Relevant questions are e.g.: Single- or multi-player? Competitive
+% or cooperative? Zero-sum? Is it a turn-taking game? Perfect or imperfect information
+% (full or partial observability)? Deterministic or stochastic? And what does this imply for
+% the kind of algorithms that apply to the game?
 
 
 \section{Game Representation}
