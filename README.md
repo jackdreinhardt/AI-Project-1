@@ -23,11 +23,12 @@ Arguments following this command are used to adjust the settings of the gameplay
 |  `-p2`   | chooses player 2    | Player 2 | any character string |
 
 To choose an AI to play the game, use one of the following special names for `-p1` or `-p2`. If the argument does not match an AI algorithm, a human player will be created with the specified name.
+
 | name |           AI         |
 |:----:|:--------------------:|
 | bfs  | breadth-first-search |
 | dfs  | depth-first-search   |
-| . . . |                     |
+| ...  |                      |
 
 
 ## Playing the Game
