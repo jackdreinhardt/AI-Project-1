@@ -28,7 +28,13 @@ To choose an AI to play the game, use one of the following special names for `-p
 |:----:|:--------------------:|
 | bfs  | breadth-first-search |
 | dfs  | depth-first-search   |
-| ...  |                      |
+| ...  | ...                  |
+
+Examples:
+`python app.py -b 16 -r 4`
+`python app.py -r 3 -b 6 -p1 bfs`
+`python app.py -p1 Bob -p2 Alice`
+`python app.py -b 6 -r 3 -p2 bfs -p3 dfs`
 
 
 ## Playing the Game
