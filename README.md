@@ -2,10 +2,10 @@
 
 ## Dependencies
 
-- python (version 3.7.1+). It may be possible to run the code in previous versions, however not all functionality is guaranteed. See PYTHONURL for dowload instructions if python is not installed.
+- python (version 3.7.1+). It may be possible to run the code in previous versions, however not all functionality is guaranteed. See https://www.python.org for dowload instructions if python is not installed.
 - pygame (version 1.9.4+). It may be possible to run the code in previous versions, however not all functionality is guaranteed. The easiest way to download pygame is using pip, the python package manager. The command is as follows
  `pip install pygame`
- If this fails, see PYGAMEURL for specific instructions on how to download the software.
+ If this fails, see https://www.pygame.org/ for specific instructions on how to download the software.
 
 ## Running the Program
 
@@ -16,7 +16,7 @@ It is possible to run the game from an IDE, but it is recommended to use the com
 Arguments following this command are used to adjust the settings of the gameplay. They are listed below.
 
 | argument | function | default | options |
-|----------|----------|---------|
+|:----------|:----------:|:---------:|-----:|
 |   `-b`     | sets the board size | 16 | 6, 16 |
 |   `-r`     | number of robots | 4 | 1 - 4 |
 |   `-p1`    | chooses player 1 | Player 1 | any character string |
