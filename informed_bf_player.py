@@ -90,14 +90,14 @@ class Graph_Search_BF(AIPlayer):
                             return newNode
                              
                         
-                        for m in range (len(frontier))  :
-                            if (Node.compare_robots(frontier[m],newNode)):
-                                unique_node=False
-                                break
-                        for n in range(len(expanded))  :  
-                            if (Node.compare_robots(expanded[n],newNode)):
-                                unique_node=False
-                                break
+#                        for m in range (len(frontier))  :
+#                            if (Node.compare_robots(frontier[m],newNode)):
+#                                unique_node=False
+#                                break
+#                        for n in range(len(expanded))  :  
+#                            if (Node.compare_robots(expanded[n],newNode)):
+#                                unique_node=False
+#                                break
                         
           
                         if(unique_node and newNode.level_<(limit)): 
