@@ -19,7 +19,6 @@ import random
 from globals import *
 from collections import deque
 import copy
-from goal_state import Goal_state
 from target import Target
 
 #import copy
