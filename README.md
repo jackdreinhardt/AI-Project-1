@@ -15,19 +15,19 @@ It is possible to run the game from an IDE, but it is recommended to use the com
 
 Arguments following this command are used to adjust the settings of the gameplay. They are listed below.
 
-| argument | function | default | options |
-|:----------|:----------:|:---------:|-----:|
-|   `-b`     | sets the board size | 16 | 6, 16 |
-|   `-r`     | number of robots | 4 | 1 - 4 |
-|   `-p1`    | chooses player 1 | Player 1 | any character string |
-|   `-p2`    | chooses player 2 | Player 2 | any character string |
+| argument |       function      | default  | options              |
+|:--------:|:-------------------:|:--------:|:--------------------:|
+|  `-b`    | sets the board size | 16       | 6, 16                |
+|  `-r`    | number of robots    | 4        | 1 - 4                |
+|  `-p1`   | chooses player 1    | Player 1 | any character string |
+|  `-p2`   | chooses player 2    | Player 2 | any character string |
 
 To choose an AI to play the game, use one of the following special names for `-p1` or `-p2`. If the argument does not match an AI algorithm, a human player will be created with the specified name.
-| name | AI |
-|------|----|
+| name |           AI         |
+|:----:|:--------------------:|
 | bfs  | breadth-first-search |
-| dfs  | depth-first-search |
-| . . . | |
+| dfs  | depth-first-search   |
+| . . . |                     |
 
 
 ## Playing the Game
