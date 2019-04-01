@@ -9,7 +9,7 @@ class Settings:
         self.boardsize_ = boardsize
         self.robots_ = robots
         self.players_ = players
-        self.test_rounds_ = 0
+        self.test_rounds_ = 1
 
     def set_settings(self, args):
         for i in range(len(args)):

@@ -133,7 +133,7 @@ class App:
         self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
 
         test_csv_file = open('test_csvs/test.csv', mode='a+')
-        csv_writer = csv.writer(test_csv_file, delimiter=',')
+        csv_writer = csv.writer(test_csv_file, delimiter=';')
 
         csv_writer.writerow([])
         csv_writer.writerow(['AI', 'Board Size', 'Robots', 'Iteration', 'Outcome', 'Moves', 'Nodes Expanded'])
@@ -186,18 +186,18 @@ def Run_Tests():
     s = Settings()
 
     csv_file = open('test_csvs/test_averages.csv', mode='a+')
-    csv_write = csv.writer(csv_file, delimiter=',')
+    csv_write = csv.writer(csv_file, delimiter=';')
 
     csv_write.writerow([])
     csv_write.writerow(['AI', 'Board Size', 'Robots', 'Success Ratio', 'Avg Moves', 'Avg Nodes Expanded'])
     csv_file.close()
 
-    arguments = ["python", "-b", "6", "-r", "3", "-t", "30", "-p1", "dfs"]
+    arguments = ["python", "-b", "6", "-r", "3", "-t", "30", "-p1", "bfs"]
     s.set_settings(arguments)
     game = App(s)
-    results1 = game.Run_Test(6)
-    results2 = game.Run_Test(8)
-    results3 = game.Run_Test(10)
+    results1 = game.Run_Test(12)
+    results2 = game.Run_Test(12)
+    results3 = game.Run_Test(12)
     results4 = game.Run_Test(12)
 
     csv_file = open('test_csvs/test_averages.csv', mode='a+')
@@ -208,12 +208,12 @@ def Run_Tests():
     csv_write.writerow(results4)
     csv_file.close()
 
-    arguments = ["python", "-b", "6", "-r", "4", "-t", "30", "-p1", "dfs"]
+    arguments = ["python", "-b", "6", "-r", "4", "-t", "30", "-p1", "bfs"]
     s.set_settings(arguments)
     game = App(s)
-    results1 = game.Run_Test(6)
-    results2 = game.Run_Test(8)
-    results3 = game.Run_Test(10)
+    results1 = game.Run_Test(12)
+    results2 = game.Run_Test(12)
+    results3 = game.Run_Test(12)
     results4 = game.Run_Test(12)
 
     csv_file = open('test_csvs/test_averages.csv', mode='a+')
@@ -224,40 +224,40 @@ def Run_Tests():
     csv_write.writerow(results4)
     csv_file.close()
 
-    arguments = ["python", "-b", "6", "-r", "3", "-t", "30", "-p1", "a-star"]
+#    arguments = ["python", "-b", "6", "-r", "3", "-t", "30", "-p1", "a-star"]
+#    s.set_settings(arguments)
+#    game = App(s)
+#    results1 = game.Run_Test(0, "Manhattan Distance")
+#    results2 = game.Run_Test(0, "Row/Column")
+#    results3 = game.Run_Test(0, None)
+#
+#    csv_file = open('test_csvs/test_averages.csv', mode='a+')
+#    csv_write = csv.writer(csv_file, delimiter=',')
+#    csv_write.writerow(results1)
+#    csv_write.writerow(results2)
+#    csv_write.writerow(results3)
+#    csv_file.close()
+#
+#    arguments = ["python", "-b", "6", "-r", "4", "-t", "30", "-p1", "a-star"]
+#    s.set_settings(arguments)
+#    game = App(s)
+#    results1 = game.Run_Test(0, "Manhattan Distance")
+#    results2 = game.Run_Test(0, "Row/Column")
+#    results3 = game.Run_Test(0, None)
+#
+#    csv_file = open('test_csvs/test_averages.csv', mode='a+')
+#    csv_write = csv.writer(csv_file, delimiter=',')
+#    csv_write.writerow(results1)
+#    csv_write.writerow(results2)
+#    csv_write.writerow(results3)
+#    csv_file.close()
+
+    arguments = ["python", "-b", "16", "-r", "3", "-t", "30", "-p1", "bfs"]
     s.set_settings(arguments)
     game = App(s)
-    results1 = game.Run_Test(0, "Manhattan Distance")
-    results2 = game.Run_Test(0, "Row/Column")
-    results3 = game.Run_Test(0, None)
-
-    csv_file = open('test_csvs/test_averages.csv', mode='a+')
-    csv_write = csv.writer(csv_file, delimiter=',')
-    csv_write.writerow(results1)
-    csv_write.writerow(results2)
-    csv_write.writerow(results3)
-    csv_file.close()
-
-    arguments = ["python", "-b", "6", "-r", "4", "-t", "30", "-p1", "a-star"]
-    s.set_settings(arguments)
-    game = App(s)
-    results1 = game.Run_Test(0, "Manhattan Distance")
-    results2 = game.Run_Test(0, "Row/Column")
-    results3 = game.Run_Test(0, None)
-
-    csv_file = open('test_csvs/test_averages.csv', mode='a+')
-    csv_write = csv.writer(csv_file, delimiter=',')
-    csv_write.writerow(results1)
-    csv_write.writerow(results2)
-    csv_write.writerow(results3)
-    csv_file.close()
-
-    arguments = ["python", "-b", "16", "-r", "3", "-t", "30", "-p1", "dfs"]
-    s.set_settings(arguments)
-    game = App(s)
-    results1 = game.Run_Test(6)
-    results2 = game.Run_Test(8)
-    results3 = game.Run_Test(10)
+    results1 = game.Run_Test(12)
+    results2 = game.Run_Test(12)
+    results3 = game.Run_Test(112)
     results4 = game.Run_Test(12)
 
     csv_file = open('test_csvs/test_averages.csv', mode='a+')
@@ -268,12 +268,12 @@ def Run_Tests():
     csv_write.writerow(results4)
     csv_file.close()
 
-    arguments = ["python", "-b", "16", "-r", "4", "-t", "30", "-p1", "dfs"]
+    arguments = ["python", "-b", "16", "-r", "4", "-t", "30", "-p1", "bfs"]
     s.set_settings(arguments)
     game = App(s)
-    results1 = game.Run_Test(6)
-    results2 = game.Run_Test(8)
-    results3 = game.Run_Test(10)
+    results1 = game.Run_Test(12)
+    results2 = game.Run_Test(12)
+    results3 = game.Run_Test(12)
     results4 = game.Run_Test(12)
 
     csv_file = open('test_csvs/test_averages.csv', mode='a+')
@@ -284,33 +284,33 @@ def Run_Tests():
     csv_write.writerow(results4)
     csv_file.close()
 
-    arguments = ["python", "-b", "16", "-r", "3", "-t", "30", "-p1", "a-star"]
-    s.set_settings(arguments)
-    game = App(s)
-    results1 = game.Run_Test(0, "Manhattan Distance")
-    results2 = game.Run_Test(0, "Row/Column")
-    results3 = game.Run_Test(0, None)
+#    arguments = ["python", "-b", "16", "-r", "3", "-t", "30", "-p1", "a-star"]
+#    s.set_settings(arguments)
+#    game = App(s)
+#    results1 = game.Run_Test(0, "Manhattan Distance")
+#    results2 = game.Run_Test(0, "Row/Column")
+#    results3 = game.Run_Test(0, None)
+#
+#    csv_file = open('test_csvs/test_averages.csv', mode='a+')
+#    csv_write = csv.writer(csv_file, delimiter=',')
+#    csv_write.writerow(results1)
+#    csv_write.writerow(results2)
+#    csv_write.writerow(results3)
+#    csv_file.close()
 
-    csv_file = open('test_csvs/test_averages.csv', mode='a+')
-    csv_write = csv.writer(csv_file, delimiter=',')
-    csv_write.writerow(results1)
-    csv_write.writerow(results2)
-    csv_write.writerow(results3)
-    csv_file.close()
-
-    arguments = ["python", "-b", "16", "-r", "4", "-t", "30", "-p1", "a-star"]
-    s.set_settings(arguments)
-    game = App(s)
-    results1 = game.Run_Test(0, "Manhattan Distance")
-    results2 = game.Run_Test(0, "Row/Column")
-    results3 = game.Run_Test(0, None)
-
-    csv_file = open('test_csvs/test_averages.csv', mode='a+')
-    csv_write = csv.writer(csv_file, delimiter=',')
-    csv_write.writerow(results1)
-    csv_write.writerow(results2)
-    csv_write.writerow(results3)
-    csv_file.close()
+#    arguments = ["python", "-b", "16", "-r", "4", "-t", "30", "-p1", "a-star"]
+#    s.set_settings(arguments)
+#    game = App(s)
+#    results1 = game.Run_Test(0, "Manhattan Distance")
+#    results2 = game.Run_Test(0, "Row/Column")
+#    results3 = game.Run_Test(0, None)
+#
+#    csv_file = open('test_csvs/test_averages.csv', mode='a+')
+#    csv_write = csv.writer(csv_file, delimiter=',')
+#    csv_write.writerow(results1)
+#    csv_write.writerow(results2)
+#    csv_write.writerow(results3)
+#    csv_file.close()
 
 if __name__ == '__main__':
     print("\nusage: python app.py -b <boardsize> -r <robotcount> -t <testrounds> -p1 <playerone> -p2 <playertwo>\n")

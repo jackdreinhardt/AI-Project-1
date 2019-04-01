@@ -55,9 +55,7 @@ Ricochet Robots allowed us to play and test our AI algorithms without surpassing
 
 
   \subsection{Recursive Depth-Limited Search} \label{recursiveDFS}
-  Given the large branching factor of Ricochet Robots, a depth-limited search gives the AI player a higher potential to find solutions to the more difficult board
-  configurations.  Some experimentation is necessary to find the optimal limit to the depth, but when the AI player is attempting to find a better solution than
-  its human competitor, the limit could simply be set to one less than the human move count.  \\
+  Given the large branching factor of Ricochet Robots, a depth-limited search gives the AI player a higher potential to find solutions to the more difficult board configurations.  Some experimentation is necessary to find the optimal limit to the depth, but when the AI player is attempting to find a better solution than its human competitor, the limit could simply be set to one less than the human move count.  \\
 
   Specific design choices were made in order to optimize the depth-limited search for Ricochet Robots.  The depth-limited search was implemented recursively and
   as a tree search rather than a graph search.  Not keeping track of past states gives the algorithm much less overhead and allows it to expand nodes more quickly,
@@ -91,10 +89,6 @@ Ricochet Robots allowed us to play and test our AI algorithms without surpassing
   are closer to the initial state.  Overall, the depth-limited AI player would be an adequate match for a human player in both the full and simplified versions of
   Ricochet Robots.\\
 
-  \subsection{Informed Breadth-First-Search}
-  The breadth-first-search does not skip a move and does therefore always find the optimal solution. However, considering the game state of Ricochet Robots, the search tree expands quickly and the algorithm becomes slow. The implementation does follow the code in the XXXXX. The children of every expanded node have a reference to its father node to allow to navigate in the tree. 
-  
-  Follwing the rules from
   
    \ref{sec:stateSpace} this leads to a tree with up to $16^n$ knots.
   \begin{itemize}

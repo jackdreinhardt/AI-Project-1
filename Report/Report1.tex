@@ -119,13 +119,18 @@ Ricochet Robots allowed us to play and test our AI algorithms without surpassing
 
 
   \subsection{Informed Search: Breadth First Search}
-  As already mentioned
-
-  The team decided to develop a informed breadth first search to guarantee finding always the goal state by using as few moves as possible. However, this leads as mentioned in \ref{sec:stateSpace} this leads to a tree with up to $16^n$ knots.
-  \begin{itemize}
-    \item Difficulty of setting the limit to a certain level
-  \end{itemize}
-
+  \subsection{Informed Breadth-First-Search}
+  The breadth-first-search does not skip a move and does therefore always find the optimal solution. However, considering the game state of Ricochet Robots, the search tree expands quickly and the algorithm becomes slow. Given a certain game state, the algorithm moves one robot in one direction. If it didn't reach the target and the new game state is not saved on the frontier or expanded-nodes deque it adds it to the frontier. The algorithm does that for all possible directions and robots before it expands the next game state from the frontier. An example of a concrete game state is given below. If the target is reached, the algorithm returns the node of the goal state. The moves to reach the goal can be reconstructed by iterating through all the father nodes as the node class contains the move of how a certain game state is reached. The implementation does follow the code in the XXXXX with one difference. While the code in XXX chooses the node from the frontier and compares if it equals the goal state this AI checks it directly after moving the robot. Through that, it prevents to expand additional nodes even though the robot reached the target.
+  
+  \begin{figure}
+  	\centering
+  	\label{fig_bfs:test}
+  	\includegraphics[scale=0.47]{figures/Bfs_test_results.png}
+  	\caption{Breadth First Search testing results.}
+  \end{figure}
+  
+  
+  As already mentioned, because of the high branching the AI-search becomes slow at a certain limit. The algorithm is tested for two different board sizes and for both, three and four robots. Figure \ref{fig_bfs:tes} shows the results. While the amount of expanded notes depends on the numbers of robots, the success rate depends on the square size and the number of robots. Compared to the depth first search, the likelyhood the algortihm finds a solution is lower. 
 
   \subsection{A* Search}
   Two heuristic functions were tested with the A* graph search for their ability to quickly reach the target in Ricochet Robot.
