@@ -4,8 +4,13 @@ from a_star_player import A_Star_Player
 from depth_limited_player import Depth_Limited_Player
 from AAI import Advanced_AI_Player
 
+# Settings class
+#
+# Parsing functions for command line arguments. Allows for different variations
+# of the game, such as different AI combinations and player AI combinations
+
 class Settings:
-    def __init__(self, boardsize=16, robots=4, players=['Player 1','Player 2']):
+    def __init__(self, boardsize=16, robots=4, players=['Thomas', 'Nina']):
         self.boardsize_ = boardsize
         self.robots_ = robots
         self.players_ = players

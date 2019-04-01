@@ -1,7 +1,13 @@
+# Player class
+#
+# Base class for the human and AI players. Includes shared variables and
+# required functions
+
 class Player:
     def __init__(self, name, score):
         self.name_ = name
         self.score_ = score
+        self.move_count_ = 0
 
         self.north_click_bound = None
         self.south_click_bound = None
@@ -19,4 +25,3 @@ class Player:
     def search(self, board, target, robots):
         raise TypeError('Abstract method `' + self._class.__name__ \
                             + '.' + self._function + '\' called')
-
