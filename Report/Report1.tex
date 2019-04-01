@@ -57,7 +57,8 @@ In order to run tests on the AIs an additional 6 by 6 board has been implemented
 \label{sec:gameRep}
 The representation of the game state only includes the locations of the game pieces - the robots - and the location of the target. The walls on the board are static,
 so these are not included in the game state. More specifically, the state is represented by a tuple of robots, and the target. The possible moves, dictated by Section
-\ref{sec:gameRules}, can be retrieved from the tuple in conjunction with the static game board. There is perfect observability in the game, so there is no need to represent the game state as a belief state. The state is simple to represent, which makes the AI algorithms run more efficiently and accurately.
+\ref{subsec:gameRules}, can be retrieved from the tuple in conjunction with the static game board. There is perfect observability in the game, so there is no need to represent
+the game state as a belief state. The state is simple to represent, which makes the AI algorithms run more efficiently and accurately.
 
 
 \section{State Space and Complexity}
@@ -167,7 +168,11 @@ Ricochet Robots allowed us to play and test our AI algorithms without surpassing
 
 
 \section{Conclusion}
-
+Three AI algorithms were tested for their ability to consistently reach the target in Ricochet Robots. After numerous tests of each algorithm, the depth-limited search is
+the most worthy human competitor due to its ability to quickly search through many states while optimizing the solution once a path to the target is found. While breadth-first
+search is optimal, giving it an advantage in some instances, the breadth-first and A* graph search algorithms often times could not reach the depth necessary to find a solution. 
+The success of each algorithm is of course dependent on the hardware of the computer since the AI player will only have one minute to find a solution. A custom search
+algorithm was devised but not implemented and could be explored for future work.
 
 
 \end{document}
