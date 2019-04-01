@@ -9,7 +9,6 @@ class HumanPlayer(Player):
 
     def execute_moves(self, app, limit=99):
         robot = None
-        moveCount = 0
         while True:
             pygame.time.delay(100)
             for event in pygame.event.get():
@@ -27,8 +26,8 @@ class HumanPlayer(Player):
                     d = app.KeyToDir(event.key)
                     if robot.move_possible(app.board_, app.robots_, d):
                         robot = robot.move(app.board_, app.robots_, d)
-                        moveCount += 1
-                        print("Moves: " + str(moveCount))
+                        self.move_count_ += 1
+                        app.sidebar_.drawScoreboard(app.players_)
                         for i in range(len(app.robots_)):
                             if robot.color_ == app.robots_[i].color_:
                                 app.robots_[i] = robot
@@ -36,7 +35,7 @@ class HumanPlayer(Player):
 
                     for r in app.robots_:
                         if r.y_ == app.target_.y_ and r.x_ == app.target_.x_ and r.color_ == app.target_.color_:
-                            return moveCount
+                            return self.move_count_
 
     # since the user is playing the game, no search algorithm is needed
     def search(self, board, target, robots, limit):

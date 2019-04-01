@@ -1,6 +1,10 @@
 import pygame
-
 from player import Player
+
+# Sidebar Class
+#
+# Provides an interface to choose the current player, and display the score,
+# and display the current number of moves of the player
 
 class Sidebar:
     def __init__(self, graphics, players):
@@ -45,7 +49,7 @@ class Sidebar:
         pygame.draw.rect(self.g_.Screen, self.g_.Tile2, (self.g_.BoardArea, 0, self.g_.BoardArea + self.g_.ScoreBoard, 0.66 * self.g_.BoardArea))
         font = pygame.font.SysFont("helvetica", self.fontsize)
         text = font.render("Scoreboard", True, (0, 0, 0))
-        self.g_.Screen.blit(text,(self.g_.BoardArea + 0.5 * self.g_.ScoreBoard - 0.5 * text.get_width(), 5))
+        self.g_.Screen.blit(text,(self.g_.BoardArea + 0.3 * self.g_.ScoreBoard - 0.5 * text.get_width(), 5))
 
         line = self.g_.BoardSize_ * self.line_
         for p in players:
@@ -54,10 +58,12 @@ class Sidebar:
             text = font.render(str(p.score_), True, (0, 0, 0))
             self.g_.Screen.blit(text,(self.g_.BoardArea + 0.9 * self.g_.ScoreBoard - text.get_width() // 2, p.north_click_bound))
             if p.selected_:
-                s = pygame.Surface((p.east_click_bound - p.west_click_bound, p.south_click_bound - p.north_click_bound))  # the size of your rect
-                s.set_alpha(30)                # alpha level
-                s.fill((0,0,0))           # this fills the entire surface
-                self.g_.Screen.blit(s, (p.west_click_bound,p.north_click_bound))    # (0,0) are the top-left coordinates
+                text = font.render("# moves: " + str(p.move_count_), True, (0, 0, 0))
+                self.g_.Screen.blit(text,(self.g_.BoardArea + 0.8 * self.g_.ScoreBoard - text.get_width() // 2, 5))
+                s = pygame.Surface((p.east_click_bound - p.west_click_bound, p.south_click_bound - p.north_click_bound))
+                s.set_alpha(30)
+                s.fill((0,0,0))
+                self.g_.Screen.blit(s, (p.west_click_bound,p.north_click_bound))
             line += line
         pygame.display.flip()
 
@@ -72,7 +78,7 @@ class Sidebar:
         pygame.display.flip()
         self.pygame_update()
 
-    # I hate this, but its the only way the AI moves are shown on the board
+    # This is terrible, but the only way the screen updates
     def pygame_update(self):
         for event in pygame.event.get():
             pass

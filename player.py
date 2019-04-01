@@ -2,6 +2,7 @@ class Player:
     def __init__(self, name, score):
         self.name_ = name
         self.score_ = score
+        self.move_count_ = 0
 
         self.north_click_bound = None
         self.south_click_bound = None
