@@ -97,7 +97,7 @@ Ricochet Robots allowed us to play and test our AI algorithms without surpassing
   \subsection{Recursive Depth-Limited Search} \label{recursiveDFS}
   Given the large branching factor of Ricochet Robots, a depth-limited search gives the AI player a higher potential to find solutions to the more difficult board
   configurations.  Some experimentation is necessary to find the optimal limit to the depth, but when the AI player is attempting to find a better solution than
-  its human competitor, the limit could simply be set to one less than the human move count.  \\
+  its human competitor, the limit could simply be set to one less than the human move count. \\
 
   Specific design choices were made in order to optimize the depth-limited search for Ricochet Robots.  The depth-limited search was implemented recursively and
   as a tree search rather than a graph search.  Not keeping track of past states gives the algorithm much less overhead and allows it to expand nodes more quickly,
