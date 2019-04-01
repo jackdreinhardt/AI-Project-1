@@ -1,0 +1,29 @@
+# Pseudo Code for a more advanced AI based on breadth first search, 
+# depeth first search and the attempt to implement human reasoning 
+# and intuition
+
+### Game Setup ###
+# On a 16 by 16 board with four robots and a randomly placed target, assume without loss of generality that the current target is red.
+
+# Perform DFS-Tree-Search on the red robot (target robot)
+In the recursive dfs function check for:
+ a) has the target been reached?
+ b) has the red robot hit another robot?
+ c) has the robot reached a sqaure that it had been to before?
+ d) has the red robot crossed the row or coloum that the target is on?
+If a: the target has been reached, return the solution 
+If b: the robot has hit another robot, add two squares to the frontier:
+		- the first square being the one where the red robot stops in front of the robot that it hit
+		- the second square being the one where the red robot hits the next wall behind the robot that it hit.
+		  (adding the move of the robot of the other color to the solution)
+If c: the robot explores a square that it has been to before compare the number of moves it takes to reach that square. Prune the subtree of the longer path
+If d: the robot crosses the row or coloum of the target it is technically only one move away from the target (the move straight to the target) if it could stop at this row/coloum.
+	  Count the number of squares the red robot is in after it crossed the row/coloum of the target before it hits a wall.
+	  If the number of squares is between 1 and 3 (inclusively) save it to an array, prioritising the times where the red robot only passed one square before it hit a wall.
+
+# If dfs does not find a simple solution continue with the next step. (A simple solution beeing one where it is possible to reach the target by only moving the robot of the target color and moving other robots out of the way) 
+# Perform DFS-Tree-Search on all the robots that do not have the same color as the target
+1. Make the squares from the array from the previous step new goal states.
+2. Return the solution (this solution will place a robot in a sqaure where it can be used as a wall by the red robot to reach the target in one move)
+3. Find the square that is located on the row/coloum of the target and next to the sqaure that was a goal state for the dfs serach in the previous step in the tree of the dfs serach of the red robot and backtrack to the root node.
+4. Combine the two solution and return an overall solution to the problem.
