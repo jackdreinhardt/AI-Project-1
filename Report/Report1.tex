@@ -75,8 +75,8 @@ the game state as a belief state. The state is simple to represent, which makes 
 \section{State Space and Complexity}
 \label{sec:stateSpace}
 The state space and branching factor of Ricochet Robots is large, making the task of reaching the target non-trivial for both humans and AI search algorithms.
-The board consists of a sixteen-by-sixteen grid with walls placed in predetermined positions.  With four robots that can be moved anywhere on the board (other
-than on top of another robot), this leaves a total of $(16*16)(16*16-1)(16*16-2)(16*16-3) = 4,195,023,360$ board configurations for a single wall setup and
+The board consists of a 16x16 grid with walls placed in predetermined positions.  With four robots that can be moved anywhere on the board (other
+than on top of another robot or the four middle squares), this leaves a total of $(16*16-4)(16*16-5)(16*16-6)(16*16-7) = 3,937,437,000$ board configurations for a single wall setup and
 target placement.  Depending on the board setup, some states may not be reachable, but the state space still remains large. Each robot can move in any of the
 four directions on the board until it reaches a wall or another robot in its path.  Assuming that each robot has an obstruction in one of the four directions
 decreases the possible moves for each robot to three, giving the search algorithm a branching factor of $4*3 = 12$.  This assumption will be true in most cases since
@@ -101,7 +101,9 @@ Ricochet Robots allowed us to play and test our AI algorithms without surpassing
   as a tree search rather than a graph search.  Not keeping track of past states gives the algorithm much less overhead and allows it to expand nodes more quickly,
   increasing the success rate.  The algorithm will start in the initial state by looping through each possible move for each robot and continue traversing the tree
   recursively until it either reaches a solution or it reaches the specified depth limit.  Once it reaches the depth limit, it will return to the previous level of
-  recursion to search the next branch at that depth.  \\
+  recursion to search the next branch at that depth. For example, if the depth limit is set to ten, the algorithm will traverse down one path, with the direction being
+  randomly determined at each move, until it is ten moves away from the initial state, at which point it will return to the depth of nine to test all other moves on
+  that branch and so on. \\
 
   One negative aspect of the depth-limited AI player is that it usually does not find an optimal solution.  Most solutions contain extraneous moves that do nothing
   towards reaching the goal state.  In order to alleviate this issue, two aspects were added to the algorithm.  First, when checking if a move is possible, the
@@ -186,7 +188,7 @@ Implementing either a randomazied boardsetup (random placement of walls) or diff
 
 
 \section{Conclusion}
-Three AI algorithms were tested for their ability to consistently reach the target in Ricochet Robots. After numerous tests of each algorithm, the depth-limited search is
+Three AI algorithms, depth-limited search, breadth-first search, and A* search, were tested for their ability to consistently reach the target in Ricochet Robots. After numerous tests of each algorithm, the depth-limited search is
 the most worthy human competitor due to its ability to quickly search through many states while optimizing the solution once a path to the target is found. While breadth-first
 search is optimal, giving it an advantage in some instances, the breadth-first and A* graph search algorithms often times could not reach the depth necessary to find a solution.
 The success of each algorithm is of course dependent on the hardware of the computer since the AI player will only have one minute to find a solution. A custom search
