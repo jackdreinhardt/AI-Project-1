@@ -6,6 +6,10 @@ from globals import *
 from ai_player import AIPlayer
 from node import Node
 
+# A-Star class
+#
+# Algorithm to find a solution to ricochet robots using the A-Star algorithm
+
 class A_Star_Player(AIPlayer):
     def __init__(self):
         AIPlayer.__init__(self, 'A-Star', 0)

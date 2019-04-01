@@ -6,6 +6,10 @@ from globals import *
 from ai_player import AIPlayer
 from node import Node
 
+# BFS class
+#
+# Algorithm to find a solution to ricochet robots using BFS
+
 class Graph_Search_BF(AIPlayer):
     def __init__(self):
         AIPlayer.__init__(self, 'Breadth First Search', 0)
@@ -15,7 +19,7 @@ class Graph_Search_BF(AIPlayer):
         self.start_time = time.time()
         return self.graph_search(board, target, robots, limit, heuristic)      
 
-    def graph_search(self,board, target,robots,limit,heuristic):
+    def graph_search(self, board, target, robots, limit, heuristic):
        initialNode = Node(robots, 0, 0, 0, 0,0)
        frontier = deque([initialNode])
        expanded = deque()

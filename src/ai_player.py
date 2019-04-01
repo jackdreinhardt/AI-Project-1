@@ -33,7 +33,7 @@ class AIPlayer(Player):
     # moves is an array of (robot, direction) pairs
     #   robot: an instance of the Robot class
     #   direction: a string, "NORTH" "SOUTH" "EAST" or "WEST"
-    def search(self, board, robots, limit, heuristic):
+    def search(self, board, target, robots, limit, heuristic):
         return None
 
 

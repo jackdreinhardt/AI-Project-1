@@ -6,6 +6,10 @@ from globals import *
 
 from ai_player import AIPlayer
 
+# DFS class
+#
+# Algorithm to find a solution to ricochet robots using recursive DFS tree search
+
 class Depth_Limited_Player(AIPlayer):
     def __init__(self):
         AIPlayer.__init__(self, 'Depth First Search', 0)
