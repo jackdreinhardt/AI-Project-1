@@ -27,7 +27,7 @@ Project report on\\
 \newpage
 \section{Game Background}
 \subsection{Game Rules}
-\label{subsec:gameRules}
+\label{sec:gameRules}
 \textit{Ricochet Robots} is a competitive game first published in Germany in 1999. In the original game four different colored robots are placed on a 16 by 16 board. The objective of the game is to reach a target that is placed somewhere on the board each round. The targets have different colors matching the colors of the four robots. A red target has to be reached by the red robot, a blue target by the blue robot and so on. The challenge of the game comes from the allowed movements of the robots. All robots can move in four directions: up, down, left and right, however once a robot is moved it will only stop when it hits a wall or another robot. The outer edges of the board, the four middle squares as well as additional squares on the board are blocked on up to two sides by walls. In order to reach the target often robots of other colors need to be used as 'walls'.
 \begin{figure}[!htb]
 \center{\includegraphics[width=6cm]{figures/originalgame.jpg}}
@@ -39,7 +39,7 @@ In the original game the board consists of four quaters printed on both sides th
 \par
 In order to run tests on the AIs an additional 6 by 6 board has been implemented. The game rules are exactly the same, only some squares have walls on three sides. That is because of the reduced space on the small board.
 \begin{figure}
-\center{\includegraphics[width=10cm]{figures/boardimplementation.PNG}}
+\center{\includegraphics[width=10cm]{figures/boardimplementation.png}}
 \caption{The implementation of 'Ricochet Robots'}
 \label{fig:implementation}
 \end{figure}
@@ -119,18 +119,13 @@ Ricochet Robots allowed us to play and test our AI algorithms without surpassing
 
 
   \subsection{Informed Search: Breadth First Search}
-  \subsection{Informed Breadth-First-Search}
-  The breadth-first-search does not skip a move and does therefore always find the optimal solution. However, considering the game state of Ricochet Robots, the search tree expands quickly and the algorithm becomes slow. Given a certain game state, the algorithm moves one robot in one direction. If it didn't reach the target and the new game state is not saved on the frontier or expanded-nodes deque it adds it to the frontier. The algorithm does that for all possible directions and robots before it expands the next game state from the frontier. An example of a concrete game state is given below. If the target is reached, the algorithm returns the node of the goal state. The moves to reach the goal can be reconstructed by iterating through all the father nodes as the node class contains the move of how a certain game state is reached. The implementation does follow the code in the XXXXX with one difference. While the code in XXX chooses the node from the frontier and compares if it equals the goal state this AI checks it directly after moving the robot. Through that, it prevents to expand additional nodes even though the robot reached the target.
-  
-  \begin{figure}
-  	\centering
-  	\label{fig_bfs:test}
-  	\includegraphics[scale=0.47]{figures/Bfs_test_results.png}
-  	\caption{Breadth First Search testing results.}
-  \end{figure}
-  
-  
-  As already mentioned, because of the high branching the AI-search becomes slow at a certain limit. The algorithm is tested for two different board sizes and for both, three and four robots. Figure \ref{fig_bfs:tes} shows the results. While the amount of expanded notes depends on the numbers of robots, the success rate depends on the square size and the number of robots. Compared to the depth first search, the likelyhood the algortihm finds a solution is lower. 
+  As already mentioned
+
+  The team decided to develop a informed breadth first search to guarantee finding always the goal state by using as few moves as possible. However, this leads as mentioned in \ref{sec:stateSpace} this leads to a tree with up to $16^n$ knots.
+  \begin{itemize}
+    \item Difficulty of setting the limit to a certain level
+  \end{itemize}
+
 
   \subsection{A* Search}
   Two heuristic functions were tested with the A* graph search for their ability to quickly reach the target in Ricochet Robot.
@@ -171,8 +166,12 @@ Ricochet Robots allowed us to play and test our AI algorithms without surpassing
 \subsection{Game Improvements}
 Implementing either a randomazied boardsetup (random placement of walls) or different quaters that can be combined to different setups, similar to the original boardgame.
 \subsection{Search Algorithm combined with human intuition}
-
-
+Find the pseudo code for an AI that tries to mimic human reasoning and intuition. 
+\begin{figure}
+\center{\includegraphics[width=\textwidth]{figures/pseudocode.png}}
+\caption{The pseudo code for a more advanced AI}
+\label{fig:pseudo}
+\end{figure}
 
 \section{Conclusion}
 
