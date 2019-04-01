@@ -138,7 +138,7 @@ Ricochet Robots allowed us to play and test our AI algorithms without surpassing
 
 
 
-  \subsection{Informed Breadth-First-Search}
+  \subsection{Informed Breadth-First Search}
 
   \begin{figure}
   	\centering
@@ -147,7 +147,7 @@ Ricochet Robots allowed us to play and test our AI algorithms without surpassing
   	\caption{Breadth First Search Search Tree built}
   	\label{fig:bfs_tree}
   \end{figure}
-  Another way to find a solution for searching problems is a breadth-first approach. This search expands all nodes on the current level before it explores the nodes on the lower level. Therefore, it always finds the optimal solution. However, considering the game state of Ricochet Robots, the search tree expands quickly, and the algorithm becomes slow. Figure \ref{fig:bfs_tree} shows how the algorithm works. Given a certain game state, the search moves one robot in each direction. If it does not reach the target and the new game state is not saved on the frontier or expanded-nodes dequeue it adds it to the frontier. The algorithm does that for all possible directions and robots before it expands the next game state from the frontier. If the target is reached, the algorithm returns the node of the goal state. The moves to reach the goal can be reconstructed by iterating through all the father nodes as the node class contains the move of how a certain game state is reached. The implementation does follow the code in \cite{Textbook} with one difference. The code in \cite{Textbook} chooses the node from the frontier and compares if it equals the goal state. Therefore, it may add a game state already has reached the square with the target. Considering the high branching, the algorithm must explore many nodes before it finds the solution. This AI compares it directly after moving the robot to preclude that the search explores additional nodes even though the robot already reached the target.\\
+  Another way to find a solution for searching problems is a breadth-first approach. This search expands all nodes on the current level before it explores the nodes on the lower level. Therefore, it always finds the optimal solution. However, considering the game state of Ricochet Robots, the search tree expands quickly, and the algorithm becomes slow. Figure \ref{fig:bfs_tree} shows how the algorithm works. Given a certain game state, the search moves one robot in each direction. If it does not reach the target and the new game state is not already saved on the frontier or expanded-nodes queue, then it is added to the frontier. The algorithm does that for all possible directions and robots before it expands the next game state from the frontier. If the target is reached, the algorithm returns the node of the goal state. The moves to reach the goal can be reconstructed by iterating through all the father nodes as the node class contains the move of how a certain game state is reached. The implementation does follow the code in \cite{Textbook} with one difference. The code in \cite{Textbook} chooses the node from the frontier and compares if it equals the goal state. Therefore, it may add a game state already has reached the square with the target. Considering the high branching, the algorithm must explore many nodes before it finds the solution. This AI compares it directly after moving the robot to preclude that the search explores additional nodes even though the robot already reached the target.\\
 
 	  \begin{figure}
 	  	\centering
@@ -160,7 +160,7 @@ Ricochet Robots allowed us to play and test our AI algorithms without surpassing
 
 
 
-  The algorithm is tested on two different board sizes and both, three and four robots. Figure \ref{fig:bfs_test} shows the results. While the amount of expanded notes depends on the number of robots, the success rate depends on the square size and the numbers of robots. Compared to the depth-first search, the breadth-first search finds a solution less frequently. One reason for that is that it follows branches without utility to reach the target. Therefore, the following section integrates a heuristic function.
+  The algorithm is tested on two different board sizes and both, three and four robots. Figure \ref{fig:bfs_test} shows the results. While the amount of expanded nodes depends on the number of robots, the success rate depends on the board size and the numbers of robots. Compared to the depth-first search, the breadth-first search finds a solution less frequently. One reason for that is that it follows branches without utility to reach the target. Therefore, the following section integrates a heuristic function.
 
   \subsection{A* Search}
   Two heuristic functions were tested with the A* graph search for their ability to quickly reach the target in Ricochet Robot.
