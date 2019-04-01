@@ -74,7 +74,7 @@ class App:
                     self.sidebar_.displayMessage(["Click a robot and move", " with arrow keys."])
 
                     # execute the moves of the current player
-                    cp_move_count = current_player.execute_moves(self, 8)
+                    cp_move_count = current_player.execute_moves(self, 10, "Manhattan Distance")
                     if cp_move_count == FAILURE or cp_move_count == TIME_CUTOFF or cp_move_count == DEPTH_CUTOFF:
                         print('{cp} was not able to reach the target. If {op} can find a solution, they win the round.'\
                             .format(cp=current_player.name_, op=other_player.name_))
@@ -91,7 +91,7 @@ class App:
                     self.graphics_.drawBoardState(self.board_, self.robots_, self.target_)
 
                     # execute moves of the other player
-                    op_move_count = other_player.execute_moves(self, 8)
+                    op_move_count = other_player.execute_moves(self, 10, "Manhattan Distance")
                     if op_move_count == FAILURE or op_move_count == TIME_CUTOFF or op_move_count == DEPTH_CUTOFF:
                         print('{op} was not able to reach the target.'\
                             .format(count=op_move_count, op=other_player.name_))
