@@ -1,3 +1,8 @@
+# Player class
+#
+# Base class for the human and AI players. Includes shared variables and
+# required functions
+
 class Player:
     def __init__(self, name, score):
         self.name_ = name
