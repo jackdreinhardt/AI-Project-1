@@ -1,11 +1,6 @@
 from player import Player
 from globals import *
 import pygame
-import time
-import copy
-import random
-
-CUTOFF_TIME = 60
 
 class AIPlayer(Player):
     def __init__(self, name, score):
@@ -38,7 +33,7 @@ class AIPlayer(Player):
     # moves is an array of (robot, direction) pairs
     #   robot: an instance of the Robot class
     #   direction: a string, "NORTH" "SOUTH" "EAST" or "WEST"
-    def search(self, board, robots, limit, heuristic):
+    def search(self, board, target, robots, limit, heuristic):
         return None
 
 

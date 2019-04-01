@@ -38,5 +38,5 @@ class HumanPlayer(Player):
                             return self.move_count_
 
     # since the user is playing the game, no search algorithm is needed
-    def search(self, board, target, robots, limit):
+    def search(self, board, target, robots, limit, heuristic):
         return None

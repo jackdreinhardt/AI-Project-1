@@ -2,7 +2,6 @@ from human_player import HumanPlayer
 from informed_bf_player import Graph_Search_BF
 from a_star_player import A_Star_Player
 from depth_limited_player import Depth_Limited_Player
-from AAI import Advanced_AI_Player
 
 # Settings class
 #
