@@ -105,13 +105,19 @@ class App:
                     self.sidebar_.noPlayer()
                     if op_move_count < cp_move_count:
                         other_player.score_ += 1
+                        print('{op} won the round.'.format(op=other_player.name_))
                     elif cp_move_count == float("inf") and op_move_count == float("inf"):
                         self.robots = robot_start_position
                         self.sidebar_.displayMessage(["Neither player found a", "solution, no points awarded"])
                         pygame.time.delay(3000)
                     else:
                         current_player.score_ += 1
+                        print('{cp} won the round.'.format(cp=current_player.name_))
                         self.robots_ = first_player_robots
+
+                    # reset move counters
+                    for p in self.players_:
+                        p.move_count_ = 0
 
                     # final messages of the round
                     self.sidebar_.displayMessage(["Round complete.", "Click a player name to select."])

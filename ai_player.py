@@ -28,7 +28,9 @@ class AIPlayer(Player):
                     for i in range(len(app.robots_)):
                             if robot.color_ == app.robots_[i].color_:
                                 app.robots_[i] = robot # move robot on board
+                                self.move_count_ += 1
                     pygame.time.delay(1000)
+                    app.sidebar_.drawScoreboard(app.players_)
                     app.graphics_.drawBoardState(app.board_, app.robots_, app.target_)
                     count += 1
         return count
