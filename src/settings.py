@@ -43,9 +43,6 @@ class Settings:
                 players.append(Advanced_AI_Player())
             elif name == 'bfs':
                 players.append(Graph_Search_BF())
-#            elif name == 'i_dfs':
-#                players.append(Graph_Search_DF())
             else:
                 players.append(HumanPlayer(name))
-        return players
-        
+        return players       
