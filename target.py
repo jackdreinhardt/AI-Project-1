@@ -5,7 +5,6 @@ from random import randrange as rd
 # Provides functions to randomly place the target in a valid location.
 # Additionally, contains x and y coordinates, and color of the target
 
-
 class Target:
     def __init__(self, boardSize, board, robots):
         self.board_size_ = boardSize
