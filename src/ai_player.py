@@ -1,11 +1,6 @@
 from player import Player
 from globals import *
 import pygame
-import time
-import copy
-import random
-
-CUTOFF_TIME = 60
 
 class AIPlayer(Player):
     def __init__(self, name, score):
