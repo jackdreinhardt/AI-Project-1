@@ -20,4 +20,3 @@ class Player:
     def search(self, board, target, robots):
         raise TypeError('Abstract method `' + self._class.__name__ \
                             + '.' + self._function + '\' called')
-
