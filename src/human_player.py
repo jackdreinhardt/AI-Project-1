@@ -7,7 +7,7 @@ class HumanPlayer(Player):
     def __init__(self, name):
         Player.__init__(self, name, 0)
 
-    def execute_moves(self, app, limit=99):
+    def execute_moves(self, app, limit=99, heuristic=None):
         robot = None
         while True:
             pygame.time.delay(100)
