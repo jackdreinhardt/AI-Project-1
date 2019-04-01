@@ -20,9 +20,9 @@ Project report on\\
 \rule{\textwidth}{0.5pt}
 \begin{description}
 \item\begin{tabular}{rll}
-    \textbf{Contributors:}  & Jannis Haberhausen  & (s186398) \\ 
-                            & Jack Reinhardt      & (s186182) \\ 
-                            & Kilian Speiser      & (s181993) \\ 
+    \textbf{Contributors:}  & Jannis Haberhausen  & (s186398) \\
+                            & Jack Reinhardt      & (s186182) \\
+                            & Kilian Speiser      & (s181993) \\
                             & Jacob Miller        & (s186093) \\
 \end{tabular}
 \end{description}
@@ -33,7 +33,7 @@ Project report on\\
 \newpage
 
 \section{Game Background}
-\textit{Ricochet Robots} is a competitive game first published in Germany in 1999. It can be played with two or more people. The objective of the game is to move robots over the board such that one of the robots reaches a designated target. All players simultaneously try to find a solution to the given search problem. In order to do that every player is allowed to move all robots. That means all players are provided with perfect information and makes the game deterministic and fully observable. 
+\textit{Ricochet Robots} is a competitive game first published in Germany in 1999. It can be played with two or more people. The objective of the game is to move robots over the board such that one of the robots reaches a designated target. All players simultaneously try to find a solution to the given search problem. In order to do that every player is allowed to move all robots. That means all players are provided with perfect information and makes the game deterministic and fully observable.
 
   \subsection{Game Rules}
   \label{subsec:gameRules}
@@ -59,14 +59,14 @@ Project report on\\
   In order to run tests on the AI algorithms, an additional 6 by 6 board has been implemented. The game rules are exactly the same, only some squares have walls on three sides.
   The small board achieves a smaller state space and less complexity as discussed in Section \ref{sec:stateSpace}.
   \begin{figure}[!htb]
-  \center{\includegraphics[width=10cm]{figures/boardimplementation.png}}
+  \center{\includegraphics[width=10cm]{figures/boardimplementation.PNG}}
   \caption{The implementation of 'Ricochet Robots'}
   \label{fig:implementation}
   \end{figure}
 
   \subsection{Applicable AIs}
   As \textit{Ricochet Robots} is not adversarial (in fact for the AI implementation it is essentially a one player game with the challenge to perform better than a previous player) the Minimax-Algrothim and Monte-Carlo-Tree-Search are not applicable. \\
-  Instead graph and tree searches with Depth-First-Search (dfs), Breath-First-Search (bfs) and A* were implemented. Different techniques were explored to optimize the performance of the search algorithms which are presented in section \ref{sec:searchAlgorithms}. In section \ref{sec:futureWork} ideas for more advanced AIs that try to mimic human reasoning and intuition are presented.
+  Instead graph and tree searches with depth-first search (DFS), breath-first search (BFS) and A* were implemented. Different techniques were explored to optimize the performance of the search algorithms which are presented in Section \ref{sec:searchAlgorithms}. In Section \ref{sec:futureWork} ideas for more advanced AIs that try to mimic human reasoning and intuition are presented.
 
 \section{Game Representation}
 \label{sec:gameRep}
@@ -79,7 +79,7 @@ the game state as a belief state. The state is simple to represent, which makes 
 \label{sec:stateSpace}
 The state space and branching factor of Ricochet Robots is large, making the task of reaching the target non-trivial for both humans and AI search algorithms.
 The board consists of a 16x16 grid with walls placed in predetermined positions.  With four robots that can be moved anywhere on the board (other
-than on top of another robot or the four middle squares), this leaves a total of $(16*16-4)(16*16-5)(16*16-6)(16*16-7) = 3,937,437,000$ board configurations for a single wall setup and
+than on top of another robot or the four middle squares), this leaves a total of $(16*16-4)(16*16-5)(16*16-6)(16*16-7) = 3,937,437,000$ board configurations for a single board setup and
 target placement.  Depending on the board setup, some states may not be reachable, but the state space still remains large. Each robot can move in any of the
 four directions on the board until it reaches a wall or another robot in its path.  Assuming that each robot has an obstruction in one of the four directions
 decreases the possible moves for each robot to three, giving the search algorithm a branching factor of $4*3 = 12$.  This assumption will be true in most cases since
@@ -186,12 +186,12 @@ Ricochet Robots allowed us to play and test our AI algorithms without surpassing
 \label{sec:futureWork}
 
   \subsection{Game Improvements}
-  Implementing either a randomazied boardsetup (random placement of walls) or different quaters that can be combined to different setups, similar to the original boardgame would improve the variety of the game. Additionally, using more space efficient data structures would speed up the processes of the game. For example, we could use bits to encode the game board instead of objects. This would greatly reduce space and boost the speed of all search algorithms.
+  Implementing either a randomazied boardsetup (random placement of walls) or different quaters that can be combined to different setups, similar to the original boardgame would improve the variety of the game. Using more space efficient data structures would speed up the processes of the game. For example, we could use bits to encode the game board instead of objects. This would greatly reduce space and boost the speed of all search algorithms. Additionally, a faster language could be beneficial.
 
   \subsection{Search Algorithm combined with human intuition}
-  In figure \ref{fig:pseudo} the ideas for an advanced AI that tries to mimic human reasoning and intuition are layed out. 
+  In figure \ref{fig:pseudo} the ideas for an advanced AI that tries to mimic human reasoning and intuition are layed out.
   \begin{figure}[!htb]
-  \center{\includegraphics[width=\textwidth]{figures/pseudocode.png}}
+  \center{\includegraphics[width=\textwidth]{figures/pseudocode.PNG}}
   \caption{The 'pseudo code' for a more advanced AI}
   \label{fig:pseudo}
   \end{figure}
