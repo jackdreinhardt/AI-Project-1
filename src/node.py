@@ -1,6 +1,10 @@
-
 import copy
 from robot import Robot
+
+# Node class
+#
+# Provides valuable methods for both BFS and A-Star needed to complete the
+# algorithm efficiently
 
 class Node:
     def __init__(self, robots, father, movetuple, g=0, h=0,level=0):
@@ -9,7 +13,6 @@ class Node:
         self.move_tuple_ = movetuple # what robot was moved to what direction
         self.g_ = g # g(n)
         self.h_ = h # heuristic
-        self.children_ = []
         self.level_ = level
 
     def get_solution(self):
@@ -46,7 +49,4 @@ class Node:
         robots =[]
         for r in self.robots_:
             robots.append(Robot(r.color_,r.x_,r.y_))
-        return Node(robots,father,mt,0,0,level)
-
-            
-        
+        return Node(robots,father,mt,0,0,level)     
