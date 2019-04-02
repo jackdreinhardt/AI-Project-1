@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-- python (version 3.7.1+). It may be possible to run the code in previous versions, however not all functionality is guaranteed. See https://www.python.org for dowload instructions if python is not installed.
+- python (version 3.7.1+). It may be possible to run the code in previous versions, however not all functionality is guaranteed. See https://www.python.org for download instructions if python is not installed.
 - pygame (version 1.9.4+). It may be possible to run the code in previous versions, however not all functionality is guaranteed. The easiest way to download pygame is using pip, the python package manager. The command is as follows
  `pip install pygame`
  If this fails, see https://www.pygame.org/ for specific instructions on how to download the software.
